@@ -27,3 +27,13 @@ Then add a custom domain (e.g., `ucahub.ie`) in the Pages project settings.
 - Update milestones in `progress.html`
 - Add dated entries to `updates.html`
 - Update `site.json` for status and `lastUpdated`.
+
+
+## Data received thermometer
+Edit `site.json`:
+
+- `metricCurrent`: how many responses collected so far
+- `metricTarget`: target number of responses
+- `metricUnit`: label (e.g., "responses")
+
+This thermometer is intentionally **not** overall project completion.

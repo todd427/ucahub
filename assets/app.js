@@ -4,7 +4,12 @@
     tagline: "Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors",
     isLive: false,
     lastUpdated: "",
-    statusMessage: "Not live yet: awaiting Ethics approval."
+    statusMessage: "Not live yet: awaiting Ethics approval.",
+    metricName: "Data received",
+    metricUnit: "responses",
+    metricCurrent: 0,
+    metricTarget: 500,
+    metricNote: "This thermometer reflects responses collected (not overall project completion)."
   };
 
   async function loadConfig(){
@@ -22,15 +27,19 @@
     if(el) el.textContent = value;
   }
 
+  function wireText(selector, value){
+    document.querySelectorAll(selector).forEach(el=>el.textContent = value);
+  }
+
+  function clamp(n, lo, hi){ return Math.max(lo, Math.min(hi, n)); }
+
   function applyPrelive(cfg){
     const prelive = !cfg.isLive;
     document.body.classList.toggle("prelive", prelive);
 
-    // Update status pill and notice
     setText("statusText", prelive ? cfg.statusMessage : "Live");
     setText("lastUpdated", cfg.lastUpdated ? ("Last updated: " + cfg.lastUpdated) : "");
 
-    // Disable elements marked as requiring live state
     document.querySelectorAll("[data-requires-live='true']").forEach(el=>{
       if(prelive){
         el.setAttribute("aria-disabled","true");
@@ -49,9 +58,25 @@
     });
   }
 
+  function applyMetric(cfg){
+    const cur = Number(cfg.metricCurrent ?? 0);
+    const tgt = Number(cfg.metricTarget ?? 0);
+    const pct = (tgt > 0) ? clamp((cur / tgt) * 100, 0, 100) : 0;
+
+    wireText("[data-metric-name]", cfg.metricName || "Data received");
+    wireText("[data-metric-note]", cfg.metricNote || "");
+    wireText("[data-metric-current]", String(cur));
+    wireText("[data-metric-target]", String(tgt));
+    wireText("[data-metric-unit]", cfg.metricUnit || "");
+
+    document.querySelectorAll(".thermo[data-kind='metric']").forEach(t=>{
+      t.style.setProperty("--fill", pct + "%");
+    });
+  }
+
   function wireBrand(cfg){
-    document.querySelectorAll("[data-site-name]").forEach(el=>el.textContent = cfg.siteName);
-    document.querySelectorAll("[data-tagline]").forEach(el=>el.textContent = cfg.tagline);
+    wireText("[data-site-name]", cfg.siteName);
+    wireText("[data-tagline]", cfg.tagline);
     document.title = cfg.siteName;
   }
 
@@ -59,5 +84,6 @@
     const cfg = await loadConfig();
     wireBrand(cfg);
     applyPrelive(cfg);
+    applyMetric(cfg);
   });
 })();

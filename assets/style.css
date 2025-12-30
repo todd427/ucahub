@@ -226,3 +226,110 @@ a{color:inherit}
   color:var(--muted);
   font-size:12px;
 }
+
+
+/* Thermometer (metric) */
+.thermo-wrap{
+  display:flex;
+  gap:18px;
+  align-items:flex-end;
+  margin-top:14px;
+}
+.thermo{
+  --fill: 0%;
+  width:86px;
+  position:relative;
+  padding-bottom:92px; /* space for bulb */
+}
+.thermo .tube{
+  width:46px;
+  height:360px;
+  margin:0 auto;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.05);
+  overflow:hidden;
+  box-shadow: 0 14px 40px rgba(0,0,0,.22);
+  position:relative;
+}
+.thermo .fill{
+  position:absolute;
+  left:0; right:0;
+  bottom:0;
+  height: var(--fill);
+  background:rgba(122,162,255,.55);
+  border-top:1px solid rgba(255,255,255,.18);
+}
+.thermo .bulb{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:0;
+  width:86px;
+  height:86px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+  box-shadow: 0 16px 44px rgba(0,0,0,.25);
+}
+.thermo .bulb:before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border-radius:50%;
+  background:rgba(122,162,255,.55);
+  border:1px solid rgba(255,255,255,.16);
+}
+.thermo .stem{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:70px;
+  width:22px;
+  height:28px;
+  border-radius:999px;
+  background:rgba(122,162,255,.55);
+  border:1px solid rgba(255,255,255,.14);
+}
+.metric-box{
+  flex:1;
+  min-width:260px;
+}
+.metric-line{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 14px;
+  align-items:baseline;
+  margin-top:10px;
+  color:rgba(233,238,247,.84);
+}
+.metric-line .big{
+  font-size:28px;
+  letter-spacing:.2px;
+}
+.metric-line .muted{
+  color:var(--muted);
+  font-size:13px;
+}
+@media (max-width:860px){
+  .thermo-wrap{flex-direction:column; align-items:flex-start}
+  .thermo{width:78px}
+  .thermo .bulb{width:78px; height:78px}
+  .thermo .tube{height:300px}
+}
+
+/* Pre-live overlay (no blur, keep readable) */
+.prelive #preliveOverlay{
+  display:block;
+}
+#preliveOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.42);
+  z-index:999;
+  pointer-events:none;
+}
+.prelive .dim-wrap{
+  filter: grayscale(.55) brightness(.85);
+}

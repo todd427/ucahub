@@ -31,7 +31,34 @@
     <main>
       <section class="content">
   <h2>Progress</h2>
-  <p>This is a simple milestone tracker. The “Current” stage will be updated as the project moves forward.</p>
+  <p>This is a simple milestone tracker.</p>
+
+  <div class="thermo-wrap">
+    <div class="thermo" data-kind="metric" aria-label="Thermometer showing data received">
+      <div class="tube" aria-hidden="true">
+        <div class="fill" aria-hidden="true"></div>
+      </div>
+      <div class="stem" aria-hidden="true"></div>
+      <div class="bulb" aria-hidden="true"></div>
+    </div>
+
+    <div class="metric-box">
+      <h3 style="margin-top:0"><span data-metric-name>Data received</span></h3>
+      <p style="margin-top:6px" data-metric-note>This thermometer reflects responses collected (not overall project completion).</p>
+
+      <div class="metric-line">
+        <div class="big"><span data-metric-current>0</span> <span data-metric-unit>responses</span></div>
+        <div class="muted">target: <span data-metric-target>500</span></div>
+      </div>
+
+      <div class="notice" style="margin-top:12px">
+        <strong>How to update:</strong> edit <code>site.json</code> → <code>metricCurrent</code> and <code>metricTarget</code>.
+      </div>
+    </div>
+  </div>
+
+
+  <p> The “Current” stage will be updated as the project moves forward.</p>
 
   <div class="thermo" aria-label="Progress thermometer">
     <div class="thermo-bar" aria-hidden="true"><div class="thermo-fill" style="height:28%"></div></div>

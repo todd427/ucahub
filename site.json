@@ -3,5 +3,10 @@
   "tagline": "Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors",
   "isLive": false,
   "lastUpdated": "2025-12-30",
-  "statusMessage": "Not live yet: awaiting Ethics approval."
+  "statusMessage": "Not live yet: awaiting Ethics approval.",
+  "metricName": "Data received",
+  "metricUnit": "responses",
+  "metricCurrent": 0,
+  "metricTarget": 500,
+  "metricNote": "This thermometer reflects responses collected (not overall project completion)."
 }
