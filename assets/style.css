@@ -180,12 +180,49 @@ a{color:inherit}
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.55);
-  backdrop-filter: blur(2px);
+  background:rgba(0,0,0,.35);
   z-index:999;
   pointer-events:none; /* we still allow reading; buttons will be disabled separately */
 }
 .prelive .dim-wrap{
-  filter: grayscale(.85) brightness(.72);
+  filter: grayscale(.55) brightness(.88);
 }
 .prelive .pill .dot{background:rgba(255,226,123,.95); box-shadow:0 0 0 6px rgba(255,226,123,.12)}
+
+
+/* Thermometer */
+.thermo{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  margin-top:12px;
+  padding:12px 12px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+}
+.thermo-bar{
+  width:18px;
+  height:180px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+  overflow:hidden;
+  position:relative;
+}
+.thermo-fill{
+  position:absolute;
+  left:0; right:0;
+  bottom:0;
+  height:28%;
+  background:rgba(122,162,255,.75);
+}
+.thermo-label{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.thermo-label .small{
+  color:var(--muted);
+  font-size:12px;
+}
