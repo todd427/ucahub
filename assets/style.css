@@ -166,7 +166,7 @@ a{color:inherit}
   white-space:nowrap;
 }
 .badge.done{background:rgba(151,237,195,.10); border-color:rgba(151,237,195,.26)}
-.badge.now{background:rgba(122,162,255,.12); border-color:rgba(122,162,255,.28)}
+.badge.now{background:rgba(255,80,80,.10); border-color:rgba(255,80,80,.35)}
 .badge.next{background:rgba(255,226,123,.10); border-color:rgba(255,226,123,.26)}
 @media (max-width:860px){
   .progress li{grid-column: span 12}
@@ -257,7 +257,7 @@ a{color:inherit}
   left:0; right:0;
   bottom:0;
   height: var(--fill);
-  background:rgba(122,162,255,.55);
+  background:rgba(255,80,80,.72);
   border-top:1px solid rgba(255,255,255,.18);
 }
 .thermo .bulb{
@@ -277,7 +277,7 @@ a{color:inherit}
   position:absolute;
   inset:14px;
   border-radius:50%;
-  background:rgba(122,162,255,.55);
+  background:rgba(255,80,80,.72);
   border:1px solid rgba(255,255,255,.16);
 }
 .thermo .stem{
@@ -288,7 +288,7 @@ a{color:inherit}
   width:22px;
   height:28px;
   border-radius:999px;
-  background:rgba(122,162,255,.55);
+  background:rgba(255,80,80,.72);
   border:1px solid rgba(255,255,255,.14);
 }
 .metric-box{
