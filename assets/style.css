@@ -333,3 +333,243 @@ a{color:inherit}
 .prelive .dim-wrap{
   filter: grayscale(.55) brightness(.85);
 }
+
+
+/* Theme toggle button */
+.theme-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+  font-size:13px;
+  cursor:pointer;
+}
+.theme-toggle:hover{
+  color:var(--text);
+  border-color:rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+}
+.theme-toggle:focus{
+  outline:2px solid rgba(122,162,255,.55);
+  outline-offset:2px;
+}
+.theme-icon{
+  width:14px;height:14px;border-radius:50%;
+  background: rgba(255,226,123,.95);
+  box-shadow: 0 0 0 5px rgba(255,226,123,.14);
+}
+body.theme-bright .theme-icon{
+  background: rgba(43,108,255,.95);
+  box-shadow: 0 0 0 5px rgba(43,108,255,.16);
+}
+
+/* Upbeat theme (bright, encouraging) */
+body.theme-bright{
+  --bg:#fbfcff;
+  --card:rgba(255,255,255,.82);
+  --text:#101522;
+  --muted:#4a556f;
+  --accent:#2b6cff;
+  --line:rgba(16,21,34,.12);
+  --shadow:0 16px 40px rgba(16,21,34,.12);
+}
+body.theme-bright{
+  background:
+    radial-gradient(900px 650px at 12% 10%, rgba(43,108,255,.18), transparent 55%),
+    radial-gradient(900px 650px at 88% 16%, rgba(255,80,80,.10), transparent 60%),
+    radial-gradient(1100px 800px at 50% 90%, rgba(151,237,195,.22), transparent 55%),
+    var(--bg);
+}
+body.theme-bright .header{
+  background:rgba(255,255,255,.78);
+  backdrop-filter: blur(10px);
+}
+body.theme-bright .hero{
+  background:rgba(255,255,255,.74);
+}
+body.theme-bright .card,
+body.theme-bright .content{
+  background:rgba(255,255,255,.78);
+}
+body.theme-bright .nav a:hover{
+  background:rgba(16,21,34,.04);
+}
+body.theme-bright .btn.secondary{
+  background:rgba(16,21,34,.04);
+}
+body.theme-bright .btn.secondary:hover{
+  background:rgba(16,21,34,.06);
+}
+/* Keep pre-live readable in bright theme */
+body.theme-bright.prelive .dim-wrap{
+  filter: grayscale(.35) brightness(.96);
+}
+
+
+/* Paper theme (academic, minimal, print-friendly) */
+body.theme-paper{
+  --bg:#ffffff;
+  --card:#ffffff;
+  --text:#111111;
+  --muted:#444444;
+  --accent:#0b57d0;
+  --line:rgba(0,0,0,.12);
+  --shadow:none;
+}
+body.theme-paper{
+  background: var(--bg);
+}
+body.theme-paper .header,
+body.theme-paper .hero,
+body.theme-paper .card,
+body.theme-paper .content{
+  background: var(--card);
+  box-shadow:none;
+}
+body.theme-paper .logo{
+  background: linear-gradient(135deg, rgba(11,87,208,.92), rgba(0,0,0,.10));
+  box-shadow:none;
+}
+body.theme-paper .theme-toggle{
+  background: rgba(0,0,0,.03);
+  border-color: rgba(0,0,0,.14);
+}
+body.theme-paper .nav a{
+  color: rgba(0,0,0,.62);
+}
+body.theme-paper .nav a:hover{
+  color: rgba(0,0,0,.86);
+  background: rgba(0,0,0,.03);
+  border-color: rgba(0,0,0,.10);
+}
+body.theme-paper .btn{
+  background: rgba(11,87,208,.10);
+  border-color: rgba(11,87,208,.22);
+  color: rgba(0,0,0,.90);
+}
+body.theme-paper .btn:hover{
+  background: rgba(11,87,208,.14);
+}
+body.theme-paper .btn.secondary{
+  background: rgba(0,0,0,.03);
+  border-color: rgba(0,0,0,.12);
+}
+body.theme-paper .btn.secondary:hover{
+  background: rgba(0,0,0,.05);
+}
+body.theme-paper #preliveOverlay{
+  background: rgba(255,255,255,.70);
+}
+body.theme-paper.prelive .dim-wrap{
+  filter: grayscale(.35) brightness(.92);
+}
+
+/* Theme icon per theme */
+body.theme-paper .theme-icon{
+  background: rgba(0,0,0,.55);
+  box-shadow: 0 0 0 5px rgba(0,0,0,.10);
+}
+
+
+/* Font scaling (user-adjustable) */
+:root{ --font-scale: 1; }
+html{ font-size: calc(16px * var(--font-scale)); }
+
+
+/* Theme-dependent strong text */
+:root{ --strong: rgba(233,238,247,.92); --strong-muted: rgba(233,238,247,.72); }
+body.theme-bright, body.theme-paper{
+  --strong: rgba(16,21,34,.92);
+  --strong-muted: rgba(16,21,34,.70);
+}
+.metric-line .big{ color: var(--strong); }
+.metric-line .muted{ color: var(--strong-muted); }
+
+
+/* Badge readability across themes */
+body.theme-bright .badge,
+body.theme-paper .badge{
+  color: rgba(16,21,34,.78);
+  background: rgba(16,21,34,.04);
+  border-color: rgba(16,21,34,.12);
+}
+body.theme-bright .badge.done,
+body.theme-paper .badge.done{
+  background: rgba(16,140,86,.10);
+  border-color: rgba(16,140,86,.22);
+}
+body.theme-bright .badge.now,
+body.theme-paper .badge.now{
+  background: rgba(11,87,208,.10);
+  border-color: rgba(11,87,208,.22);
+}
+body.theme-bright .badge.next,
+body.theme-paper .badge.next{
+  background: rgba(176,110,0,.10);
+  border-color: rgba(176,110,0,.22);
+}
+
+
+/* Font controls */
+.font-controls{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-left:10px;
+}
+.fc-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:32px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+  font-size:0.8125rem;
+  cursor:pointer;
+}
+.fc-btn:hover{
+  color:var(--text);
+  border-color:rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+}
+.fc-label{
+  font-size:0.75rem;
+  color: var(--muted);
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.04);
+  padding:6px 10px;
+  border-radius:999px;
+}
+body.theme-bright .fc-btn,
+body.theme-bright .fc-label,
+body.theme-paper .fc-btn,
+body.theme-paper .fc-label{
+  border-color: rgba(16,21,34,.12);
+  background: rgba(16,21,34,.03);
+  color: rgba(16,21,34,.62);
+}
+body.theme-bright .fc-btn:hover,
+body.theme-paper .fc-btn:hover{
+  background: rgba(16,21,34,.05);
+  color: rgba(16,21,34,.86);
+}
+
+
+/* Typography overrides (rem-based so font scale works) */
+.brand h1{ font-size: 1.125rem; }
+.brand p{ font-size: 0.75rem; }
+.nav a{ font-size: 0.8125rem; }
+.hero h2{ font-size: 2.0rem; }
+.card h3{ font-size: 1rem; }
+.card p{ font-size: 0.8125rem; }
+.notice{ font-size: 0.875rem; }
+.content h2{ font-size: 1.375rem; }
+.content h3{ font-size: 1rem; }
+.metric-line .big{ font-size: 1.75rem; }
