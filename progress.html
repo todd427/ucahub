@@ -42,100 +42,94 @@
 
     <main>
       <section class="content">
-  <h2>Progress</h2>
-  <p>This is a simple milestone tracker.</p>
+        <h2>Progress</h2>
+        <p>This is a simple milestone tracker.</p>
 
-  <div class="thermo-wrap">
-    <div class="thermo" data-kind="metric" aria-label="Thermometer showing data received">
-      <div class="tube" aria-hidden="true">
-        <div class="fill" aria-hidden="true"></div>
-      </div>
-      <div class="stem" aria-hidden="true"></div>
-      <div class="bulb" aria-hidden="true"></div>
-    </div>
+        <div class="thermo-poster-wrap">
+          <div class="thermo-wrap">
+            <div class="thermo" data-kind="metric" aria-label="Thermometer showing data received">
+              <div class="tube" aria-hidden="true">
+                <div class="fill" aria-hidden="true"></div>
+              </div>
+              <div class="stem" aria-hidden="true"></div>
+              <div class="bulb" aria-hidden="true"></div>
+            </div>
 
-    <div class="metric-box">
-      <h3 style="margin-top:0"><span data-metric-name>Data received</span></h3>
-      <p style="margin-top:6px" data-metric-note>This thermometer reflects responses collected (not overall project completion).</p>
+            <div class="metric-box">
+              <h3><span data-metric-name>Data received</span></h3>
+              <p data-metric-note>This thermometer reflects responses collected (not overall project completion).</p>
 
-      <div class="metric-line">
-        <div class="big"><span data-metric-current>0</span> <span data-metric-unit>responses</span></div>
-        <div class="muted">target: <span data-metric-target>500</span></div>
-      </div>
+              <div class="metric-line">
+                <div class="big"><span data-metric-current>0</span> <span data-metric-unit>responses</span></div>
+                <div class="muted">target: <span data-metric-target>500</span></div>
+              </div>
 
-      <div class="notice" style="margin-top:12px">
-        <strong>How to update:</strong> edit <code>site.json</code> → <code>metricCurrent</code> and <code>metricTarget</code>.
-      </div>
-    </div>
-  </div>
+              <div class="notice" style="margin-top:12px">
+                <strong>How to update:</strong> edit <code>site.json</code> → <code>metricCurrent</code> and <code>metricTarget</code>.
+              </div>
+            </div>
+          </div>
 
-<!--
-  <p> The “Current” stage will be updated as the project moves forward.</p>
+          <div class="poster-wrap">
+            <a class="poster-link" href="https://bit.ly/office-e24cn" target="_blank" rel="noopener" aria-label="Open survey link (bit.ly/office-e24cn)">
+              <img class="poster-img" src="/assets/ready-for-tomorrow.jpg" alt="Poster: Want to be ready for tomorrow? Scan to take part.">
+              <div class="poster-cta">Open survey link</div>
+            </a>
+          </div>
+        </div>
 
-  <div class="thermo" aria-label="Progress thermometer">
-    <div class="thermo-bar" aria-hidden="true"><div class="thermo-fill" style="height:28%"></div></div>
-    <div class="thermo-label">
-      <strong>Thermometer</strong>
-      <div class="small">Current: Literature review</div>
-      <div class="small">Next: Study design</div>
-    </div>
-  </div>
--->
+        <div class="notice">
+          <strong>Status:</strong> <span id="statusText">Loading…</span>
+        </div>
 
-
-  <div class="notice">
-    <strong>Status:</strong> <span id="statusText">Loading…</span>
-  </div>
-
-  <ul class="progress" aria-label="Milestones">
-    <li>
-      <div class="stage"><strong>Topic locked</strong><span class="badge done">Done</span></div>
-      <p>Core question and constructs agreed.</p>
-    </li>
-    <li>
-      <div class="stage"><strong>Literature review</strong><span class="badge now">Current</span></div>
-      <p>Key theories, measures, and prior findings gathered and organized.</p>
-    </li>
-    <li>
-      <div class="stage"><strong>Study design</strong><span class="badge next">Next</span></div>
-      <p>Survey flow, constructs, and analysis plan finalized.</p>
-    </li>
-    <li>
-      <div class="stage"><strong>Ethics submission</strong><span class="badge done">Submitted: 15-12-2025</span></div>
-      <p>Participant info, consent, and data handling documentation prepared.</p>
-    </li>
-    <li>
-      <div class="stage"><strong>Ethics approval</strong><span class="badge done">Approved: 12-01-2026</span></div>
-      <p>Participation opens only after approval.</p>
-    </li>
-    <li>
-      <div class="stage"><strong>Pilot</strong><span class="badge done">Completed 15-01-2026</span></div>
-      <p>Small-scale test to catch issues before data collection.</p>
-    </li>
-    <li>
-      <div class="stage"><strong>Data collection</strong><span class="badge now">Started: 13-01-2026</span></div>
-      <p>Recruitment and survey run.</p>
-    </li>
-    <li>
-      <div class="stage"><strong>Cleaning & analysis</strong><span class="badge">Planned</span></div>
-      <p>Quality checks, modeling, and hypothesis tests.</p>
-    </li>
-    <li>
-      <div class="stage"><strong>Writing</strong><span class="badge">Planned</span></div>
-      <p>Drafting, iteration, and supervisor feedback.</p>
-    </li>
-    <li>
-      <div class="stage"><strong>Submission</strong><span class="badge">Planned</span></div>
-      <p>Final hand-in.</p>
-    </li>
-  </ul>
-</section>
-
+        <ul class="progress" aria-label="Milestones">
+          <li>
+            <div class="stage"><strong>Topic locked</strong><span class="badge done">Done</span></div>
+            <p>Core question and constructs agreed.</p>
+          </li>
+          <li>
+            <div class="stage"><strong>Literature review</strong><span class="badge now">Current</span></div>
+            <p>Key theories, measures, and prior findings gathered and organized.</p>
+          </li>
+          <li>
+            <div class="stage"><strong>Study design</strong><span class="badge next">Next</span></div>
+            <p>Survey flow, constructs, and analysis plan finalized.</p>
+          </li>
+          <li>
+            <div class="stage"><strong>Ethics submission</strong><span class="badge done">Submitted: 15-12-2025</span></div>
+            <p>Participant info, consent, and data handling documentation prepared.</p>
+          </li>
+          <li>
+            <div class="stage"><strong>Ethics approval</strong><span class="badge done">Approved: 12-01-2026</span></div>
+            <p>Participation opens only after approval.</p>
+          </li>
+          <li>
+            <div class="stage"><strong>Pilot</strong><span class="badge done">Completed 15-01-2026</span></div>
+            <p>Small-scale test to catch issues before data collection.</p>
+          </li>
+          <li>
+            <div class="stage"><strong>Data collection</strong><span class="badge now">Started: 13-01-2026</span></div>
+            <p>Recruitment and survey run.</p>
+          </li>
+          <li>
+            <div class="stage"><strong>Cleaning & analysis</strong><span class="badge">Planned</span></div>
+            <p>Quality checks, modeling, and hypothesis tests.</p>
+          </li>
+          <li>
+            <div class="stage"><strong>Writing</strong><span class="badge">Planned</span></div>
+            <p>Drafting, iteration, and supervisor feedback.</p>
+          </li>
+          <li>
+            <div class="stage"><strong>Submission</strong><span class="badge">Planned</span></div>
+            <p>Final hand-in.</p>
+          </li>
+        </ul>
+      </section>
     </main>
 
     <footer class="footer">
       <span id="lastUpdated"></span>
-      <div>UCAHub is a project progress hub. This site may remain in “pre-live” mode until Ethics approval.</div>
+      <div>UCAHub is a project progress hub. This site may remain in "pre-live" mode until Ethics approval.</div>
     </footer>
   </div>
 </body>

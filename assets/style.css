@@ -7,6 +7,25 @@
   --atu-mist: #F0F7F9;
   --atu-mint: #ACE6BD;
   --atu-purple: #4D0857;
+
+  /* Dark theme defaults */
+  --bg: #0d0f14;
+  --text: #e9eef7;
+  --muted: rgba(233,238,247,.62);
+  --accent: rgba(122,162,255,.95);
+  --card: rgba(17,19,26,.72);
+  --line: rgba(255,255,255,.12);
+  --shadow: 0 8px 32px rgba(0,0,0,.35);
+  --strong: rgba(233,238,247,.92);
+  --strong-muted: rgba(233,238,247,.72);
+  --btn-bg: rgba(122,162,255,.14);
+  --btn-hover: rgba(122,162,255,.22);
+  --btn-secondary: rgba(255,255,255,.05);
+  --btn-secondary-hover: rgba(255,255,255,.08);
+  --control-bg: rgba(255,255,255,.04);
+  --control-border: rgba(255,255,255,.14);
+  --control-hover-bg: rgba(255,255,255,.06);
+  --control-hover-border: rgba(255,255,255,.18);
 }
 
 *{box-sizing:border-box}
@@ -26,7 +45,7 @@ a{color:inherit}
 .header{
   display:flex; align-items:center; justify-content:space-between;
   gap:18px; padding:14px 18px; border:1px solid var(--line);
-  border-radius:var(--radius); background:rgba(17,19,26,.72); backdrop-filter: blur(10px);
+  border-radius:var(--radius); background:var(--card); backdrop-filter: blur(10px);
   box-shadow: var(--shadow);
 }
 .brand{display:flex; gap:12px; align-items:center; text-decoration:none}
@@ -47,21 +66,21 @@ a{color:inherit}
   text-decoration:none; font-size:13px; color:var(--muted);
   padding:8px 10px; border-radius:12px; border:1px solid transparent;
 }
-.nav a:hover{color:var(--text); border-color:rgba(255,255,255,.12); background:rgba(255,255,255,.04)}
+.nav a:hover{color:var(--text); border-color:var(--control-hover-border); background:var(--control-bg)}
 
 .hero{
   margin-top:18px;
   padding:28px 22px;
   border-radius:var(--radius);
   border:1px solid var(--line);
-  background:rgba(17,19,26,.62);
+  background:var(--card);
   box-shadow: var(--shadow);
 }
 .kicker{display:inline-flex; gap:10px; align-items:center; color:var(--muted); font-size:13px}
 .pill{
   display:inline-flex; align-items:center; gap:8px;
-  padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.04);
+  padding:6px 10px; border-radius:999px; border:1px solid var(--control-border);
+  background:var(--control-bg);
 }
 .dot{width:8px; height:8px; border-radius:50%; background:rgba(151,237,195,.95); box-shadow:0 0 0 6px rgba(151,237,195,.12)}
 
@@ -79,7 +98,7 @@ a{color:inherit}
   padding:16px 16px;
   border-radius:var(--radius);
   border:1px solid var(--line);
-  background:rgba(17,19,26,.55);
+  background:var(--card);
   box-shadow: var(--shadow);
   min-height:120px;
 }
@@ -97,16 +116,16 @@ a{color:inherit}
   text-decoration:none;
   padding:10px 14px;
   border-radius:14px;
-  border:1px solid rgba(255,255,255,.16);
-  background:rgba(122,162,255,.14);
+  border:1px solid var(--control-border);
+  background:var(--btn-bg);
   color:var(--text);
   font-size:13px;
 }
-.btn:hover{background:rgba(122,162,255,.22)}
-.btn.secondary{background:rgba(255,255,255,.05)}
-.btn.secondary:hover{background:rgba(255,255,255,.08)}
+.btn:hover{background:var(--btn-hover)}
+.btn.secondary{background:var(--btn-secondary)}
+.btn.secondary:hover{background:var(--btn-secondary-hover)}
 .btn.ghost{background:transparent}
-.btn.ghost:hover{background:rgba(255,255,255,.05)}
+.btn.ghost:hover{background:var(--control-bg)}
 .btn[aria-disabled="true"]{
   opacity:.38;
   filter: grayscale(1);
@@ -116,7 +135,7 @@ a{color:inherit}
 
 .footer{
   margin:22px 0 10px;
-  color:rgba(233,238,247,.62);
+  color:var(--muted);
   font-size:12px;
   text-align:center;
 }
@@ -125,9 +144,9 @@ a{color:inherit}
   margin-top:12px;
   padding:10px 12px;
   border-radius:14px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.04);
-  color:rgba(233,238,247,.85);
+  border:1px solid var(--control-border);
+  background:var(--control-bg);
+  color:var(--muted);
   font-size:13px;
 }
 .notice strong{color:var(--text)}
@@ -137,14 +156,14 @@ a{color:inherit}
   padding:18px 18px;
   border-radius:var(--radius);
   border:1px solid var(--line);
-  background:rgba(17,19,26,.55);
+  background:var(--card);
   box-shadow: var(--shadow);
 }
 .content h2{margin:6px 0 10px; font-size:22px}
 .content h3{margin:18px 0 8px; font-size:16px}
 .content p, .content li{color:var(--muted)}
-.content a{color:rgba(122,162,255,.95)}
-.content code{background:rgba(255,255,255,.06); padding:2px 6px; border-radius:8px; border:1px solid rgba(255,255,255,.10)}
+.content a{color:var(--accent)}
+.content code{background:var(--control-bg); padding:2px 6px; border-radius:8px; border:1px solid var(--control-border)}
 
 .progress{
   list-style:none; padding:0; margin:12px 0 0;
@@ -152,17 +171,17 @@ a{color:inherit}
 }
 .progress li{
   grid-column: span 6;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.04);
+  border:1px solid var(--control-border);
+  background:var(--control-bg);
   border-radius:16px;
   padding:12px 12px;
 }
 .progress .stage{display:flex; align-items:center; justify-content:space-between; gap:10px}
 .badge{
   font-size:11px; padding:5px 8px; border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.04);
-  color:rgba(233,238,247,.78);
+  border:1px solid var(--control-border);
+  background:var(--control-bg);
+  color:var(--muted);
   white-space:nowrap;
 }
 .badge.done{background:rgba(151,237,195,.10); border-color:rgba(151,237,195,.26)}
@@ -182,7 +201,7 @@ a{color:inherit}
   inset:0;
   background:rgba(0,0,0,.35);
   z-index:999;
-  pointer-events:none; /* we still allow reading; buttons will be disabled separately */
+  pointer-events:none;
 }
 .prelive .dim-wrap{
   filter: grayscale(.55) brightness(.88);
@@ -190,64 +209,20 @@ a{color:inherit}
 .prelive .pill .dot{background:rgba(255,226,123,.95); box-shadow:0 0 0 6px rgba(255,226,123,.12)}
 
 
-/* Thermometer */
-.thermo{
-  display:flex;
-  gap:14px;
-  align-items:center;
-  margin-top:12px;
-  padding:12px 12px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.04);
-}
-.thermo-bar{
-  width:18px;
-  height:180px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.06);
-  overflow:hidden;
-  position:relative;
-}
-.thermo-fill{
-  position:absolute;
-  left:0; right:0;
-  bottom:0;
-  height:28%;
-  background:rgba(122,162,255,.75);
-}
-.thermo-label{
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-}
-.thermo-label .small{
-  color:var(--muted);
-  font-size:12px;
-}
-
-
 /* Thermometer (metric) */
-.thermo-wrap{
-  display:flex;
-  gap:18px;
-  align-items:flex-end;
-  margin-top:14px;
-}
 .thermo{
   --fill: 0%;
   width:86px;
   position:relative;
-  padding-bottom:92px; /* space for bulb */
+  padding-bottom:92px;
 }
 .thermo .tube{
   width:46px;
   height:360px;
   margin:0 auto;
   border-radius:999px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.05);
+  border:1px solid var(--control-border);
+  background:var(--control-bg);
   overflow:hidden;
   box-shadow: 0 14px 40px rgba(0,0,0,.22);
   position:relative;
@@ -268,8 +243,8 @@ a{color:inherit}
   width:86px;
   height:86px;
   border-radius:50%;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.06);
+  border:1px solid var(--control-border);
+  background:var(--control-bg);
   box-shadow: 0 16px 44px rgba(0,0,0,.25);
 }
 .thermo .bulb:before{
@@ -291,47 +266,27 @@ a{color:inherit}
   background:rgba(255,80,80,.72);
   border:1px solid rgba(255,255,255,.14);
 }
-.metric-box{
-  flex:1;
-  min-width:260px;
-}
 .metric-line{
   display:flex;
   flex-wrap:wrap;
   gap:10px 14px;
   align-items:baseline;
   margin-top:10px;
-  color:rgba(233,238,247,.84);
 }
 .metric-line .big{
   font-size:28px;
   letter-spacing:.2px;
+  color: var(--strong);
 }
 .metric-line .muted{
-  color:var(--muted);
+  color: var(--strong-muted);
   font-size:13px;
 }
-@media (max-width:860px){
-  .thermo-wrap{flex-direction:column; align-items:flex-start}
-  .thermo{width:78px}
-  .thermo .bulb{width:78px; height:78px}
-  .thermo .tube{height:300px}
-}
-
-/* Pre-live overlay (no blur, keep readable) */
-.prelive #preliveOverlay{
-  display:block;
-}
-#preliveOverlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.42);
-  z-index:999;
-  pointer-events:none;
-}
-.prelive .dim-wrap{
-  filter: grayscale(.55) brightness(.85);
+@media (max-width:520px){
+  .thermo{width:70px; padding-bottom:75px}
+  .thermo .bulb{width:70px; height:70px}
+  .thermo .tube{height:260px; width:36px}
+  .thermo .stem{bottom:58px; width:16px; height:20px}
 }
 
 
@@ -342,16 +297,16 @@ a{color:inherit}
   gap:8px;
   padding:8px 10px;
   border-radius:12px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.04);
+  border:1px solid var(--control-border);
+  background:var(--control-bg);
   color:var(--muted);
   font-size:13px;
   cursor:pointer;
 }
 .theme-toggle:hover{
   color:var(--text);
-  border-color:rgba(255,255,255,.18);
-  background:rgba(255,255,255,.06);
+  border-color:var(--control-hover-border);
+  background:var(--control-hover-bg);
 }
 .theme-toggle:focus{
   outline:2px solid rgba(122,162,255,.55);
@@ -362,21 +317,27 @@ a{color:inherit}
   background: rgba(255,226,123,.95);
   box-shadow: 0 0 0 5px rgba(255,226,123,.14);
 }
-body.theme-bright .theme-icon{
-  background: rgba(43,108,255,.95);
-  box-shadow: 0 0 0 5px rgba(43,108,255,.16);
-}
 
-/* Upbeat theme (bright, encouraging) */
+
+/* ==================== THEME: BRIGHT (Upbeat) ==================== */
 body.theme-bright{
   --bg: var(--atu-mist);
-  --text: #101522;                 /* keep readable ink */
+  --text: #101522;
   --muted: rgba(16,21,34,.62);
-  --accent: var(--atu-teal);       /* links + subtle accents */
-  --brand: var(--atu-navy);        /* headings/nav */
-  --cta: var(--atu-orange);        /* primary call-to-action */
+  --accent: var(--atu-teal);
   --card: rgba(255,255,255,.82);
   --line: rgba(16,21,34,.12);
+  --shadow: 0 4px 20px rgba(0,0,0,.08);
+  --strong: rgba(16,21,34,.92);
+  --strong-muted: rgba(16,21,34,.70);
+  --btn-bg: rgba(43,108,255,.12);
+  --btn-hover: rgba(43,108,255,.18);
+  --btn-secondary: rgba(16,21,34,.04);
+  --btn-secondary-hover: rgba(16,21,34,.06);
+  --control-bg: rgba(16,21,34,.03);
+  --control-border: rgba(16,21,34,.12);
+  --control-hover-bg: rgba(16,21,34,.05);
+  --control-hover-border: rgba(16,21,34,.18);
 }
 
 body.theme-bright{
@@ -397,44 +358,53 @@ body.theme-bright .card,
 body.theme-bright .content{
   background:rgba(255,255,255,.78);
 }
-body.theme-bright .nav a:hover{
-  background:rgba(16,21,34,.04);
+body.theme-bright .theme-icon{
+  background: rgba(43,108,255,.95);
+  box-shadow: 0 0 0 5px rgba(43,108,255,.16);
 }
-body.theme-bright .btn.secondary{
-  background:rgba(16,21,34,.04);
-}
-body.theme-bright .btn.secondary:hover{
-  background:rgba(16,21,34,.06);
-}
-/* Keep pre-live readable in bright theme */
 body.theme-bright.prelive .dim-wrap{
   filter: grayscale(.35) brightness(.96);
 }
-/* Bright/Paper badges */
-body.theme-bright .badge.now,
-body.theme-paper  .badge.now{
-  background: rgba(255, 121, 30, .14);   /* orange tint */
+body.theme-bright .badge.now{
+  background: rgba(255, 121, 30, .14);
   border-color: rgba(255, 121, 30, .28);
   color: rgba(16,21,34,.86);
 }
-
-body.theme-bright .badge.done,
-body.theme-paper  .badge.done{
-  background: rgba(0, 91, 94, .12);      /* teal tint */
+body.theme-bright .badge.done{
+  background: rgba(0, 91, 94, .12);
   border-color: rgba(0, 91, 94, .24);
   color: rgba(16,21,34,.86);
 }
+body.theme-bright .badge{
+  color: rgba(16,21,34,.78);
+  background: rgba(16,21,34,.04);
+  border-color: rgba(16,21,34,.12);
+}
+body.theme-bright .badge.next{
+  background: rgba(176,110,0,.10);
+  border-color: rgba(176,110,0,.22);
+}
 
 
-/* Paper theme (academic, minimal, print-friendly) */
+/* ==================== THEME: PAPER (Academic) ==================== */
 body.theme-paper{
   --bg:#ffffff;
-  --card:#ffffff;
   --text:#111111;
   --muted:#444444;
   --accent:#0b57d0;
+  --card:#ffffff;
   --line:rgba(0,0,0,.12);
   --shadow:none;
+  --strong: rgba(16,21,34,.92);
+  --strong-muted: rgba(16,21,34,.70);
+  --btn-bg: rgba(11,87,208,.10);
+  --btn-hover: rgba(11,87,208,.14);
+  --btn-secondary: rgba(0,0,0,.03);
+  --btn-secondary-hover: rgba(0,0,0,.05);
+  --control-bg: rgba(0,0,0,.03);
+  --control-border: rgba(0,0,0,.14);
+  --control-hover-bg: rgba(0,0,0,.05);
+  --control-hover-border: rgba(0,0,0,.18);
 }
 body.theme-paper{
   background: var(--bg);
@@ -450,32 +420,9 @@ body.theme-paper .logo{
   background: linear-gradient(135deg, rgba(11,87,208,.92), rgba(0,0,0,.10));
   box-shadow:none;
 }
-body.theme-paper .theme-toggle{
-  background: rgba(0,0,0,.03);
-  border-color: rgba(0,0,0,.14);
-}
-body.theme-paper .nav a{
-  color: rgba(0,0,0,.62);
-}
-body.theme-paper .nav a:hover{
-  color: rgba(0,0,0,.86);
-  background: rgba(0,0,0,.03);
-  border-color: rgba(0,0,0,.10);
-}
-body.theme-paper .btn{
-  background: rgba(11,87,208,.10);
-  border-color: rgba(11,87,208,.22);
-  color: rgba(0,0,0,.90);
-}
-body.theme-paper .btn:hover{
-  background: rgba(11,87,208,.14);
-}
-body.theme-paper .btn.secondary{
-  background: rgba(0,0,0,.03);
-  border-color: rgba(0,0,0,.12);
-}
-body.theme-paper .btn.secondary:hover{
-  background: rgba(0,0,0,.05);
+body.theme-paper .theme-icon{
+  background: rgba(0,0,0,.55);
+  box-shadow: 0 0 0 5px rgba(0,0,0,.10);
 }
 body.theme-paper #preliveOverlay{
   background: rgba(255,255,255,.70);
@@ -483,41 +430,30 @@ body.theme-paper #preliveOverlay{
 body.theme-paper.prelive .dim-wrap{
   filter: grayscale(.35) brightness(.92);
 }
-
-/* Theme icon per theme */
-body.theme-paper .theme-icon{
-  background: rgba(0,0,0,.55);
-  box-shadow: 0 0 0 5px rgba(0,0,0,.10);
+body.theme-paper .badge.now{
+  background: rgba(255, 121, 30, .14);
+  border-color: rgba(255, 121, 30, .28);
+  color: rgba(16,21,34,.86);
+}
+body.theme-paper .badge.done{
+  background: rgba(0, 91, 94, .12);
+  border-color: rgba(0, 91, 94, .24);
+  color: rgba(16,21,34,.86);
+}
+body.theme-paper .badge{
+  color: rgba(16,21,34,.78);
+  background: rgba(16,21,34,.04);
+  border-color: rgba(16,21,34,.12);
+}
+body.theme-paper .badge.next{
+  background: rgba(176,110,0,.10);
+  border-color: rgba(176,110,0,.22);
 }
 
 
 /* Font scaling (user-adjustable) */
 :root{ --font-scale: 1; }
 html{ font-size: calc(16px * var(--font-scale)); }
-
-
-/* Theme-dependent strong text */
-:root{ --strong: rgba(233,238,247,.92); --strong-muted: rgba(233,238,247,.72); }
-body.theme-bright, body.theme-paper{
-  --strong: rgba(16,21,34,.92);
-  --strong-muted: rgba(16,21,34,.70);
-}
-.metric-line .big{ color: var(--strong); }
-.metric-line .muted{ color: var(--strong-muted); }
-
-
-/* Badge readability across themes */
-body.theme-bright .badge,
-body.theme-paper .badge{
-  color: rgba(16,21,34,.78);
-  background: rgba(16,21,34,.04);
-  border-color: rgba(16,21,34,.12);
-}
-body.theme-bright .badge.next,
-body.theme-paper .badge.next{
-  background: rgba(176,110,0,.10);
-  border-color: rgba(176,110,0,.22);
-}
 
 
 /* Font controls */
@@ -534,37 +470,24 @@ body.theme-paper .badge.next{
   width:34px;
   height:32px;
   border-radius:12px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.04);
+  border:1px solid var(--control-border);
+  background:var(--control-bg);
   color:var(--muted);
   font-size:0.8125rem;
   cursor:pointer;
 }
 .fc-btn:hover{
   color:var(--text);
-  border-color:rgba(255,255,255,.18);
-  background:rgba(255,255,255,.06);
+  border-color:var(--control-hover-border);
+  background:var(--control-hover-bg);
 }
 .fc-label{
   font-size:0.75rem;
   color: var(--muted);
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.04);
+  border:1px solid var(--control-border);
+  background:var(--control-bg);
   padding:6px 10px;
   border-radius:999px;
-}
-body.theme-bright .fc-btn,
-body.theme-bright .fc-label,
-body.theme-paper .fc-btn,
-body.theme-paper .fc-label{
-  border-color: rgba(16,21,34,.12);
-  background: rgba(16,21,34,.03);
-  color: rgba(16,21,34,.62);
-}
-body.theme-bright .fc-btn:hover,
-body.theme-paper .fc-btn:hover{
-  background: rgba(16,21,34,.05);
-  color: rgba(16,21,34,.86);
 }
 
 
@@ -581,23 +504,240 @@ body.theme-paper .fc-btn:hover{
 .metric-line .big{ font-size: 1.75rem; }
 
 
-/* ===== Homepage top metric layout override (v15) ===== */
-/* Keep side-by-side longer; only stack on truly small screens */
-@media (max-width: 520px){
-  .top-metric-inner{ grid-template-columns: 1fr !important; }
-  .top-metric-right{ max-width: none !important; justify-self: stretch !important; }
+/* ==================== THERMO-WRAP (general side-by-side thermometer layout) ==================== */
+.thermo-wrap{
+  display:flex;
+  gap:24px;
+  align-items:flex-start;
+  margin-top:14px;
 }
 
-/* Force 2-col on >=521px even if earlier rules stack */
-@media (min-width: 521px){
-  .top-metric-inner{ grid-template-columns: 2.2fr 1fr !important; }
-  .top-metric-right{ max-width: 360px !important; justify-self: end !important; }
+.thermo-wrap .metric-box{
+  flex:1;
+  min-width:200px;
+  padding-top:8px;
 }
 
-/* Poster sizing: readable, not a wall */
+.thermo-wrap .metric-box h3{
+  margin:0 0 6px;
+  font-size:1.125rem;
+}
+
+.thermo-wrap .metric-box p{
+  margin:0 0 10px;
+  color:var(--muted);
+  font-size:0.875rem;
+}
+
+@media (max-width:600px){
+  .thermo-wrap{
+    flex-direction:column;
+    align-items:center;
+  }
+  .thermo-wrap .metric-box{
+    text-align:center;
+  }
+  .thermo-wrap .metric-line{
+    justify-content:center;
+  }
+}
+
+
+/* ==================== THERMO-POSTER-WRAP (thermometer + poster side-by-side for progress page) ==================== */
+.thermo-poster-wrap{
+  display:grid !important;
+  grid-template-columns: 1fr 320px;
+  gap:28px;
+  align-items:start;
+  margin:20px 0;
+}
+
+.thermo-poster-wrap > .thermo-wrap{
+  margin-top:0;
+  flex:1;
+}
+
+.thermo-poster-wrap > .poster-wrap{
+  display:flex;
+  justify-content:flex-end;
+  align-items:flex-start;
+}
+
+.thermo-poster-wrap .poster-link{
+  display:block;
+  text-decoration:none;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:var(--control-bg);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.thermo-poster-wrap .poster-link:hover{
+  transform:translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+}
+
+.thermo-poster-wrap .poster-img{
+  display:block;
+  max-width:280px;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+}
+
+.thermo-poster-wrap .poster-cta{
+  padding:10px 14px;
+  text-align:center;
+  font-size:0.8125rem;
+  color:var(--muted);
+  border-top:1px solid var(--line);
+  background:var(--control-bg);
+}
+.thermo-poster-wrap .poster-link:hover .poster-cta{
+  color:var(--text);
+}
+
+@media (max-width:860px){
+  .thermo-poster-wrap{
+    grid-template-columns: 1fr !important;
+    gap:20px;
+  }
+  .thermo-poster-wrap > .poster-wrap{
+    justify-content:center;
+  }
+  .thermo-poster-wrap .poster-img{
+    max-width:240px;
+  }
+}
+
+@media (max-width:520px){
+  .thermo-poster-wrap .poster-img{
+    max-width:100%;
+  }
+}
+
+
+/* ==================== TOP METRIC SECTION (thermometer + poster side-by-side) ==================== */
+.top-metric{
+  margin-top:18px;
+  padding:24px 22px;
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+  background:var(--card);
+  box-shadow: var(--shadow);
+}
+
+.top-metric-inner{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:28px;
+  align-items:start;
+}
+
+.top-metric-left{
+  display:flex;
+  flex-direction:column;
+}
+
+.top-metric-title{
+  margin:0 0 6px;
+  font-size:1.375rem;
+}
+
+.top-metric-note{
+  margin:0 0 8px;
+  color:var(--muted);
+  font-size:0.875rem;
+}
+
+.top-metric-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+
+.top-metric-right{
+  display:flex;
+  justify-content:flex-end;
+  align-items:flex-start;
+}
+
+.poster-link{
+  display:block;
+  text-decoration:none;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:var(--control-bg);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.poster-link:hover{
+  transform:translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+}
+
 .poster-img{
-  max-height: 420px;
-  width: 100%;
-  object-fit: contain;
-  background: rgba(255,255,255,.03);
+  display:block;
+  max-width:320px;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+}
+
+.poster-cta{
+  padding:10px 14px;
+  text-align:center;
+  font-size:0.8125rem;
+  color:var(--muted);
+  border-top:1px solid var(--line);
+  background:var(--control-bg);
+}
+.poster-link:hover .poster-cta{
+  color:var(--text);
+}
+
+/* Responsive: stack on smaller screens */
+@media (max-width:760px){
+  .top-metric-inner{
+    grid-template-columns: 1fr;
+    gap:20px;
+  }
+  .top-metric-right{
+    justify-content:center;
+  }
+  .poster-img{
+    max-width:280px;
+  }
+}
+
+@media (max-width:520px){
+  .top-metric-inner{
+    grid-template-columns: 1fr;
+  }
+  .poster-img{
+    max-width:100%;
+  }
+}
+
+/* Thermometer inside top-metric: smaller version */
+.top-thermo{
+  margin-top:8px;
+}
+.top-thermo .thermo{
+  width:70px;
+  padding-bottom:75px;
+}
+.top-thermo .thermo .tube{
+  width:38px;
+  height:280px;
+}
+.top-thermo .thermo .bulb{
+  width:70px;
+  height:70px;
+}
+.top-thermo .thermo .stem{
+  bottom:58px;
+  width:18px;
+  height:22px;
 }
