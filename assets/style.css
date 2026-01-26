@@ -1,12 +1,12 @@
 :root{
-  --bg:#0b0c10;
-  --card:#11131a;
-  --text:#e9eef7;
-  --muted:#aab3c5;
-  --accent:#7aa2ff;
-  --line:rgba(255,255,255,.10);
-  --shadow:0 14px 40px rgba(0,0,0,.35);
-  --radius:18px;
+  /* ATU-derived harmony palette */
+  --atu-teal: #005B5E;
+  --atu-navy: #001A79;
+  --atu-orange: #FF791E;
+  --atu-sky: #7BB9CB;
+  --atu-mist: #F0F7F9;
+  --atu-mint: #ACE6BD;
+  --atu-purple: #4D0857;
 }
 
 *{box-sizing:border-box}
@@ -369,14 +369,16 @@ body.theme-bright .theme-icon{
 
 /* Upbeat theme (bright, encouraging) */
 body.theme-bright{
-  --bg:#fbfcff;
-  --card:rgba(255,255,255,.82);
-  --text:#101522;
-  --muted:#4a556f;
-  --accent:#2b6cff;
-  --line:rgba(16,21,34,.12);
-  --shadow:0 16px 40px rgba(16,21,34,.12);
+  --bg: var(--atu-mist);
+  --text: #101522;                 /* keep readable ink */
+  --muted: rgba(16,21,34,.62);
+  --accent: var(--atu-teal);       /* links + subtle accents */
+  --brand: var(--atu-navy);        /* headings/nav */
+  --cta: var(--atu-orange);        /* primary call-to-action */
+  --card: rgba(255,255,255,.82);
+  --line: rgba(16,21,34,.12);
 }
+
 body.theme-bright{
   background:
     radial-gradient(900px 650px at 12% 10%, rgba(43,108,255,.18), transparent 55%),
@@ -407,6 +409,20 @@ body.theme-bright .btn.secondary:hover{
 /* Keep pre-live readable in bright theme */
 body.theme-bright.prelive .dim-wrap{
   filter: grayscale(.35) brightness(.96);
+}
+/* Bright/Paper badges */
+body.theme-bright .badge.now,
+body.theme-paper  .badge.now{
+  background: rgba(255, 121, 30, .14);   /* orange tint */
+  border-color: rgba(255, 121, 30, .28);
+  color: rgba(16,21,34,.86);
+}
+
+body.theme-bright .badge.done,
+body.theme-paper  .badge.done{
+  background: rgba(0, 91, 94, .12);      /* teal tint */
+  border-color: rgba(0, 91, 94, .24);
+  color: rgba(16,21,34,.86);
 }
 
 
@@ -497,16 +513,6 @@ body.theme-paper .badge{
   background: rgba(16,21,34,.04);
   border-color: rgba(16,21,34,.12);
 }
-body.theme-bright .badge.done,
-body.theme-paper .badge.done{
-  background: rgba(16,140,86,.10);
-  border-color: rgba(16,140,86,.22);
-}
-body.theme-bright .badge.now,
-body.theme-paper .badge.now{
-  background: rgba(11,87,208,.10);
-  border-color: rgba(11,87,208,.22);
-}
 body.theme-bright .badge.next,
 body.theme-paper .badge.next{
   background: rgba(176,110,0,.10);
@@ -573,3 +579,25 @@ body.theme-paper .fc-btn:hover{
 .content h2{ font-size: 1.375rem; }
 .content h3{ font-size: 1rem; }
 .metric-line .big{ font-size: 1.75rem; }
+
+
+/* ===== Homepage top metric layout override (v15) ===== */
+/* Keep side-by-side longer; only stack on truly small screens */
+@media (max-width: 520px){
+  .top-metric-inner{ grid-template-columns: 1fr !important; }
+  .top-metric-right{ max-width: none !important; justify-self: stretch !important; }
+}
+
+/* Force 2-col on >=521px even if earlier rules stack */
+@media (min-width: 521px){
+  .top-metric-inner{ grid-template-columns: 2.2fr 1fr !important; }
+  .top-metric-right{ max-width: 360px !important; justify-self: end !important; }
+}
+
+/* Poster sizing: readable, not a wall */
+.poster-img{
+  max-height: 420px;
+  width: 100%;
+  object-fit: contain;
+  background: rgba(255,255,255,.03);
+}

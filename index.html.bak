@@ -41,34 +41,33 @@
     </header>
 
     <main>
-      <section class="content">
-  <h2>Updates</h2>
-  <p>Short, dated notes. (Keeping this boring is the point.)</p>
+      
+<section class="top-metric" aria-label="Participation status">
+  <div class="top-metric-inner">
 
-  <h3>2025-12-30</h3>
-  <ul>
-    <li>UCAHub scaffold created.</li>
-    <li>Pre-live “dark” mode enabled while awaiting Ethics approval.</li>
-  </ul>
+    <div class="top-metric-left">
+      <h2>Data received</h2>
+      <p class="top-metric-note">
+        This thermometer reflects responses collected (not overall project completion).
+      </p>
 
-  <h3>2026-01-12</h3>
-  <ul>
-    <li>Received Ethic approval.</li>
-    <li>Made site live</li>
-  </ul>
+      <!-- Thermometer markup remains unchanged -->
+      <div id="thermometer"></div>
 
-  <h3>2026-01-23</h3>
-  <ul>
-    <li>UCAHub improved.</li>
-    <li>Updated responses received.</li>
-  </ul>
+    </div>
 
-<!--
-  <h3>Add an update</h3>
-  <p>Edit <code>updates.html</code> (or later swap to a markdown-based flow). Keep entries short and timestamped.</p>
+    <div class="top-metric-right">
+      <a class="poster-link" href="https://bit.ly/office-e24cn" target="_blank" rel="noopener">
+        <img class="poster-img" src="/assets/ready-for-tomorrow.jpg" alt="ATU student research poster">
+        <div class="poster-cta">Open survey link</div>
+      </a>
+    </div>
+
+  </div>
 </section>
--->
-    </main>
+
+
+</main>
 
     <footer class="footer">
       <span id="lastUpdated"></span>
