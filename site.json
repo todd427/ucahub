@@ -6,7 +6,7 @@
   "statusMessage": "Ethics Approval received, 12/01/2026. Collecting data.",
   "metricName": "Data received",
   "metricUnit": "responses",
-  "metricCurrent": 12,
+  "metricCurrent": 16,
   "metricTarget": 500,
   "metricNote": "This thermometer reflects responses collected (not overall project completion)."
 }
