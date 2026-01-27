@@ -2,11 +2,11 @@
   "siteName": "UCAHub",
   "tagline": "Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors",
   "isLive": true,
-  "lastUpdated": "2026-01-26",
+  "lastUpdated": "2026-01-27",
   "statusMessage": "Ethics Approval received, 12/01/2026. Collecting data.",
   "metricName": "Data received",
   "metricUnit": "responses",
-  "metricCurrent": 9,
+  "metricCurrent": 12,
   "metricTarget": 500,
   "metricNote": "This thermometer reflects responses collected (not overall project completion)."
 }
