@@ -221,20 +221,73 @@ a{color:inherit}
   height:360px;
   margin:0 auto;
   border-radius:999px;
-  border:1px solid var(--control-border);
-  background:var(--control-bg);
+  border:2px solid rgba(180,180,180,.4);
+  background: linear-gradient(to bottom, 
+    rgba(255,255,255,.95) 0%, 
+    rgba(245,245,245,.9) 50%,
+    rgba(240,240,240,.85) 100%);
   overflow:hidden;
-  box-shadow: 0 14px 40px rgba(0,0,0,.22);
+  box-shadow: 
+    inset 2px 0 8px rgba(0,0,0,.08),
+    inset -2px 0 8px rgba(255,255,255,.5),
+    0 14px 40px rgba(0,0,0,.22);
   position:relative;
 }
+
+/* Tick marks on the tube */
+.thermo .tube::before{
+  content:"";
+  position:absolute;
+  top:10%;
+  bottom:10%;
+  right:6px;
+  width:8px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 8px,
+    rgba(150,150,150,.4) 8px,
+    rgba(150,150,150,.4) 10px
+  );
+  z-index:1;
+}
+
+/* Major tick marks */
+.thermo .tube::after{
+  content:"";
+  position:absolute;
+  top:10%;
+  bottom:10%;
+  right:4px;
+  width:12px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 48px,
+    rgba(120,120,120,.5) 48px,
+    rgba(120,120,120,.5) 51px
+  );
+  z-index:1;
+}
+
 .thermo .fill{
   position:absolute;
-  left:0; right:0;
+  left:3px;
+  right:3px;
   bottom:0;
   height: var(--fill);
-  background:rgba(255,80,80,.72);
-  border-top:1px solid rgba(255,255,255,.18);
+  background: linear-gradient(to top,
+    rgba(220,40,40,.95) 0%,
+    rgba(255,80,80,.9) 40%,
+    rgba(255,120,100,.85) 70%,
+    rgba(255,160,140,.75) 100%);
+  border-radius:0 0 999px 999px;
+  box-shadow: 
+    inset 0 -4px 8px rgba(180,20,20,.3),
+    inset 2px 0 4px rgba(255,255,255,.2);
+  transition: height 0.5s ease-out;
 }
+
 .thermo .bulb{
   position:absolute;
   left:50%;
@@ -243,18 +296,42 @@ a{color:inherit}
   width:86px;
   height:86px;
   border-radius:50%;
-  border:1px solid var(--control-border);
-  background:var(--control-bg);
-  box-shadow: 0 16px 44px rgba(0,0,0,.25);
+  border:2px solid rgba(180,180,180,.4);
+  background: linear-gradient(135deg,
+    rgba(255,255,255,.9) 0%,
+    rgba(245,245,245,.85) 100%);
+  box-shadow: 
+    inset 3px 3px 10px rgba(255,255,255,.6),
+    inset -2px -2px 8px rgba(0,0,0,.05),
+    0 16px 44px rgba(0,0,0,.25);
 }
 .thermo .bulb:before{
   content:"";
   position:absolute;
-  inset:14px;
+  inset:12px;
   border-radius:50%;
-  background:rgba(255,80,80,.72);
-  border:1px solid rgba(255,255,255,.16);
+  background: radial-gradient(circle at 35% 35%,
+    rgba(255,100,100,.85) 0%,
+    rgba(220,40,40,.95) 60%,
+    rgba(180,20,20,.98) 100%);
+  box-shadow: 
+    inset 3px 3px 8px rgba(255,150,150,.4),
+    inset -2px -2px 6px rgba(120,0,0,.3);
 }
+
+/* Glass highlight on bulb */
+.thermo .bulb:after{
+  content:"";
+  position:absolute;
+  top:16px;
+  left:20px;
+  width:20px;
+  height:12px;
+  border-radius:50%;
+  background: rgba(255,255,255,.4);
+  transform: rotate(-35deg);
+}
+
 .thermo .stem{
   position:absolute;
   left:50%;
@@ -263,8 +340,10 @@ a{color:inherit}
   width:22px;
   height:28px;
   border-radius:999px;
-  background:rgba(255,80,80,.72);
-  border:1px solid rgba(255,255,255,.14);
+  background: linear-gradient(to top,
+    rgba(220,40,40,.95) 0%,
+    rgba(255,80,80,.9) 100%);
+  box-shadow: inset 1px 0 3px rgba(255,255,255,.2);
 }
 .metric-line{
   display:flex;
@@ -314,8 +393,20 @@ a{color:inherit}
 }
 .theme-icon{
   width:14px;height:14px;border-radius:50%;
-  background: rgba(255,226,123,.95);
-  box-shadow: 0 0 0 5px rgba(255,226,123,.14);
+  background: rgba(30,30,40,.85);
+  box-shadow: 0 0 0 2px rgba(255,255,255,.25), 0 0 0 5px rgba(30,30,40,.15);
+}
+
+/* Bright theme: blue sun-like icon */
+body.theme-bright .theme-icon{
+  background: rgba(43,108,255,.95);
+  box-shadow: 0 0 0 5px rgba(43,108,255,.16);
+}
+
+/* Paper theme: neutral gray icon */
+body.theme-paper .theme-icon{
+  background: rgba(0,0,0,.55);
+  box-shadow: 0 0 0 5px rgba(0,0,0,.10);
 }
 
 
@@ -357,10 +448,6 @@ body.theme-bright .hero{
 body.theme-bright .card,
 body.theme-bright .content{
   background:rgba(255,255,255,.78);
-}
-body.theme-bright .theme-icon{
-  background: rgba(43,108,255,.95);
-  box-shadow: 0 0 0 5px rgba(43,108,255,.16);
 }
 body.theme-bright.prelive .dim-wrap{
   filter: grayscale(.35) brightness(.96);
@@ -419,10 +506,6 @@ body.theme-paper .content{
 body.theme-paper .logo{
   background: linear-gradient(135deg, rgba(11,87,208,.92), rgba(0,0,0,.10));
   box-shadow:none;
-}
-body.theme-paper .theme-icon{
-  background: rgba(0,0,0,.55);
-  box-shadow: 0 0 0 5px rgba(0,0,0,.10);
 }
 body.theme-paper #preliveOverlay{
   background: rgba(255,255,255,.70);
@@ -516,6 +599,10 @@ html{ font-size: calc(16px * var(--font-scale)); }
   flex:1;
   min-width:200px;
   padding-top:8px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:100%;
 }
 
 .thermo-wrap .metric-box h3{
@@ -527,6 +614,11 @@ html{ font-size: calc(16px * var(--font-scale)); }
   margin:0 0 10px;
   color:var(--muted);
   font-size:0.875rem;
+}
+
+.thermo-wrap .metric-box .metric-line{
+  margin-top:auto;
+  padding-top:16px;
 }
 
 @media (max-width:600px){
@@ -723,6 +815,7 @@ html{ font-size: calc(16px * var(--font-scale)); }
 /* Thermometer inside top-metric: smaller version */
 .top-thermo{
   margin-top:8px;
+  align-items:stretch;
 }
 .top-thermo .thermo{
   width:70px;
@@ -736,8 +829,200 @@ html{ font-size: calc(16px * var(--font-scale)); }
   width:70px;
   height:70px;
 }
+.top-thermo .thermo .bulb:before{
+  inset:10px;
+}
+.top-thermo .thermo .bulb:after{
+  top:14px;
+  left:16px;
+  width:16px;
+  height:10px;
+}
 .top-thermo .thermo .stem{
   bottom:58px;
   width:18px;
   height:22px;
+}
+
+
+/* ==================== DAILY MESSAGE ==================== */
+.daily-message{
+  margin-bottom:auto;
+  padding:14px 18px;
+  border-radius:12px;
+  background: linear-gradient(135deg, rgba(151,237,195,.15), rgba(122,162,255,.10));
+  border-left:4px solid rgba(151,237,195,.8);
+  position:relative;
+}
+
+.daily-message::before{
+  content:"💬";
+  margin-right:10px;
+}
+
+.daily-message-text{
+  font-size:1.125rem;
+  font-weight:500;
+  color:var(--text);
+  line-height:1.4;
+  white-space:pre-line;
+}
+
+body.theme-bright .daily-message,
+body.theme-paper .daily-message{
+  background: linear-gradient(135deg, rgba(0,91,94,.08), rgba(43,108,255,.06));
+  border-left-color: rgba(0,91,94,.6);
+}
+
+
+/* ==================== STATUS SECTION ==================== */
+.status-section{
+  margin-top:18px;
+  padding:16px 20px;
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+  background:var(--card);
+  box-shadow: var(--shadow);
+}
+
+.status-current{
+  font-size:1rem;
+  color:var(--text);
+}
+
+.status-current strong{
+  color:var(--muted);
+}
+
+
+/* ==================== UPDATES SECTION (Collapsible) ==================== */
+.updates-section{
+  margin-top:14px;
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+  background:var(--card);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+.updates-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  padding:14px 20px;
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  text-align:left;
+}
+
+.updates-toggle-text{
+  font-size:1rem;
+  font-weight:600;
+  color:var(--accent);
+  transition: color 0.15s ease;
+}
+
+.updates-toggle:hover .updates-toggle-text{
+  color:var(--text);
+}
+
+.updates-toggle-icon{
+  width:20px;
+  height:20px;
+  position:relative;
+  transition: transform 0.2s ease;
+}
+
+.updates-toggle-icon::before,
+.updates-toggle-icon::after{
+  content:"";
+  position:absolute;
+  background:var(--muted);
+  border-radius:2px;
+  transition: background 0.15s ease;
+}
+
+.updates-toggle-icon::before{
+  top:50%;
+  left:4px;
+  right:4px;
+  height:2px;
+  transform:translateY(-50%);
+}
+
+.updates-toggle-icon::after{
+  left:50%;
+  top:4px;
+  bottom:4px;
+  width:2px;
+  transform:translateX(-50%);
+}
+
+.updates-toggle:hover .updates-toggle-icon::before,
+.updates-toggle:hover .updates-toggle-icon::after{
+  background:var(--text);
+}
+
+/* Expanded state */
+.updates-section:not(.collapsed) .updates-toggle-icon{
+  transform:rotate(45deg);
+}
+
+.updates-section:not(.collapsed) .updates-toggle-text{
+  color:var(--text);
+}
+
+.updates-content{
+  max-height:500px;
+  padding:0 20px 18px;
+  transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.2s ease;
+  opacity:1;
+}
+
+.updates-section.collapsed .updates-content{
+  max-height:0;
+  padding:0 20px;
+  opacity:0;
+  overflow:hidden;
+}
+
+.updates-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.updates-list li{
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+  font-size:0.875rem;
+  color:var(--muted);
+}
+
+.updates-list li:last-child{
+  border-bottom:none;
+  padding-bottom:0;
+}
+
+.updates-list .update-date{
+  font-weight:600;
+  color:var(--text);
+  margin-right:8px;
+}
+
+.updates-empty{
+  color:var(--muted);
+  font-size:0.875rem;
+  margin:0;
+}
+
+
+/* ==================== ACTIONS SECTION ==================== */
+.actions-section{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
 }

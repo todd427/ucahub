@@ -5,11 +5,13 @@
     isLive: false,
     lastUpdated: "",
     statusMessage: "Not live yet: awaiting Ethics approval.",
+    dailyMessage: "",
     metricName: "Data received",
     metricUnit: "responses",
     metricCurrent: 0,
     metricTarget: 500,
-    metricNote: "This thermometer reflects responses collected (not overall project completion)."
+    metricNote: "This thermometer reflects responses collected (not overall project completion).",
+    updates: []  // Array of {date: "YYYY-MM-DD", text: "Update message"}
   };
 
   const THEMES = [
@@ -49,7 +51,8 @@
     const prelive = !cfg.isLive;
     document.body.classList.toggle("prelive", prelive);
 
-    setText("statusText", prelive ? cfg.statusMessage : "Live");
+    // Always show the statusMessage (not just when prelive)
+    setText("statusText", cfg.statusMessage || (prelive ? "Not live yet" : "Live"));
     setText("lastUpdated", cfg.lastUpdated ? ("Last updated: " + cfg.lastUpdated) : "");
 
     document.querySelectorAll("[data-requires-live='true']").forEach(el=>{
@@ -84,6 +87,60 @@
     document.querySelectorAll(".thermo[data-kind='metric']").forEach(t=>{
       t.style.setProperty("--fill", pct + "%");
     });
+  }
+
+  function applyUpdates(cfg){
+    const list = document.getElementById("updatesList");
+    const empty = document.getElementById("updatesEmpty");
+    if(!list) return;
+
+    const updates = cfg.updates || [];
+    
+    // Show only the most recent 5 updates on homepage
+    const recentUpdates = updates.slice(0, 5);
+
+    if(recentUpdates.length === 0){
+      list.innerHTML = "";
+      if(empty) empty.style.display = "block";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+    
+    list.innerHTML = recentUpdates.map(u => {
+      const date = u.date || "";
+      const text = u.text || "";
+      return `<li><span class="update-date">${date}</span>${text}</li>`;
+    }).join("");
+  }
+
+  function initUpdatesToggle(){
+    const toggle = document.getElementById("updatesToggle");
+    const section = document.getElementById("updatesSection");
+    
+    if(!toggle || !section) return;
+    
+    toggle.addEventListener("click", ()=>{
+      const isCollapsed = section.classList.contains("collapsed");
+      section.classList.toggle("collapsed", !isCollapsed);
+      toggle.setAttribute("aria-expanded", isCollapsed ? "true" : "false");
+    });
+  }
+
+  function applyDailyMessage(cfg){
+    const msg = cfg.dailyMessage || "";
+    const container = document.getElementById("dailyMessage");
+    const textEl = document.querySelector("[data-daily-message]");
+    
+    // Use innerHTML to support HTML tags like <em>, <b>, <br>
+    if(textEl){
+      textEl.innerHTML = msg;
+    }
+    
+    // Hide the daily message section if empty
+    if(container){
+      container.style.display = msg ? "block" : "none";
+    }
   }
 
   function setTheme(themeKey){
@@ -154,9 +211,12 @@
   document.addEventListener("DOMContentLoaded", async ()=>{
     initTheme();
     initFontScale();
+    initUpdatesToggle();
     const cfg = await loadConfig();
     wireBrand(cfg);
     applyPrelive(cfg);
     applyMetric(cfg);
+    applyDailyMessage(cfg);
+    applyUpdates(cfg);
   });
 })();

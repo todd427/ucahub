@@ -3,10 +3,18 @@
   "tagline": "Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors",
   "isLive": true,
   "lastUpdated": "2026-01-29",
-  "statusMessage": "Ethics Approval received, 12/01/2026. Collecting data.",
+  "statusMessage": "Data collection in progress — 92 responses so far!",
+  "dailyMessage": "Thank you <em>all</em> for filling out the Surveys!\n\nTell Your friends!\n\nI'll be <b>back</b> next Thursday, 5 Feb\n\nCan we reach <em><b>500?</b></em>",
   "metricName": "Data received",
   "metricUnit": "responses",
-  "metricCurrent": 88,
+  "metricCurrent": 92,
   "metricTarget": 500,
-  "metricNote": "This thermometer reflects responses collected (not overall project completion)."
+  "metricNote": "This thermometer reflects responses collected (not overall project completion).",
+  "updates": [
+    { "date": "2026-01-29", "text": "Reached 92 responses!" },
+    { "date": "2026-01-26", "text": "Survey promoted across ATU campus." },
+    { "date": "2026-01-15", "text": "Pilot completed successfully." },
+    { "date": "2026-01-13", "text": "Data collection started." },
+    { "date": "2026-01-12", "text": "Ethics approval received." }
+  ]
 }

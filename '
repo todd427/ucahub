@@ -27,7 +27,6 @@
         <a href="/contact.html">Contact</a>
       
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme toggle">
-	 Theme:
           <span class="theme-icon" aria-hidden="true"></span>
           <span data-theme-label>Dark</span>
         </button>
@@ -57,13 +56,13 @@
             </div>
 
             <div class="metric-box">
-              <div class="daily-message" id="dailyMessage">
-                <span class="daily-message-text" data-daily-message>Loading…</span>
-              </div>
-              
               <div class="metric-line">
                 <div class="big"><span data-metric-current>0</span> <span data-metric-unit>responses</span></div>
                 <div class="muted">target: <span data-metric-target>500</span></div>
+              </div>
+              
+              <div class="daily-message" id="dailyMessage">
+                <span class="daily-message-text" data-daily-message>Loading…</span>
               </div>
             </div>
           </div>
@@ -85,17 +84,12 @@
         </div>
       </section>
 
-      <section class="updates-section collapsed" id="updatesSection">
-        <button class="updates-toggle" id="updatesToggle" type="button" aria-expanded="false" aria-controls="updatesContent">
-          <span class="updates-toggle-text">Recent Updates</span>
-          <span class="updates-toggle-icon" aria-hidden="true"></span>
-        </button>
-        <div class="updates-content" id="updatesContent">
-          <ul class="updates-list" id="updatesList">
-            <!-- Populated by JS from site.json -->
-          </ul>
-          <p class="updates-empty" id="updatesEmpty" style="display:none;">No updates yet.</p>
-        </div>
+      <section class="updates-section">
+        <h3>Recent Updates</h3>
+        <ul class="updates-list" id="updatesList">
+          <!-- Populated by JS from site.json -->
+        </ul>
+        <p class="updates-empty" id="updatesEmpty" style="display:none;">No updates yet.</p>
       </section>
 
       <section class="actions-section">
@@ -106,7 +100,7 @@
 
     <footer class="footer">
       <span id="lastUpdated"></span>
-      <div>UCAHub is a project progress hub for Todd McCaffrey's MSc Cyberpsychology dissertation.</div>
+      <div>UCAHub is a project progress hub. This site may remain in "pre-live" mode until Ethics approval.</div>
     </footer>
   </div>
 </body>
