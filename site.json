@@ -2,12 +2,12 @@
   "siteName": "UCAHub",
   "tagline": "Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors",
   "isLive": true,
-  "lastUpdated": "2026-01-29",
+  "lastUpdated": "2026-02-04",
   "statusMessage": "Data collection in progress — 92 responses so far!",
   "dailyMessage": "Thank you <em>all</em> for filling out the Surveys!\n\nTell Your friends!\n\nI'll be <b>back</b> next Thursday, 5 Feb\n\nCan we reach <em><b>500?</b></em>",
   "metricName": "Data received",
   "metricUnit": "responses",
-  "metricCurrent": 91,
+  "metricCurrent": 93
   "metricTarget": 500,
   "metricNote": "This thermometer reflects responses collected (not overall project completion).",
   "updates": [
