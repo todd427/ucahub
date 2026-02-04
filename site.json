@@ -7,7 +7,7 @@
   "dailyMessage": "Thank you <em>all</em> for filling out the Surveys!\n\nTell Your friends!\n\nI'll be <b>back</b> next Thursday, 5 Feb\n\nCan we reach <em><b>500?</b></em>",
   "metricName": "Data received",
   "metricUnit": "responses",
-  "metricCurrent": 93
+  "metricCurrent": 93,
   "metricTarget": 500,
   "metricNote": "This thermometer reflects responses collected (not overall project completion).",
   "updates": [
