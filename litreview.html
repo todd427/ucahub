@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Literature Review — UCAHub</title>
+  <meta name="description" content="Chapter 2 literature review for Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors.">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+  <style>
+    /* ── Map container ── */
+    .litreview-hero {
+      margin-top: 18px;
+      padding: 24px 22px 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .litreview-hero h2 { margin: 0 0 4px; font-size: 1.5rem; }
+    .litreview-hero p  { margin: 0 0 18px; color: var(--muted); font-size: 0.875rem; max-width: 72ch; }
+
+    .map-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+    .map-wrap svg {
+      display: block;
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── SVG node colours (theme-aware fills) ── */
+    .mn-purple rect { fill: rgba(77,8,87,.18);   stroke: rgba(140,60,155,.55); }
+    .mn-teal   rect { fill: rgba(0,91,94,.18);    stroke: rgba(0,150,155,.5);  }
+    .mn-coral  rect { fill: rgba(216,90,48,.18);  stroke: rgba(216,90,48,.55); }
+    .mn-blue   rect { fill: rgba(55,138,221,.18); stroke: rgba(55,138,221,.5); }
+    .mn-gray   rect { fill: rgba(136,135,128,.14);stroke: rgba(136,135,128,.45);}
+    .mn-center rect { fill: rgba(216,90,48,.22);  stroke: rgba(216,90,48,.7);  }
+
+    .mn-label  { font-size: 13px; font-weight: 600; fill: var(--text); font-family: ui-sans-serif, system-ui, sans-serif; }
+    .mn-sub    { font-size: 11px; font-weight: 400; fill: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; }
+
+    .map-node { cursor: pointer; }
+    .map-node:hover rect { opacity: .8; }
+
+    .map-edge { fill: none; stroke: var(--line); stroke-width: 1.4; }
+
+    /* ── Theory sections ── */
+    .theory-section {
+      margin-top: 14px;
+      padding: 22px 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      scroll-margin-top: 24px;
+    }
+    .theory-section .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      border: 1px solid var(--control-border);
+      background: var(--control-bg);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .theory-section .section-tag .tag-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+    .theory-section h2 {
+      margin: 0 0 6px;
+      font-size: 1.25rem;
+    }
+    .theory-section .section-intro {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 0.875rem;
+      border-left: 3px solid var(--line);
+      padding-left: 14px;
+    }
+    .theory-section h3 {
+      margin: 20px 0 8px;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+    .theory-section p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    .theory-section p:last-child { margin-bottom: 0; }
+    .theory-section .refs {
+      margin-top: 18px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--control-border);
+      background: var(--control-bg);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .theory-section .refs strong { color: var(--text); }
+
+    .back-to-map {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      font-size: 0.8125rem;
+      color: var(--accent);
+      cursor: pointer;
+      text-decoration: none;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .back-to-map:hover { opacity: .75; }
+
+    /* ── Stub banner for unpopulated sections ── */
+    .stub-notice {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px dashed var(--control-border);
+      background: var(--control-bg);
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+
+    /* ── Finding badge ── */
+    .finding {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(151,237,195,.35);
+      background: rgba(151,237,195,.08);
+      font-size: 0.8125rem;
+      color: var(--text);
+      margin: 10px 0 14px;
+    }
+    .finding .finding-label { color: var(--muted); margin-right: 4px; }
+  </style>
+</head>
+<body>
+  <div id="preliveOverlay" aria-hidden="true"></div>
+
+  <div class="container dim-wrap">
+    <header class="header">
+      <a class="brand" href="/">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1 data-site-name>UCAHub</h1>
+          <p data-tagline>Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors</p>
+        </div>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/progress.html">Progress</a>
+        <a href="/updates.html">Updates</a>
+        <a href="/litreview.html" aria-current="page" style="color:var(--text);border-color:var(--control-hover-border);background:var(--control-bg)">Lit Review</a>
+        <a href="/about.html">About</a>
+        <a href="/ethics.html">Ethics</a>
+        <a href="/contact.html">Contact</a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme toggle">
+          Theme:
+          <span class="theme-icon" aria-hidden="true"></span>
+          <span data-theme-label>Dark</span>
+        </button>
+        <span class="font-controls" aria-label="Text size controls">
+          <button class="fc-btn" id="fontDec" type="button" title="Smaller text">A−</button>
+          <button class="fc-btn" id="fontReset" type="button" title="Reset text size">A</button>
+          <button class="fc-btn" id="fontInc" type="button" title="Larger text">A+</button>
+          <span class="fc-label" id="fontLabel">100%</span>
+        </span>
+      </nav>
+    </header>
+
+    <main>
+      <section class="litreview-hero">
+        <h2>Chapter 2: Literature Review</h2>
+        <p>Click any node in the map to jump to that theory section. The map traces the conceptual lineage from classical aggression research through CMC, moral disengagement, and the novel AI constructs introduced in this study.</p>
+
+        <!-- ══════════════ MIND MAP SVG ══════════════ -->
+        <div class="map-wrap" id="lit-map">
+          <svg viewBox="0 0 860 620" xmlns="http://www.w3.org/2000/svg" aria-label="Chapter 2 literature review mind map">
+
+            <!-- Edges from centre -->
+            <line class="map-edge" x1="430" y1="305" x2="430" y2="118"/>
+            <line class="map-edge" x1="430" y1="305" x2="618" y2="192"/>
+            <line class="map-edge" x1="430" y1="305" x2="680" y2="310"/>
+            <line class="map-edge" x1="430" y1="305" x2="618" y2="428"/>
+            <line class="map-edge" x1="430" y1="305" x2="430" y2="500"/>
+            <line class="map-edge" x1="430" y1="305" x2="242" y2="428"/>
+            <line class="map-edge" x1="430" y1="305" x2="178" y2="310"/>
+            <line class="map-edge" x1="430" y1="305" x2="242" y2="192"/>
+
+            <!-- Centre node -->
+            <g class="map-node mn-center" onclick="scrollToSection('sec-overview')" role="button" tabindex="0" aria-label="Overview">
+              <rect x="340" y="278" width="180" height="54" rx="10"/>
+              <text class="mn-label" x="430" y="299" text-anchor="middle" dominant-baseline="central">Cyber-Aggression</text>
+              <text class="mn-sub"   x="430" y="319" text-anchor="middle" dominant-baseline="central">Chapter 2 overview</text>
+            </g>
+
+            <!-- Top: Aggression Theory -->
+            <g class="map-node mn-purple" onclick="scrollToSection('sec-aggression')" role="button" tabindex="0" aria-label="Aggression theory">
+              <rect x="330" y="36" width="200" height="82" rx="8"/>
+              <text class="mn-label" x="430" y="58"  text-anchor="middle" dominant-baseline="central">Aggression theory</text>
+              <text class="mn-sub"   x="430" y="74"  text-anchor="middle" dominant-baseline="central">FAH · Berkowitz CNA</text>
+              <text class="mn-sub"   x="430" y="89"  text-anchor="middle" dominant-baseline="central">GAM (Anderson, 2002)</text>
+            </g>
+
+            <!-- Top-right: Communication infrastructure -->
+            <g class="map-node mn-teal" onclick="scrollToSection('sec-communication')" role="button" tabindex="0" aria-label="Communication infrastructure">
+              <rect x="518" y="110" width="200" height="82" rx="8"/>
+              <text class="mn-label" x="618" y="132" text-anchor="middle" dominant-baseline="central">Communication</text>
+              <text class="mn-sub"   x="618" y="148" text-anchor="middle" dominant-baseline="central">Cost = structural brake</text>
+              <text class="mn-sub"   x="618" y="163" text-anchor="middle" dominant-baseline="central">CMC removes friction</text>
+            </g>
+
+            <!-- Right: Cyber-aggression definition -->
+            <g class="map-node mn-purple" onclick="scrollToSection('sec-cyberagg')" role="button" tabindex="0" aria-label="Cyber-aggression definition">
+              <rect x="580" y="270" width="200" height="82" rx="8"/>
+              <text class="mn-label" x="680" y="292" text-anchor="middle" dominant-baseline="central">Cyber-aggression</text>
+              <text class="mn-sub"   x="680" y="308" text-anchor="middle" dominant-baseline="central">≠ cyberbullying</text>
+              <text class="mn-sub"   x="680" y="323" text-anchor="middle" dominant-baseline="central">4-R model · HRL</text>
+            </g>
+
+            <!-- Bottom-right: Disinhibition -->
+            <g class="map-node mn-teal" onclick="scrollToSection('sec-disinhibition')" role="button" tabindex="0" aria-label="Disinhibition">
+              <rect x="518" y="388" width="200" height="82" rx="8"/>
+              <text class="mn-label" x="618" y="410" text-anchor="middle" dominant-baseline="central">Disinhibition</text>
+              <text class="mn-sub"   x="618" y="426" text-anchor="middle" dominant-baseline="central">SIDE · Suler's 6 factors</text>
+              <text class="mn-sub"   x="618" y="441" text-anchor="middle" dominant-baseline="central">Benign vs toxic</text>
+            </g>
+
+            <!-- Bottom: Moral disengagement -->
+            <g class="map-node mn-coral" onclick="scrollToSection('sec-moraldis')" role="button" tabindex="0" aria-label="Moral disengagement">
+              <rect x="330" y="502" width="200" height="82" rx="8"/>
+              <text class="mn-label" x="430" y="524" text-anchor="middle" dominant-baseline="central">Moral disengagement</text>
+              <text class="mn-sub"   x="430" y="540" text-anchor="middle" dominant-baseline="central">8 mechanisms / 3 levels</text>
+              <text class="mn-sub"   x="430" y="555" text-anchor="middle" dominant-baseline="central">β = .478 *** (primary)</text>
+            </g>
+
+            <!-- Bottom-left: AI constructs -->
+            <g class="map-node mn-blue" onclick="scrollToSection('sec-ai')" role="button" tabindex="0" aria-label="AI constructs">
+              <rect x="142" y="388" width="200" height="82" rx="8"/>
+              <text class="mn-label" x="242" y="410" text-anchor="middle" dominant-baseline="central">AI constructs</text>
+              <text class="mn-sub"   x="242" y="426" text-anchor="middle" dominant-baseline="central">Habitual use · AI Trust</text>
+              <text class="mn-sub"   x="242" y="441" text-anchor="middle" dominant-baseline="central">AI Disinhibition</text>
+            </g>
+
+            <!-- Left: Personality -->
+            <g class="map-node mn-gray" onclick="scrollToSection('sec-personality')" role="button" tabindex="0" aria-label="Personality">
+              <rect x="78" y="270" width="200" height="82" rx="8"/>
+              <text class="mn-label" x="178" y="292" text-anchor="middle" dominant-baseline="central">Personality</text>
+              <text class="mn-sub"   x="178" y="308" text-anchor="middle" dominant-baseline="central">Agreeableness (−)</text>
+              <text class="mn-sub"   x="178" y="323" text-anchor="middle" dominant-baseline="central">Small direct effects</text>
+            </g>
+
+            <!-- Top-left: AI catharsis -->
+            <g class="map-node mn-blue" onclick="scrollToSection('sec-catharsis')" role="button" tabindex="0" aria-label="AI catharsis">
+              <rect x="142" y="110" width="200" height="82" rx="8"/>
+              <text class="mn-label" x="242" y="132" text-anchor="middle" dominant-baseline="central">AI catharsis</text>
+              <text class="mn-sub"   x="242" y="148" text-anchor="middle" dominant-baseline="central">Venting → lower HRL</text>
+              <text class="mn-sub"   x="242" y="163" text-anchor="middle" dominant-baseline="central">r = −.201, p = .017</text>
+            </g>
+
+          </svg>
+        </div><!-- /map-wrap -->
+      </section>
+
+      <!-- ══════════════ OVERVIEW ══════════════ -->
+      <section class="theory-section" id="sec-overview">
+        <div class="section-tag"><span class="tag-dot" style="background:rgba(216,90,48,.8)"></span> Overview</div>
+        <h2>Chapter 2 — Literature Review</h2>
+        <p class="section-intro">This chapter traces the theoretical foundations of cyber-aggression from classical frustration-aggression theory and the General Aggression Model through to the specific psychological and structural conditions of computer-mediated communication, moral disengagement, and the emerging role of AI in human communicative behaviour.</p>
+        <p>The central argument is that the psychology underlying online hostile behaviour is not new — it is the same frustration, threat attribution, and moral disengagement that Dollard, Berkowitz, and Bandura documented in pre-digital contexts — but that successive reductions in the cost of communication have progressively removed the structural friction that previously contained its expression.</p>
+        <p>Against this theoretical background, the chapter identifies three specific gaps that the present study addresses: the underrepresentation of adult populations in cyber-aggression research; the theoretically anomalous but empirically consistent negative relationship between anonymity and hostile response likelihood; and the absence of AI-specific constructs from existing predictive models. A further and largely unanticipated finding — the AI catharsis effect, driven specifically by the venting function of AI interaction — suggests that the relationship between AI use and online aggression may be more complex, and more theoretically interesting, than either the disinhibition or the null-effect hypothesis alone would predict.</p>
+        <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
+      </section>
+
+      <!-- ══════════════ AGGRESSION THEORY ══════════════ -->
+      <section class="theory-section" id="sec-aggression">
+        <div class="section-tag"><span class="tag-dot" style="background:rgba(140,60,155,.8)"></span> Aggression theory</div>
+        <h2>2.1 Theoretical Foundations of Aggression</h2>
+        <p class="section-intro">From the frustration-aggression hypothesis through Berkowitz's cognitive neoassociationistic model to the General Aggression Model — the theoretical lineage that underpins the present study's predictors.</p>
+
+        <h3>2.1.1 The Frustration-Aggression Hypothesis</h3>
+        <p>The systematic psychological study of aggression begins with Dollard et al.'s (1939) frustration-aggression hypothesis (FAH), which proposed a strict causal relationship: frustration — defined as the blocking of goal-directed behaviour — always leads to aggression, and aggression is always the product of frustration. The theoretical economy of this formulation was also its weakness. Empirical challenges accumulated quickly. Miller (1941), one of the original authors, acknowledged within two years that frustration need not produce overt aggression but may instead generate a drive toward aggression that is inhibited or displaced. Berkowitz (1962) extended this revision, demonstrating that frustration was not a sufficient condition for aggression but a necessary precursor that elevated the probability of aggressive responding under conditions that facilitated its expression. The FAH, in its revised form, bequeathed to subsequent theorising two enduring propositions: that aggression is motivationally grounded in aversive affective states, and that situational variables mediate between those states and behavioural outcomes.</p>
+
+        <h3>2.1.2 Berkowitz's Cognitive Neoassociationistic Model</h3>
+        <p>Berkowitz's (1989; 1990) cognitive neoassociationistic (CNA) model represented a fundamental reconceptualisation of the frustration-aggression relationship. The model draws on associative network theory (Anderson, 1983) to propose that any aversive stimulus — frustration, pain, heat, provocation, or even ambient discomfort — generates negative affect, which activates a network of semantically and affectively linked cognitive associations. These associations include memories of prior aversive experiences, appraisals of threat, and behavioural scripts for responding, among them both fight and flight tendencies. The specific output — aggression, avoidance, or suppression — is determined by the cognitive appraisal that follows: the individual's attribution of intent to the provocateur, their assessment of the legitimacy and likely consequences of aggressive responding, and their evaluation of available alternatives.</p>
+        <p>Two aspects of the CNA model are particularly consequential for understanding cyber-aggression. First, the model places the locus of explanation at the intersection of affect and cognition rather than in either alone. This accounts for the well-documented phenomenon of displaced aggression — hostile behaviour directed at targets other than the original source of frustration — which is theoretically problematic for models that require a direct frustration-target link. In online environments, where the original provocateur may be absent, pseudonymous, or diffuse, displaced aggression is structurally facilitated in ways that offline contexts typically are not. Second, the CNA model's emphasis on higher-order cognitive appraisal identifies the intervention points at which individual differences — including the moral disengagement mechanisms examined later in this chapter — can amplify or attenuate the translation of aversive affect into aggressive behaviour.</p>
+
+        <h3>2.1.3 The General Aggression Model</h3>
+        <p>Anderson and Bushman (2002) synthesised the preceding theoretical lineage into the General Aggression Model (GAM), the most widely applied integrative framework in contemporary aggression research. GAM organises the determinants of aggressive behaviour across three analytical levels. At the input level, personal variables (trait hostility, aggressive attitudes, prior reinforcement history) and situational variables (provocation, frustration, presence of weapons, temperature) interact to shape the internal state of the individual. At the level of internal state, the model specifies three interdependent pathways: the person's current affect, their active cognitive schemas and scripts, and their level of arousal. At the appraisal and decision level, a dual-process mechanism produces either an immediate, largely automatic response consistent with activated scripts, or a more deliberative reappraisal if the situation is sufficiently novel or the costs of automatic responding sufficiently salient.</p>
+        <p>Several theoretical extensions of GAM are directly relevant to the online context. DeWall et al. (2011) demonstrated that GAM accommodates indirect and displaced forms of aggression — including cyber-aggression, where physical distance from the target and absence of real-time feedback remove the corrective social signals that ordinarily constrain aggressive responding in GAM's appraisal stage. Allen et al. (2018), in a comprehensive narrative review, confirmed GAM's generalisability across contexts and modalities, including digital communication, while noting that the model's appraisal mechanisms were developed around assumptions of social co-presence that online environments do not satisfy.</p>
+        <p>This last point is theoretically significant for the present study. GAM's appraisal stage assumes access to immediate social feedback — visible reactions, reciprocal adjustment, real-time consequence — as inputs to the reappraisal process. In computer-mediated communication, these inputs are structurally attenuated or absent. Asynchronous delivery removes the temporal coupling between act and consequence; anonymity removes the identity-level accountability that constrains reappraisal in face-to-face contexts; physical separation from the target removes the empathic feedback that ordinarily moderates dehumanisation (Bandura, 1999). The mechanisms through which these structural absences alter the GAM appraisal pathway are taken up in the following section.</p>
+
+        <div class="refs"><strong>Key references:</strong> Dollard et al. (1939); Miller (1941); Berkowitz (1962; 1989; 1990); Anderson (1983); Anderson &amp; Bushman (2002); DeWall et al. (2011); Allen et al. (2018)</div>
+        <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
+      </section>
+
+      <!-- ══════════════ COMMUNICATION INFRASTRUCTURE ══════════════ -->
+      <section class="theory-section" id="sec-communication">
+        <div class="section-tag"><span class="tag-dot" style="background:rgba(0,150,155,.8)"></span> Communication infrastructure</div>
+        <h2>2.2 Communication Cost and Structural Friction</h2>
+        <p class="section-intro">For most of human history, the cost of communication served as an inadvertent brake on aggressive expression. CMC removed that brake simultaneously across reach, anonymity, and cost.</p>
+        <p>The psychology underlying aggression is not new. What changes across history is not the capacity for hostile behaviour but the structural conditions that contain or release it. Hostile messages required significant effort to produce, could reach only a limited audience, and exposed the sender to social accountability. These friction-bearing constraints were not designed to suppress aggression — they were simply properties of the medium — but their effect was to contain it within manageable bounds (Shannon &amp; Weaver, 1949; Innis, 1950).</p>
+        <p>The emergence of computer-mediated communication (CMC) altered this structure fundamentally. For the first time, a message could be composed and delivered to a global audience, anonymously, at zero marginal cost, with no requirement for physical co-presence (Postmes et al., 1998). CMC did not create new aggressive tendencies; it removed the structural friction that had previously constrained the expression of pre-existing ones.</p>
+        <p>Wiener (1948), whose foundational work on cybernetics established feedback as the central regulatory mechanism of any communication system, anticipated the consequences of its removal: without the corrective loops that social co-presence provides — immediate reaction, visible consequence, reciprocal adjustment — a communication system loses its capacity for self-regulation. What CMC stripped away was not merely social cue richness but the cybernetic feedback that ordinarily bounds aggressive expression within tolerable limits.</p>
+        <p>The current moment is arguably unprecedented in that two such revolutions — the internet and AI — are running simultaneously, and neither has reached settlement. When an individual composes a hostile message with AI assistance, vents frustration to an AI before deciding how to respond to a human provocation, or operates within a social environment where AI-mediated interaction has become the norm, the psychological dynamics that existing models were built to explain may no longer fully apply.</p>
+        <div class="refs"><strong>Key references:</strong> Shannon &amp; Weaver (1949); Innis (1950); Wiener (1948); Postmes et al. (1998)</div>
+        <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
+      </section>
+
+      <!-- ══════════════ CYBER-AGGRESSION DEFINITION ══════════════ -->
+      <section class="theory-section" id="sec-cyberagg">
+        <div class="section-tag"><span class="tag-dot" style="background:rgba(140,60,155,.8)"></span> Cyber-aggression</div>
+        <h2>2.3 Cyber-Aggression: Definition, Taxonomy, and Measurement</h2>
+        <p class="section-intro">Cyber-aggression is defined broadly and distinguished from cyberbullying. Hostile response likelihood (HRL) is adopted as the primary outcome measure following Tennakoon et al. (2024).</p>
+        <p>Cyber-aggression is broadly defined as any aggressive behaviour enacted through digital technology, including hostile messaging, harassment, public humiliation, and the deliberate spread of harmful content (Kowalski et al., 2014). It is frequently conflated with cyberbullying in both popular and academic discourse, but the distinction is theoretically consequential. Cyberbullying, as originally defined, requires three criteria: intent to harm, repetition, and a power imbalance between perpetrator and target (Olweus, 1993; Kowalski et al., 2014). Cyber-aggression carries no such requirements. A single hostile act, directed at a peer, a stranger, or a public figure, qualifies — and in the online environment, single acts can propagate at a scale that renders the repetition criterion largely redundant as a meaningful boundary condition.</p>
+        <p>Runions (2013) proposed a motivational taxonomy of cyber-aggression organised around four drivers: rage, revenge, reward, and recreation. This four-R model is useful precisely because it decouples cyber-aggression from the grievance-based framing that cyberbullying research tends to assume. Not all hostile online behaviour is retaliatory; some is instrumental, some recreational, and some is better understood as opportunistic — the product of a low-cost, low-accountability environment rather than any specific interpersonal grievance.</p>
+        <p>Measuring cyber-aggression empirically presents its own difficulties. Behavioural self-report is subject to social desirability bias, recall error, and the definitional ambiguities noted above. An alternative approach, adopted by Tennakoon et al. (2024) and followed in the present study, is to measure <strong>hostile response likelihood (HRL)</strong> — the probability that an individual would respond aggressively to a standardised online provocation — rather than actual aggressive behaviour. HRL captures behavioural intent under controlled conditions, circumventing the retrospective distortions of self-report while remaining grounded in the psychological mechanisms that produce aggressive outcomes.</p>
+        <div class="refs"><strong>Key references:</strong> Kowalski et al. (2014); Olweus (1993); Runions (2013); Tennakoon et al. (2024)</div>
+        <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
+      </section>
+
+      <!-- ══════════════ DISINHIBITION ══════════════ -->
+      <section class="theory-section" id="sec-disinhibition">
+        <div class="section-tag"><span class="tag-dot" style="background:rgba(0,150,155,.8)"></span> Disinhibition</div>
+        <h2>2.4 SIDE and Online Disinhibition</h2>
+        <p class="section-intro">SIDE explains the group-level effects of anonymity; Suler explains the individual-level loosening of constraint. Together they account for why CMC amplifies pre-existing aggressive tendencies.</p>
+        <p>The Social Identity model of Deindividuation Effects (SIDE; Postmes et al., 1998) offers the first systematic account of how anonymity in CMC produces its social effects. Where earlier deindividuation theory (Zimbardo, 1969) proposed that anonymity weakens individual identity and releases impulsive, antisocial behaviour, SIDE reframes the mechanism: anonymity does not dissolve identity but shifts its salience from personal to social. When individual identity cues are absent, group identity becomes more salient, and behaviour becomes more strongly governed by group norms — whatever those norms happen to be. In a hostile online community, anonymity intensifies aggression. In a prosocial one, it intensifies cooperation. The medium does not determine the valence; it amplifies the norm.</p>
+        <p>Suler (2004) approached the same phenomenon from a different direction, identifying six psychological factors that together produce the online disinhibition effect: dissociative anonymity, invisibility, asynchronicity, solipsistic introjection, dissociative imagination, and minimisation of authority. Suler distinguished between benign disinhibition — the loosening of social constraints that allows authentic self-expression — and toxic disinhibition, in which the same mechanisms produce hostility, harassment, and cruelty directed at others.</p>
+        <p>Lapidot-Lefler and Barak (2012) subsequently isolated anonymity and invisibility as the most potent drivers of toxic disinhibition specifically, with the absence of eye contact emerging as a particularly powerful inhibition-releasing condition. Lowry et al. (2016) integrated the online disinhibition framework with SIDE and social learning theory, demonstrating that the effects operate across multiple levels simultaneously — individual psychological, group normative, and structural.</p>
+        <p>What SIDE and the online disinhibition effect provide, taken together, is a dual-level account of the same underlying phenomenon: SIDE explains why the group context under anonymity amplifies whatever norms are already operating; Suler explains why the individual feels psychologically freed to act on them.</p>
+        <div class="refs"><strong>Key references:</strong> Postmes et al. (1998); Zimbardo (1969); Suler (2004); Lapidot-Lefler &amp; Barak (2012); Lowry et al. (2016)</div>
+        <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
+      </section>
+
+      <!-- ══════════════ MORAL DISENGAGEMENT ══════════════ -->
+      <section class="theory-section" id="sec-moraldis">
+        <div class="section-tag"><span class="tag-dot" style="background:rgba(216,90,48,.8)"></span> Moral disengagement</div>
+        <h2>2.5 Moral Disengagement</h2>
+        <p class="section-intro">The dominant predictor in the UCA model (β = .478, p &lt; .001). Bandura's eight mechanisms explain why ordinary people suspend the moral standards that would otherwise inhibit harmful behaviour.</p>
+        <div class="finding"><span class="finding-label">UCA finding:</span> β = .478, p &lt; .001 — strongest predictor of HRL across all model specifications</div>
+        <p>Bandura's (1999; 2002) theory of moral disengagement addresses a question that neither SIDE nor Suler fully answers: given that the online environment creates conditions permissive of aggression, why do some individuals act on those conditions and others do not? The answer lies not in personality or pathology but in cognitive mechanism — specifically, in the set of self-regulatory processes by which ordinary people suspend the moral standards that would otherwise inhibit harmful behaviour.</p>
+        <p>Bandura identified eight such mechanisms, operating at three levels. At the level of the behaviour itself: <em>moral justification</em> (recasting harmful acts as serving a higher purpose), <em>euphemistic labelling</em> (sanitising language to obscure the nature of the act), and <em>advantageous comparison</em> (minimising the harm by contrasting it with worse behaviour). At the level of the agency relationship: <em>displacement of responsibility</em> (attributing one's actions to authority) and <em>diffusion of responsibility</em> (distributing accountability across a group until no individual feels culpable). At the level of the victim: <em>dehumanisation</em> (stripping the target of human qualities) and <em>attribution of blame</em> (recasting the victim as the cause of their own mistreatment). A further mechanism — <em>disregard or distortion of consequences</em> — operates across all three levels.</p>
+        <p>The online environment is structurally well-suited to trigger several of these mechanisms simultaneously: physical distance from the target facilitates dehumanisation; anonymity enables diffusion of responsibility; the group dynamics described by SIDE normalise moral justification within hostile communities; and the asynchronous, consequence-absent character of CMC makes disregard of consequences the path of least resistance.</p>
+        <p>The application of moral disengagement theory to the online context has been well supported empirically. Pornari and Wood (2010) demonstrated that moral disengagement predicted both peer and cyber-aggression in adolescents, with cyber-aggression showing a stronger relationship. Gaffney et al. (2019) confirmed these relationships in a meta-analytic review, establishing moral disengagement as one of the most robust predictors of cyberbullying perpetration in the literature.</p>
+        <div class="refs"><strong>Key references:</strong> Bandura (1999; 2002); Pornari &amp; Wood (2010); Runions &amp; Bak (2015); Gaffney et al. (2019)</div>
+        <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
+      </section>
+
+      <!-- ══════════════ AI CONSTRUCTS ══════════════ -->
+      <section class="theory-section" id="sec-ai">
+        <div class="section-tag"><span class="tag-dot" style="background:rgba(55,138,221,.8)"></span> AI constructs</div>
+        <h2>2.6 AI and Human Communicative Behaviour</h2>
+        <p class="section-intro">Habitual AI use, trust in AI systems, and AI-specific disinhibition — the three constructs absent from prior predictive models, including Tennakoon et al. (2024).</p>
+        <p>The theoretical frameworks established thus far were developed in the context of human-to-human CMC. The rapid integration of artificial intelligence into everyday communication introduces a qualitatively distinct set of conditions that existing frameworks were not designed to address.</p>
+        <p><strong>Habitual AI use</strong> — the routine, unreflective incorporation of AI tools into daily communicative and cognitive tasks — represents a new form of technology engagement that differs from prior CMC in one structurally significant respect: the interlocutor is not human. The social feedback mechanisms that Wiener (1948) identified as the regulatory core of communication systems are, in AI-mediated interaction, simulated rather than genuine. The consequence is that habitual AI use may progressively recalibrate the user's expectations of communicative interaction, normalising a model of exchange in which the social cost of hostile expression is structurally absent.</p>
+        <p><strong>Trust in AI systems</strong> introduces a further complication. Automation bias — the tendency to over-rely on automated outputs and defer to system recommendations — is well established in human factors research (Parasuraman &amp; Riley, 1997). Applied to AI communication tools, elevated AI trust may reduce the individual's critical engagement with their own communicative behaviour: if the AI validates, reformulates, or simply processes hostile content without resistance, the absence of pushback may function as implicit permission. This is a form of diffusion of responsibility — one of Bandura's core moral disengagement mechanisms — operating through the human-machine rather than the human-human relationship.</p>
+        <p><strong>AI disinhibition</strong>, as a construct, extends Suler's (2004) online disinhibition framework to the specific conditions of human-AI interaction. The dissociative imagination mechanism — Suler's observation that online actors often frame interaction as consequence-free — is potentially amplified when the other party is known to be a machine: the moral weight of the exchange is reduced by the certainty that no human is being harmed in the immediate interaction, even when the content being generated is intended for human targets.</p>
+        <p>These constructs are theoretically compelling but empirically underdeveloped. The literature on AI-specific effects on aggressive behaviour remains sparse, and the relationship between AI use, AI trust, and hostile behavioural intent has not been systematically examined prior to this study.</p>
+        <div class="refs"><strong>Key references:</strong> Wiener (1948); Parasuraman &amp; Riley (1997); Suler (2004); Tennakoon et al. (2024)</div>
+        <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
+      </section>
+
+      <!-- ══════════════ PERSONALITY ══════════════ -->
+      <section class="theory-section" id="sec-personality">
+        <div class="section-tag"><span class="tag-dot" style="background:rgba(136,135,128,.8)"></span> Personality</div>
+        <h2>2.7 Personality Factors</h2>
+        <p class="section-intro">Big Five personality traits as distal predictors. Theoretically plausible, but empirically modest once situational and cognitive mechanism variables are controlled.</p>
+        <p>The relationship between personality and aggressive behaviour has a substantial empirical history, with trait-level individual differences implicated as distal predictors that shape the likelihood of aggressive responding across situational contexts. Within the Big Five framework, agreeableness has the most consistent negative relationship with aggression, with low agreeableness associated with heightened hostile attribution and reduced inhibition of aggressive response (Bettencourt et al., 2006). Neuroticism, reflecting emotional instability and negative affectivity, has also been theorised as a facilitating factor, operating through its relationship with threat sensitivity and rumination. Conscientiousness, conversely, has been proposed as a protective factor, associated with impulse regulation and normative compliance.</p>
+        <p>The empirical picture, however, is considerably less tidy than the theoretical one. Personality traits account for modest variance in aggressive behaviour in general, and their predictive utility is substantially attenuated when situational variables — provocation, anonymity, normative context — are included in the model (Bettencourt et al., 2006). In the cyber-aggression literature specifically, personality factors have rarely emerged as robust independent predictors once psychological and situational mechanisms are controlled for, suggesting that their influence is primarily mediated through the same cognitive and moral processes that more proximal predictors capture directly.</p>
+        <div class="refs"><strong>Key references:</strong> Bettencourt et al. (2006)</div>
+        <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
+      </section>
+
+      <!-- ══════════════ AI CATHARSIS ══════════════ -->
+      <section class="theory-section" id="sec-catharsis">
+        <div class="section-tag"><span class="tag-dot" style="background:rgba(55,138,221,.8)"></span> AI catharsis</div>
+        <h2>2.8 Emotional Regulation and the AI Catharsis Hypothesis</h2>
+        <p class="section-intro">A novel, unanticipated finding. The venting item from the AI Disinhibition scale was the only AI construct to show a significant (negative) relationship with HRL — suggesting AI may function as a displacement channel rather than a disinhibitor.</p>
+        <div class="finding"><span class="finding-label">UCA finding:</span> Venting item r = −.201, p = .017; strengthens to r = −.223, p = .008 when moral disengagement is partialled out</div>
+        <p>A recurring assumption in both popular and academic discourse is that the expression of frustration — venting — serves a pressure-release function, reducing the likelihood of subsequent harmful behaviour by displacing affective arousal into relatively harmless expressive output. This catharsis hypothesis has a long theoretical pedigree, traceable to Freudian hydraulic models of drive and discharge, but its empirical status in the aggression literature has historically been contested. Laboratory studies of aggressive catharsis have generally found that venting increases rather than decreases subsequent aggression, particularly when the target of venting is the source of the original frustration (Bushman, 2002).</p>
+        <p>The emergence of AI as a communicative interlocutor introduces a theoretically distinct variant of this question. When the target of expressive venting is a non-human system — one that does not react, retaliate, or bear social consequences — the dynamics that typically undermine cathartic effects may not apply. The absence of a human target removes the reciprocal escalation mechanism that laboratory catharsis research has consistently identified as the driver of post-venting aggression. What remains is the affective displacement function — the relief of expressive output — without the social amplification that ordinarily follows.</p>
+        <p>Of the five items comprising the AI disinhibition scale, only one — "it is easier to vent or let off steam with AI" — showed a significant negative relationship with hostile response likelihood at the bivariate level (r = −.201, p = .017). The remaining AI disinhibition items — expressing true thoughts, saying things one would not say to a person, feeling less judged, being more direct — showed no significant relationship with HRL. This item-level specificity is theoretically important: it is not disinhibition per se that predicts reduced hostile intent, but specifically the venting function.</p>
+        <p>This interpretation is necessarily tentative. The finding is item-level, cross-sectional, and based on a single student sample. It requires replication and experimental follow-up before strong claims can be sustained. But it represents a genuinely novel empirical observation — one that opens a theoretically productive line of inquiry at the intersection of emotion regulation, human-AI interaction, and cyber-aggression research.</p>
+        <div class="refs"><strong>Key references:</strong> Bushman (2002); Suler (2004)</div>
+        <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <span id="lastUpdated"></span>
+      <div>UCAHub is a project progress hub for Todd McCaffrey's MSc Cyberpsychology dissertation at ATU Donegal.</div>
+    </footer>
+  </div>
+
+  <script>
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    function scrollToMap() {
+      const el = document.getElementById('lit-map');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    // Keyboard accessibility for SVG nodes
+    document.querySelectorAll('.map-node').forEach(node => {
+      node.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          node.dispatchEvent(new MouseEvent('click'));
+        }
+      });
+    });
+  </script>
+</body>
+</html>
