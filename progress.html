@@ -1,34 +1,28 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="UCAHub: a study hub for Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors.">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UCAHub progress tracker.">
   <link rel="stylesheet" href="/assets/style.css">
   <script src="/assets/app.js" defer></script>
 </head>
 <body>
   <div id="preliveOverlay" aria-hidden="true"></div>
-
   <div class="container dim-wrap">
     <header class="header">
-      <a class="brand" href="/">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1 data-site-name>UCAHub</h1>
-          <p data-tagline>Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors</p>
-        </div>
+      <a class="brand" href="/"><div class="logo" aria-hidden="true"></div>
+        <div><h1 data-site-name>UCAHub</h1><p data-tagline>Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors</p></div>
       </a>
       <nav class="nav" aria-label="Primary">
-        <a href="/progress.html">Progress</a>
+        <a href="/progress.html" aria-current="page" style="color:var(--text);border-color:var(--control-hover-border);background:var(--control-bg)">Progress</a>
         <a href="/updates.html">Updates</a>
         <a href="/litreview.html">Lit Review</a>
+        <a href="/mindmap.html">Mind Map</a>
         <a href="/about.html">About</a>
         <a href="/ethics.html">Ethics</a>
         <a href="/contact.html">Contact</a>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme toggle">
-          <span class="theme-icon" aria-hidden="true"></span>
-          <span data-theme-label>Dark</span>
+          <span class="theme-icon" aria-hidden="true"></span><span data-theme-label>Dark</span>
         </button>
         <span class="font-controls" aria-label="Text size controls">
           <button class="fc-btn" id="fontDec" type="button" title="Smaller text">A−</button>
@@ -38,94 +32,51 @@
         </span>
       </nav>
     </header>
-
     <main>
       <section class="content">
         <h2>Progress</h2>
         <p>This is a simple milestone tracker.</p>
-
         <div class="thermo-poster-wrap">
           <div class="thermo-wrap">
             <div class="thermo" data-kind="metric" aria-label="Thermometer showing data received">
-              <div class="tube" aria-hidden="true">
-                <div class="fill" aria-hidden="true"></div>
-              </div>
+              <div class="tube" aria-hidden="true"><div class="fill" aria-hidden="true"></div></div>
               <div class="stem" aria-hidden="true"></div>
               <div class="bulb" aria-hidden="true"></div>
             </div>
-
             <div class="metric-box">
               <h3><span data-metric-name>Data received</span></h3>
               <p data-metric-note>This thermometer reflects responses collected (not overall project completion).</p>
-
               <div class="metric-line">
                 <div class="big"><span data-metric-current>0</span> <span data-metric-unit>responses</span></div>
                 <div class="muted">target: <span data-metric-target>500</span></div>
               </div>
-
               <div class="notice" style="margin-top:12px">
                 <strong>How to update:</strong> edit <code>site.json</code> → <code>metricCurrent</code> and <code>metricTarget</code>.
               </div>
             </div>
           </div>
-
           <div class="poster-wrap">
-            <a class="poster-link" href="https://bit.ly/office-e24cn" target="_blank" rel="noopener" aria-label="Open survey link (bit.ly/office-e24cn)">
-              <img class="poster-img" src="/assets/ready-for-tomorrow.jpg" alt="Poster: Want to be ready for tomorrow? Scan to take part.">
+            <a class="poster-link" href="https://bit.ly/office-e24cn" target="_blank" rel="noopener">
+              <img class="poster-img" src="/assets/ready-for-tomorrow.jpg" alt="Poster: Want to be ready for tomorrow?">
               <div class="poster-cta">Open survey link</div>
             </a>
           </div>
         </div>
-
-        <div class="notice">
-          <strong>Status:</strong> <span id="statusText">Loading…</span>
-        </div>
-
+        <div class="notice"><strong>Status:</strong> <span id="statusText">Loading…</span></div>
         <ul class="progress" aria-label="Milestones">
-          <li>
-            <div class="stage"><strong>Topic locked</strong><span class="badge done">Done</span></div>
-            <p>Core question and constructs agreed.</p>
-          </li>
-          <li>
-            <div class="stage"><strong>Literature review</strong><span class="badge now">Current</span></div>
-            <p>Key theories, measures, and prior findings gathered and organized.</p>
-          </li>
-          <li>
-            <div class="stage"><strong>Study design</strong><span class="badge next">Next</span></div>
-            <p>Survey flow, constructs, and analysis plan finalized.</p>
-          </li>
-          <li>
-            <div class="stage"><strong>Ethics submission</strong><span class="badge done">Submitted: 15-12-2025</span></div>
-            <p>Participant info, consent, and data handling documentation prepared.</p>
-          </li>
-          <li>
-            <div class="stage"><strong>Ethics approval</strong><span class="badge done">Approved: 12-01-2026</span></div>
-            <p>Participation opens only after approval.</p>
-          </li>
-          <li>
-            <div class="stage"><strong>Pilot</strong><span class="badge done">Completed 15-01-2026</span></div>
-            <p>Small-scale test to catch issues before data collection.</p>
-          </li>
-          <li>
-            <div class="stage"><strong>Data collection</strong><span class="badge now">Started: 13-01-2026</span></div>
-            <p>Recruitment and survey run.</p>
-          </li>
-          <li>
-            <div class="stage"><strong>Cleaning & analysis</strong><span class="badge">Planned</span></div>
-            <p>Quality checks, modeling, and hypothesis tests.</p>
-          </li>
-          <li>
-            <div class="stage"><strong>Writing</strong><span class="badge">Planned</span></div>
-            <p>Drafting, iteration, and supervisor feedback.</p>
-          </li>
-          <li>
-            <div class="stage"><strong>Submission</strong><span class="badge">Planned</span></div>
-            <p>Final hand-in.</p>
-          </li>
+          <li><div class="stage"><strong>Topic locked</strong><span class="badge done">Done</span></div><p>Core question and constructs agreed.</p></li>
+          <li><div class="stage"><strong>Literature review</strong><span class="badge now">Current</span></div><p>Key theories, measures, and prior findings gathered and organized.</p></li>
+          <li><div class="stage"><strong>Study design</strong><span class="badge next">Next</span></div><p>Survey flow, constructs, and analysis plan finalized.</p></li>
+          <li><div class="stage"><strong>Ethics submission</strong><span class="badge done">Submitted: 15-12-2025</span></div><p>Participant info, consent, and data handling documentation prepared.</p></li>
+          <li><div class="stage"><strong>Ethics approval</strong><span class="badge done">Approved: 12-01-2026</span></div><p>Participation opens only after approval.</p></li>
+          <li><div class="stage"><strong>Pilot</strong><span class="badge done">Completed 15-01-2026</span></div><p>Small-scale test to catch issues before data collection.</p></li>
+          <li><div class="stage"><strong>Data collection</strong><span class="badge now">Started: 13-01-2026</span></div><p>Recruitment and survey run.</p></li>
+          <li><div class="stage"><strong>Cleaning &amp; analysis</strong><span class="badge">Planned</span></div><p>Quality checks, modeling, and hypothesis tests.</p></li>
+          <li><div class="stage"><strong>Writing</strong><span class="badge">Planned</span></div><p>Drafting, iteration, and supervisor feedback.</p></li>
+          <li><div class="stage"><strong>Submission</strong><span class="badge">Planned</span></div><p>Final hand-in.</p></li>
         </ul>
       </section>
     </main>
-
     <footer class="footer">
       <span id="lastUpdated"></span>
       <div>UCAHub is a project progress hub. This site may remain in "pre-live" mode until Ethics approval.</div>

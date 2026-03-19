@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 2 Mind Map — UCAHub</title>
+  <meta name="description" content="Radial mind map of Chapter 2 literature review for the UCA dissertation.">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+  <style>
+    .map-page-header {
+      margin-top: 18px;
+      padding: 18px 22px 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .map-page-header h2 { margin: 0; font-size: 1.25rem; }
+    .map-page-header p  { margin: 4px 0 0; color: var(--muted); font-size: 0.8125rem; }
+    .map-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    #map-wrap {
+      margin-top: 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      height: 82vh;
+      min-height: 520px;
+      position: relative;
+    }
+    #map-wrap svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Node circles */
+    .node circle {
+      stroke-width: 2;
+      cursor: pointer;
+      transition: r 0.15s ease;
+    }
+    .node circle:hover { opacity: 0.85; }
+
+    /* Node labels */
+    .node text {
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      pointer-events: none;
+      dominant-baseline: central;
+    }
+
+    /* Links */
+    .link {
+      fill: none;
+      stroke-width: 1.5;
+      opacity: 0.5;
+    }
+
+    /* Tooltip */
+    #tooltip {
+      position: absolute;
+      pointer-events: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--control-border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.8125rem;
+      max-width: 220px;
+      line-height: 1.5;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 10;
+      box-shadow: var(--shadow);
+    }
+  </style>
+</head>
+<body>
+  <div id="preliveOverlay" aria-hidden="true"></div>
+
+  <div class="container dim-wrap">
+    <header class="header">
+      <a class="brand" href="/">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1 data-site-name>UCAHub</h1>
+          <p data-tagline>Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors</p>
+        </div>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/progress.html">Progress</a>
+        <a href="/updates.html">Updates</a>
+        <a href="/litreview.html">Lit Review</a>
+        <a href="/mindmap.html" aria-current="page" style="color:var(--text);border-color:var(--control-hover-border);background:var(--control-bg)">Mind Map</a>
+        <a href="/about.html">About</a>
+        <a href="/ethics.html">Ethics</a>
+        <a href="/contact.html">Contact</a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme toggle">
+          Theme:
+          <span class="theme-icon" aria-hidden="true"></span>
+          <span data-theme-label>Dark</span>
+        </button>
+        <span class="font-controls" aria-label="Text size controls">
+          <button class="fc-btn" id="fontDec" type="button" title="Smaller text">A−</button>
+          <button class="fc-btn" id="fontReset" type="button" title="Reset text size">A</button>
+          <button class="fc-btn" id="fontInc" type="button" title="Larger text">A+</button>
+          <span class="fc-label" id="fontLabel">100%</span>
+        </span>
+      </nav>
+    </header>
+
+    <main>
+      <div class="map-page-header">
+        <div>
+          <h2>Chapter 2 — Literature Review Mind Map</h2>
+          <p>Scroll to zoom · Drag to pan · Hover a node for detail</p>
+        </div>
+        <div class="map-controls">
+          <button class="btn ghost" id="btn-reset">Reset view</button>
+          <a class="btn secondary" href="/litreview.html">Full text →</a>
+        </div>
+      </div>
+
+      <div id="map-wrap">
+        <svg id="mindmap"></svg>
+        <div id="tooltip"></div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span id="lastUpdated"></span>
+      <div>UCAHub — MSc Cyberpsychology dissertation, Todd McCaffrey, ATU Donegal.</div>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script>
+  (function () {
+
+    // ── Data ──────────────────────────────────────────────────────────────────
+    const tree = {
+      name: "Cyber-Aggression\nChapter 2", root: true,
+      children: [
+        {
+          name: "2.1 Aggression\nTheory", color: "#7F77DD",
+          detail: "Classical foundations: FAH → CNA → GAM",
+          children: [
+            { name: "2.1.1 Frustration-\nAggression Hypothesis", color: "#AFA9EC",
+              detail: "Dollard et al. 1939. Frustration always leads to aggression. Miller 1941 revision: inhibition & displacement." },
+            { name: "2.1.2 Cognitive Neo-\nassociationistic Model", color: "#AFA9EC",
+              detail: "Berkowitz 1989/1990. Aversive stimulus → negative affect → associative network. Displaced aggression." },
+            { name: "2.1.3 General\nAggression Model", color: "#AFA9EC",
+              detail: "Anderson & Bushman 2002. Input → affect/cognition/arousal → appraisal. Extended by DeWall 2011, Allen 2018." },
+          ]
+        },
+        {
+          name: "2.2 Communication\n& Friction", color: "#1D9E75",
+          detail: "Structural conditions: cost of communication as brake on aggression.",
+          children: [
+            { name: "Cost of comm.\nas brake", color: "#5DCAA5", detail: "Shannon & Weaver 1949; Innis 1950. Effort, limited reach, social accountability." },
+            { name: "CMC removes\nfriction", color: "#5DCAA5", detail: "Zero marginal cost, global reach, anonymity, no co-presence. Postmes et al. 1998." },
+            { name: "Wiener 1948\ncybernetic feedback", color: "#5DCAA5", detail: "Without corrective loops, communication systems lose self-regulation." },
+          ]
+        },
+        {
+          name: "2.3 Cyber-\nAggression", color: "#7F77DD",
+          detail: "Definition, taxonomy, and measurement of cyber-aggression.",
+          children: [
+            { name: "≠ Cyberbullying", color: "#AFA9EC", detail: "No repetition or power-imbalance required. Single acts qualify. Kowalski et al. 2014." },
+            { name: "Runions 4-R\nModel", color: "#AFA9EC", detail: "Rage · Revenge · Reward · Recreation. Decouples from grievance-based framing." },
+            { name: "HRL as outcome\nmeasure", color: "#AFA9EC", detail: "Hostile Response Likelihood. Tennakoon et al. 2024. Avoids self-report bias." },
+          ]
+        },
+        {
+          name: "2.4 SIDE &\nDisinhibition", color: "#1D9E75",
+          detail: "Group-level and individual-level mechanisms of online aggression.",
+          children: [
+            { name: "SIDE model", color: "#5DCAA5", detail: "Postmes et al. 1998. Anonymity shifts personal → social identity. Amplifies group norms." },
+            { name: "Suler's 6\nfactors", color: "#5DCAA5", detail: "Dissociative anonymity · Invisibility · Asynchronicity · Solipsistic introjection · Dissociative imagination · Minimisation of authority." },
+            { name: "Benign vs\ntoxic", color: "#5DCAA5", detail: "Lapidot-Lefler & Barak 2012. Anonymity + invisibility → toxic disinhibition. Eye contact as inhibitor." },
+          ]
+        },
+        {
+          name: "2.5 Moral\nDisengagement", color: "#D85A30",
+          detail: "Dominant predictor: β = .478, p < .001. Bandura 1999/2002.",
+          children: [
+            { name: "Behaviour level", color: "#F0997B", detail: "Moral justification · Euphemistic labelling · Advantageous comparison." },
+            { name: "Agency level", color: "#F0997B", detail: "Displacement of responsibility · Diffusion of responsibility." },
+            { name: "Victim level", color: "#F0997B", detail: "Dehumanisation · Attribution of blame · Disregard of consequences." },
+            { name: "β = .478***\ndominant predictor", color: "#F0997B", detail: "Gaffney et al. 2019 meta-analysis confirms centrality across cyberbullying literature." },
+          ]
+        },
+        {
+          name: "2.6 AI\nConstructs", color: "#378ADD",
+          detail: "Novel constructs absent from prior models including Tennakoon et al. 2024.",
+          children: [
+            { name: "Habitual\nAI use", color: "#85B7EB", detail: "Routine unreflective AI use recalibrates interaction expectations. Simulated vs genuine feedback." },
+            { name: "AI Trust /\nautomation bias", color: "#85B7EB", detail: "Parasuraman & Riley 1997. Over-reliance on AI output as implicit permission." },
+            { name: "AI\nDisinhibition", color: "#85B7EB", detail: "Extends Suler to human-AI context. Non-human interlocutor reduces moral weight." },
+          ]
+        },
+        {
+          name: "2.7 Personality\nFactors", color: "#888780",
+          detail: "Big Five as distal predictors. Attenuated by situational variables.",
+          children: [
+            { name: "Agreeableness (−)\nNeuroticism (+)", color: "#B4B2A9", detail: "Bettencourt et al. 2006. Low agreeableness → hostile attribution. Neuroticism → threat sensitivity." },
+            { name: "Modest direct\neffects", color: "#B4B2A9", detail: "Attenuated when situational variables included. Primarily mediated through cognitive mechanisms." },
+          ]
+        },
+        {
+          name: "2.8 AI Catharsis\nHypothesis", color: "#378ADD",
+          detail: "Novel finding: venting to AI reduces hostile response likelihood.",
+          children: [
+            { name: "r = −.201\np = .017", color: "#85B7EB", detail: "Venting item only. Strengthens to r = −.223, p = .008 when moral disengagement partialled out." },
+            { name: "Non-human target\nremoves escalation", color: "#85B7EB", detail: "AI doesn't retaliate. Affective displacement without social amplification. Bushman 2002 contrast." },
+            { name: "Tentative /\nneeds replication", color: "#85B7EB", detail: "Item-level, cross-sectional, single student sample. Opens emotion regulation × AI × cyber-aggression line." },
+          ]
+        },
+        {
+          name: "2.9 Literature\nGaps", color: "#D85A30",
+          detail: "Three gaps the UCA study addresses directly.",
+          children: [
+            { name: "Adult populations\nunderstudied", color: "#F0997B", detail: "Most research is adolescent cyberbullying. Adults: no institutional oversight, higher AI use." },
+            { name: "Anonymity β = −.232*\ncounterinitiative", color: "#F0997B", detail: "Contradicts Suler, Tennakoon. SIDE normative conditionality may explain. Needs examination in AI contexts." },
+            { name: "AI constructs\nabsent", color: "#F0997B", detail: "Tennakoon et al. 2024 predates mass AI adoption. No AI-specific constructs in existing models." },
+          ]
+        },
+      ]
+    };
+
+    // ── Layout ────────────────────────────────────────────────────────────────
+    const svg    = d3.select('#mindmap');
+    const wrap   = document.getElementById('map-wrap');
+    const tip    = document.getElementById('tooltip');
+
+    function getColors() {
+      const style = getComputedStyle(document.body);
+      return {
+        text:    style.getPropertyValue('--text').trim()   || '#e9eef7',
+        muted:   style.getPropertyValue('--muted').trim()  || 'rgba(233,238,247,.62)',
+        line:    style.getPropertyValue('--line').trim()   || 'rgba(255,255,255,.12)',
+        bg:      style.getPropertyValue('--card').trim()   || 'rgba(17,19,26,.72)',
+      };
+    }
+
+    function render() {
+      svg.selectAll('*').remove();
+
+      const W = wrap.clientWidth  || 900;
+      const H = wrap.clientHeight || 620;
+      const cx = W / 2, cy = H / 2;
+      const colors = getColors();
+
+      const g = svg.append('g').attr('id', 'root-g');
+
+      // Zoom
+      const zoom = d3.zoom()
+        .scaleExtent([0.3, 3])
+        .on('zoom', e => g.attr('transform', e.transform));
+      svg.call(zoom);
+
+      document.getElementById('btn-reset').onclick = () => {
+        svg.transition().duration(400).call(zoom.transform, d3.zoomIdentity);
+      };
+
+      // Hierarchy + radial layout
+      const root = d3.hierarchy(tree);
+      const nodeCount = root.descendants().length;
+
+      // Radius scales with node count
+      const innerR  = 110;
+      const outerR  = Math.min(W, H) * 0.42;
+
+      d3.cluster().size([2 * Math.PI, outerR - innerR])(root);
+
+      // Radial position helper
+      function rx(d) { return (d.y + innerR) * Math.cos(d.x - Math.PI / 2); }
+      function ry(d) { return (d.y + innerR) * Math.sin(d.x - Math.PI / 2); }
+
+      // Links
+      g.selectAll('.link')
+        .data(root.links())
+        .join('path')
+        .attr('class', 'link')
+        .attr('stroke', d => d.target.data.color || colors.line)
+        .attr('d', d3.linkRadial()
+          .angle(d => d.x)
+          .radius(d => d.y + innerR)
+        )
+        .attr('transform', `translate(${cx},${cy})`);
+
+      // Nodes
+      const node = g.selectAll('.node')
+        .data(root.descendants())
+        .join('g')
+        .attr('class', 'node')
+        .attr('transform', d =>
+          d.depth === 0
+            ? `translate(${cx},${cy})`
+            : `translate(${cx + rx(d)},${cy + ry(d)})`
+        );
+
+      // Circle radius by depth
+      const rByDepth = [48, 32, 22];
+      node.append('circle')
+        .attr('r', d => rByDepth[d.depth] ?? 18)
+        .attr('fill', d => d.data.color || (d.depth === 0 ? '#D85A30' : '#444'))
+        .attr('stroke', d => d.depth === 0 ? '#fff' : (d.data.color || '#888'))
+        .attr('stroke-width', d => d.depth === 0 ? 3 : 1.5)
+        .attr('fill-opacity', d => d.depth === 2 ? 0.7 : 0.9)
+        .on('mouseover', function(event, d) {
+          if (d.data.detail) {
+            tip.innerHTML = `<strong>${d.data.name.replace(/\n/g,' ')}</strong><br>${d.data.detail}`;
+            tip.style.opacity = 1;
+          }
+        })
+        .on('mousemove', function(event) {
+          const rect = wrap.getBoundingClientRect();
+          let x = event.clientX - rect.left + 14;
+          let y = event.clientY - rect.top  - 10;
+          if (x + 230 > rect.width)  x -= 250;
+          if (y + 80  > rect.height) y -= 80;
+          tip.style.left = x + 'px';
+          tip.style.top  = y + 'px';
+        })
+        .on('mouseout', () => { tip.style.opacity = 0; });
+
+      // Labels — split on \n
+      node.each(function(d) {
+        const el   = d3.select(this);
+        const lines = d.data.name.split('\n');
+        const isRight = d.depth > 0 && Math.cos(d.x - Math.PI/2) >= 0;
+        const isRoot  = d.depth === 0;
+        const r = rByDepth[d.depth] ?? 18;
+
+        if (isRoot) {
+          // Centred inside root circle
+          lines.forEach((line, i) => {
+            el.append('text')
+              .attr('text-anchor', 'middle')
+              .attr('dy', `${(i - (lines.length - 1) / 2) * 1.2}em`)
+              .attr('font-size', 11)
+              .attr('font-weight', 600)
+              .attr('fill', '#fff')
+              .text(line);
+          });
+        } else {
+          // Outside the circle
+          const anchor = isRight ? 'start' : 'end';
+          const xOff   = isRight ? r + 5 : -(r + 5);
+          const fontSize = d.depth === 1 ? 11 : 10;
+          const fontWeight = d.depth === 1 ? 600 : 400;
+          const fillColor = d.depth === 1 ? colors.text : colors.muted;
+
+          lines.forEach((line, i) => {
+            el.append('text')
+              .attr('text-anchor', anchor)
+              .attr('x', xOff)
+              .attr('dy', `${(i - (lines.length - 1) / 2) * 1.25}em`)
+              .attr('font-size', fontSize)
+              .attr('font-weight', fontWeight)
+              .attr('fill', fillColor)
+              .text(line);
+          });
+        }
+      });
+    }
+
+    // Re-render on resize
+    const ro = new ResizeObserver(() => render());
+    ro.observe(wrap);
+
+    // Initial render after a tick (lets CSS apply)
+    setTimeout(render, 60);
+
+    // Re-render on theme change (theme toggle fires class changes on body)
+    const mo = new MutationObserver(() => render());
+    mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+  })();
+  </script>
+</body>
+</html>
