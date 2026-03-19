@@ -56,6 +56,25 @@
       z-index: 10;
       box-shadow: var(--shadow);
     }
+
+    /* Hint bar */
+    .map-hint {
+      margin-top: 8px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--control-border);
+      background: var(--control-bg);
+      color: var(--muted);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .map-hint-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -101,6 +120,12 @@
         </div>
       </div>
 
+      <div class="map-hint">
+        <span class="map-hint-dot"></span>
+        Click any branch node to jump to that section in the Literature Review.
+        Child nodes show detail on hover.
+      </div>
+
       <div id="map-wrap">
         <svg id="mindmap"></svg>
         <div id="tooltip"></div>
@@ -117,12 +142,14 @@
   <script>
   (function () {
 
+    // sectionId maps depth-1 nodes to litreview.html anchors
     const tree = {
       name: "Cyber-Aggression\nChapter 2", root: true,
       children: [
         {
           name: "2.1 Aggression\nTheory", color: "#7F77DD",
-          detail: "Classical foundations: FAH → CNA → GAM",
+          sectionId: "sec-aggression",
+          detail: "Classical foundations: FAH → CNA → GAM. Click to open section.",
           children: [
             { name: "2.1.1 FAH", color: "#AFA9EC",
               detail: "Dollard et al. 1939. Frustration always leads to aggression. Miller 1941: inhibition & displacement." },
@@ -134,7 +161,8 @@
         },
         {
           name: "2.2 Communication\n& Friction", color: "#1D9E75",
-          detail: "Structural conditions: cost of communication as inadvertent brake on aggression.",
+          sectionId: "sec-communication",
+          detail: "Structural conditions: cost of communication as inadvertent brake on aggression. Click to open section.",
           children: [
             { name: "Cost as brake", color: "#5DCAA5",
               detail: "Shannon & Weaver 1949; Innis 1950. Effort, limited reach, social accountability." },
@@ -146,7 +174,8 @@
         },
         {
           name: "2.3 Cyber-\nAggression", color: "#7F77DD",
-          detail: "Definition, taxonomy, and measurement of cyber-aggression.",
+          sectionId: "sec-cyberagg",
+          detail: "Definition, taxonomy, and measurement of cyber-aggression. Click to open section.",
           children: [
             { name: "≠ Cyberbullying", color: "#AFA9EC",
               detail: "No repetition or power-imbalance required. Single acts qualify. Kowalski et al. 2014." },
@@ -158,7 +187,8 @@
         },
         {
           name: "2.4 SIDE &\nDisinhibition", color: "#1D9E75",
-          detail: "Group-level and individual-level mechanisms of online aggression.",
+          sectionId: "sec-disinhibition",
+          detail: "Group-level and individual-level mechanisms of online aggression. Click to open section.",
           children: [
             { name: "SIDE model", color: "#5DCAA5",
               detail: "Postmes et al. 1998. Anonymity shifts personal → social identity. Amplifies group norms." },
@@ -170,7 +200,8 @@
         },
         {
           name: "2.5 Moral\nDisengagement", color: "#D85A30",
-          detail: "Dominant predictor: β = .478, p < .001. Bandura 1999/2002.",
+          sectionId: "sec-moraldis",
+          detail: "Dominant predictor: β = .478, p < .001. Bandura 1999/2002. Click to open section.",
           children: [
             { name: "Behaviour\nlevel", color: "#F0997B",
               detail: "Moral justification · Euphemistic labelling · Advantageous comparison." },
@@ -184,7 +215,8 @@
         },
         {
           name: "2.6 AI\nConstructs", color: "#378ADD",
-          detail: "Novel constructs absent from prior models including Tennakoon et al. 2024.",
+          sectionId: "sec-ai",
+          detail: "Novel constructs absent from prior models including Tennakoon et al. 2024. Click to open section.",
           children: [
             { name: "Habitual\nAI use", color: "#85B7EB",
               detail: "Routine unreflective AI use recalibrates interaction expectations. Simulated vs genuine feedback." },
@@ -196,7 +228,8 @@
         },
         {
           name: "2.7 Personality\nFactors", color: "#888780",
-          detail: "Big Five as distal predictors. Attenuated by situational variables.",
+          sectionId: "sec-personality",
+          detail: "Big Five as distal predictors. Attenuated by situational variables. Click to open section.",
           children: [
             { name: "Agreeableness −\nNeuroticism +", color: "#B4B2A9",
               detail: "Bettencourt et al. 2006. Low agreeableness → hostile attribution. Neuroticism → threat sensitivity." },
@@ -206,7 +239,8 @@
         },
         {
           name: "2.8 AI Catharsis\nHypothesis", color: "#378ADD",
-          detail: "Novel finding: venting to AI reduces hostile response likelihood.",
+          sectionId: "sec-catharsis",
+          detail: "Novel finding: venting to AI reduces hostile response likelihood. Click to open section.",
           children: [
             { name: "r = −.201\np = .017", color: "#85B7EB",
               detail: "Venting item only. Strengthens to r = −.223, p = .008 with MD partialled out." },
@@ -218,7 +252,8 @@
         },
         {
           name: "2.9 Literature\nGaps", color: "#D85A30",
-          detail: "Three gaps the UCA study addresses directly.",
+          sectionId: "sec-gaps",
+          detail: "Three gaps the UCA study addresses directly. Click to open section.",
           children: [
             { name: "Adults\nunderstudied", color: "#F0997B",
               detail: "Most research is adolescent cyberbullying. Adults: no institutional oversight, higher AI use." },
@@ -235,24 +270,17 @@
     const wrap = document.getElementById('map-wrap');
     const tip  = document.getElementById('tooltip');
 
-    // Circle sizes per depth
-    const R = [50, 28, 13];
-    // Label offset beyond circle edge per depth
+    const R            = [50, 28, 13];
     const LABEL_OFFSET = [0, 16, 12];
-    // Estimated char width for background rect sizing
-    const CHAR_W = 6.5;
-    const LINE_H = 14;
-    const LABEL_PAD_X = 6;
-    const LABEL_PAD_Y = 3;
+    const CHAR_W       = 6.5;
+    const LINE_H       = 14;
+    const LABEL_PAD_X  = 6;
+    const LABEL_PAD_Y  = 3;
 
-    function getCardBg() {
-      // Parse card color for label backgrounds
-      const s = getComputedStyle(document.body);
-      const card = s.getPropertyValue('--card').trim();
-      return card || 'rgba(17,19,26,0.92)';
-    }
-    function getTextColor()  { return getComputedStyle(document.body).getPropertyValue('--text').trim()  || '#e9eef7'; }
-    function getMutedColor() { return getComputedStyle(document.body).getPropertyValue('--muted').trim() || 'rgba(233,238,247,.62)'; }
+    function getCardBg()    { return getComputedStyle(document.body).getPropertyValue('--card').trim()  || 'rgba(17,19,26,0.92)'; }
+    function getTextColor() { return getComputedStyle(document.body).getPropertyValue('--text').trim()  || '#e9eef7'; }
+    function getMuted()     { return getComputedStyle(document.body).getPropertyValue('--muted').trim() || 'rgba(233,238,247,.62)'; }
+    function getAccent()    { return getComputedStyle(document.body).getPropertyValue('--accent').trim()|| 'rgba(122,162,255,.95)'; }
 
     function render() {
       svg.selectAll('*').remove();
@@ -271,14 +299,12 @@
       document.getElementById('btn-reset').onclick = () =>
         svg.transition().duration(400).call(zoom.transform, d3.zoomIdentity);
 
-      // Build hierarchy
       const root   = d3.hierarchy(tree);
       const innerR = 120;
       const outerR = Math.min(W, H) * 0.40;
 
       d3.cluster().size([2 * Math.PI, outerR - innerR])(root);
 
-      // World-space position of a node
       function wx(d) { return d.depth === 0 ? 0 : (d.y + innerR) * Math.cos(d.x - Math.PI/2); }
       function wy(d) { return d.depth === 0 ? 0 : (d.y + innerR) * Math.sin(d.x - Math.PI/2); }
 
@@ -303,12 +329,22 @@
         .attr('r',  d => R[d.depth] ?? 11)
         .attr('fill', d => d.data.color || (d.depth === 0 ? '#D85A30' : '#666'))
         .attr('fill-opacity', d => d.depth === 2 ? 0.75 : 0.92)
-        .attr('stroke', d => d.depth === 0 ? '#fff' : (d.data.color || '#888'))
-        .attr('stroke-width', d => d.depth === 0 ? 3 : 1.2)
-        .style('cursor', 'pointer')
+        .attr('stroke', d => {
+          // Linked depth-1 nodes get an accent ring
+          if (d.depth === 1 && d.data.sectionId) return getAccent();
+          if (d.depth === 0) return '#fff';
+          return d.data.color || '#888';
+        })
+        .attr('stroke-width', d => d.depth === 0 ? 3 : d.depth === 1 ? 2 : 1.2)
+        .style('cursor', d => (d.depth === 1 && d.data.sectionId) ? 'pointer' : 'default')
         .on('mouseover', (event, d) => {
-          if (!d.data.detail) return;
-          tip.innerHTML = `<strong>${d.data.name.replace(/\n/g,' ')}</strong><br>${d.data.detail}`;
+          const label = d.depth === 1 && d.data.sectionId
+            ? `<strong>${d.data.name.replace(/\n/g,' ')}</strong><br>${d.data.detail}`
+            : d.data.detail
+              ? `<strong>${d.data.name.replace(/\n/g,' ')}</strong><br>${d.data.detail}`
+              : null;
+          if (!label) return;
+          tip.innerHTML = label;
           tip.style.opacity = 1;
         })
         .on('mousemove', event => {
@@ -320,9 +356,14 @@
           tip.style.left = x + 'px';
           tip.style.top  = y + 'px';
         })
-        .on('mouseout', () => { tip.style.opacity = 0; });
+        .on('mouseout', () => { tip.style.opacity = 0; })
+        .on('click', (event, d) => {
+          if (d.depth === 1 && d.data.sectionId) {
+            window.location.href = '/litreview.html#' + d.data.sectionId;
+          }
+        });
 
-      // ── Layer 3: labels (always on top) ──────────────────────────────────
+      // ── Layer 3: labels ───────────────────────────────────────────────────
       const labelG = g.append('g').attr('transform', `translate(${cx},${cy})`);
 
       root.descendants().forEach(d => {
@@ -332,7 +373,6 @@
         const ly    = wy(d);
 
         if (d.depth === 0) {
-          // Root: white text inside circle
           const lg = labelG.append('g').attr('transform', `translate(${lx},${ly})`);
           lines.forEach((line, i) => {
             lg.append('text')
@@ -349,7 +389,6 @@
           return;
         }
 
-        // For outer nodes: position label beyond circle edge
         const angle   = d.x - Math.PI / 2;
         const isRight = Math.cos(angle) >= 0;
         const anchor  = isRight ? 'start' : 'end';
@@ -357,19 +396,25 @@
         const lbx     = lx + Math.cos(angle) * offset;
         const lby     = ly + Math.sin(angle) * offset;
 
+        const isLinked   = d.depth === 1 && d.data.sectionId;
         const fontSize   = d.depth === 1 ? 11 : 10;
         const fontWeight = d.depth === 1 ? 600 : 400;
-        const fillColor  = d.depth === 1 ? getTextColor() : getMutedColor();
+        const fillColor  = isLinked ? getAccent() : (d.depth === 1 ? getTextColor() : getMuted());
         const bgColor    = getCardBg();
 
-        // Measure approximate text block
-        const maxLen  = Math.max(...lines.map(l => l.length));
-        const bw      = maxLen * CHAR_W * (fontSize / 10) + LABEL_PAD_X * 2;
-        const bh      = lines.length * LINE_H + LABEL_PAD_Y * 2;
-        const bx      = isRight ? lbx - LABEL_PAD_X : lbx - bw + LABEL_PAD_X;
-        const by      = lby - bh / 2;
+        const maxLen = Math.max(...lines.map(l => l.length));
+        // Extra width for link indicator arrow
+        const extraW = isLinked ? 14 : 0;
+        const bw     = maxLen * CHAR_W * (fontSize / 10) + LABEL_PAD_X * 2 + extraW;
+        const bh     = lines.length * LINE_H + LABEL_PAD_Y * 2;
+        const bx     = isRight ? lbx - LABEL_PAD_X : lbx - bw + LABEL_PAD_X;
+        const by     = lby - bh / 2;
 
-        const lg = labelG.append('g');
+        const lg = labelG.append('g')
+          .style('cursor', isLinked ? 'pointer' : 'default')
+          .on('click', () => {
+            if (isLinked) window.location.href = '/litreview.html#' + d.data.sectionId;
+          });
 
         // Background pill
         lg.append('rect')
@@ -392,16 +437,26 @@
             .attr('fill', fillColor)
             .attr('font-family', 'ui-sans-serif, system-ui, sans-serif')
             .attr('dominant-baseline', 'central')
+            .attr('text-decoration', isLinked ? 'underline' : 'none')
             .text(line);
         });
+
+        // Small arrow indicator for linked nodes
+        if (isLinked) {
+          const arrowX = isRight ? lbx + maxLen * CHAR_W * (fontSize / 10) + 4 : lbx - maxLen * CHAR_W * (fontSize / 10) - 10;
+          lg.append('text')
+            .attr('x', arrowX)
+            .attr('y', lby)
+            .attr('font-size', 10)
+            .attr('fill', fillColor)
+            .attr('dominant-baseline', 'central')
+            .text('→');
+        }
       });
     }
 
-    // Re-render on container resize
     new ResizeObserver(() => render()).observe(wrap);
-    // Re-render on theme change
     new MutationObserver(() => render()).observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    // Initial render
     setTimeout(render, 60);
 
   })();

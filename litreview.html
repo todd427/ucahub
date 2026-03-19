@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="/assets/style.css">
   <script src="/assets/app.js" defer></script>
   <style>
-    /* ── Map container ── */
     .litreview-hero {
       margin-top: 18px;
       padding: 24px 22px 20px;
@@ -20,34 +19,23 @@
     .litreview-hero h2 { margin: 0 0 4px; font-size: 1.5rem; }
     .litreview-hero p  { margin: 0 0 18px; color: var(--muted); font-size: 0.875rem; max-width: 72ch; }
 
-    .map-wrap {
-      width: 100%;
-      overflow-x: auto;
-    }
-    .map-wrap svg {
-      display: block;
-      width: 100%;
-      max-width: 860px;
-      margin: 0 auto;
-    }
+    .map-wrap { width: 100%; overflow-x: auto; }
+    .map-wrap svg { display: block; width: 100%; max-width: 860px; margin: 0 auto; }
 
-    /* ── SVG node colours (theme-aware fills) ── */
-    .mn-purple rect { fill: rgba(77,8,87,.18);   stroke: rgba(140,60,155,.55); }
-    .mn-teal   rect { fill: rgba(0,91,94,.18);    stroke: rgba(0,150,155,.5);  }
-    .mn-coral  rect { fill: rgba(216,90,48,.18);  stroke: rgba(216,90,48,.55); }
-    .mn-blue   rect { fill: rgba(55,138,221,.18); stroke: rgba(55,138,221,.5); }
-    .mn-gray   rect { fill: rgba(136,135,128,.14);stroke: rgba(136,135,128,.45);}
-    .mn-center rect { fill: rgba(216,90,48,.22);  stroke: rgba(216,90,48,.7);  }
+    .mn-purple rect { fill: rgba(77,8,87,.18);    stroke: rgba(140,60,155,.55); }
+    .mn-teal   rect { fill: rgba(0,91,94,.18);     stroke: rgba(0,150,155,.5);  }
+    .mn-coral  rect { fill: rgba(216,90,48,.18);   stroke: rgba(216,90,48,.55); }
+    .mn-blue   rect { fill: rgba(55,138,221,.18);  stroke: rgba(55,138,221,.5); }
+    .mn-gray   rect { fill: rgba(136,135,128,.14); stroke: rgba(136,135,128,.45); }
+    .mn-center rect { fill: rgba(216,90,48,.22);   stroke: rgba(216,90,48,.7);  }
 
-    .mn-label  { font-size: 13px; font-weight: 600; fill: var(--text); font-family: ui-sans-serif, system-ui, sans-serif; }
-    .mn-sub    { font-size: 11px; font-weight: 400; fill: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; }
+    .mn-label { font-size: 13px; font-weight: 600; fill: var(--text); font-family: ui-sans-serif, system-ui, sans-serif; }
+    .mn-sub   { font-size: 11px; font-weight: 400; fill: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; }
 
     .map-node { cursor: pointer; }
     .map-node:hover rect { opacity: .8; }
-
     .map-edge { fill: none; stroke: var(--line); stroke-width: 1.4; }
 
-    /* ── Theory sections ── */
     .theory-section {
       margin-top: 14px;
       padding: 22px 24px;
@@ -69,13 +57,8 @@
       border-radius: 999px;
       margin-bottom: 10px;
     }
-    .theory-section .section-tag .tag-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-    }
-    .theory-section h2 {
-      margin: 0 0 6px;
-      font-size: 1.25rem;
-    }
+    .theory-section .section-tag .tag-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .theory-section h2 { margin: 0 0 6px; font-size: 1.25rem; }
     .theory-section .section-intro {
       margin: 0 0 18px;
       color: var(--muted);
@@ -83,17 +66,8 @@
       border-left: 3px solid var(--line);
       padding-left: 14px;
     }
-    .theory-section h3 {
-      margin: 20px 0 8px;
-      font-size: 1rem;
-      color: var(--accent);
-    }
-    .theory-section p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.7;
-    }
+    .theory-section h3 { margin: 20px 0 8px; font-size: 1rem; color: var(--accent); }
+    .theory-section p  { margin: 0 0 14px; color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
     .theory-section p:last-child { margin-bottom: 0; }
     .theory-section .refs {
       margin-top: 18px;
@@ -121,18 +95,6 @@
     }
     .back-to-map:hover { opacity: .75; }
 
-    /* ── Stub banner for unpopulated sections ── */
-    .stub-notice {
-      margin-top: 12px;
-      padding: 12px 16px;
-      border-radius: 10px;
-      border: 1px dashed var(--control-border);
-      background: var(--control-bg);
-      color: var(--muted);
-      font-size: 0.875rem;
-    }
-
-    /* ── Finding badge ── */
     .finding {
       display: inline-flex;
       align-items: center;
@@ -164,13 +126,12 @@
         <a href="/progress.html">Progress</a>
         <a href="/updates.html">Updates</a>
         <a href="/litreview.html" aria-current="page" style="color:var(--text);border-color:var(--control-hover-border);background:var(--control-bg)">Lit Review</a>
+        <a href="/mindmap.html">Mind Map</a>
         <a href="/about.html">About</a>
         <a href="/ethics.html">Ethics</a>
         <a href="/contact.html">Contact</a>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme toggle">
-          Theme:
-          <span class="theme-icon" aria-hidden="true"></span>
-          <span data-theme-label>Dark</span>
+          Theme: <span class="theme-icon" aria-hidden="true"></span><span data-theme-label>Dark</span>
         </button>
         <span class="font-controls" aria-label="Text size controls">
           <button class="fc-btn" id="fontDec" type="button" title="Smaller text">A−</button>
@@ -186,11 +147,9 @@
         <h2>Chapter 2: Literature Review</h2>
         <p>Click any node in the map to jump to that theory section. The map traces the conceptual lineage from classical aggression research through CMC, moral disengagement, and the novel AI constructs introduced in this study.</p>
 
-        <!-- ══════════════ MIND MAP SVG ══════════════ -->
         <div class="map-wrap" id="lit-map">
           <svg viewBox="0 0 860 620" xmlns="http://www.w3.org/2000/svg" aria-label="Chapter 2 literature review mind map">
 
-            <!-- Edges from centre -->
             <line class="map-edge" x1="430" y1="305" x2="430" y2="118"/>
             <line class="map-edge" x1="430" y1="305" x2="618" y2="192"/>
             <line class="map-edge" x1="430" y1="305" x2="680" y2="310"/>
@@ -200,14 +159,12 @@
             <line class="map-edge" x1="430" y1="305" x2="178" y2="310"/>
             <line class="map-edge" x1="430" y1="305" x2="242" y2="192"/>
 
-            <!-- Centre node -->
             <g class="map-node mn-center" onclick="scrollToSection('sec-overview')" role="button" tabindex="0" aria-label="Overview">
               <rect x="340" y="278" width="180" height="54" rx="10"/>
               <text class="mn-label" x="430" y="299" text-anchor="middle" dominant-baseline="central">Cyber-Aggression</text>
               <text class="mn-sub"   x="430" y="319" text-anchor="middle" dominant-baseline="central">Chapter 2 overview</text>
             </g>
 
-            <!-- Top: Aggression Theory -->
             <g class="map-node mn-purple" onclick="scrollToSection('sec-aggression')" role="button" tabindex="0" aria-label="Aggression theory">
               <rect x="330" y="36" width="200" height="82" rx="8"/>
               <text class="mn-label" x="430" y="58"  text-anchor="middle" dominant-baseline="central">Aggression theory</text>
@@ -215,7 +172,6 @@
               <text class="mn-sub"   x="430" y="89"  text-anchor="middle" dominant-baseline="central">GAM (Anderson, 2002)</text>
             </g>
 
-            <!-- Top-right: Communication infrastructure -->
             <g class="map-node mn-teal" onclick="scrollToSection('sec-communication')" role="button" tabindex="0" aria-label="Communication infrastructure">
               <rect x="518" y="110" width="200" height="82" rx="8"/>
               <text class="mn-label" x="618" y="132" text-anchor="middle" dominant-baseline="central">Communication</text>
@@ -223,7 +179,6 @@
               <text class="mn-sub"   x="618" y="163" text-anchor="middle" dominant-baseline="central">CMC removes friction</text>
             </g>
 
-            <!-- Right: Cyber-aggression definition -->
             <g class="map-node mn-purple" onclick="scrollToSection('sec-cyberagg')" role="button" tabindex="0" aria-label="Cyber-aggression definition">
               <rect x="580" y="270" width="200" height="82" rx="8"/>
               <text class="mn-label" x="680" y="292" text-anchor="middle" dominant-baseline="central">Cyber-aggression</text>
@@ -231,7 +186,6 @@
               <text class="mn-sub"   x="680" y="323" text-anchor="middle" dominant-baseline="central">4-R model · HRL</text>
             </g>
 
-            <!-- Bottom-right: Disinhibition -->
             <g class="map-node mn-teal" onclick="scrollToSection('sec-disinhibition')" role="button" tabindex="0" aria-label="Disinhibition">
               <rect x="518" y="388" width="200" height="82" rx="8"/>
               <text class="mn-label" x="618" y="410" text-anchor="middle" dominant-baseline="central">Disinhibition</text>
@@ -239,7 +193,6 @@
               <text class="mn-sub"   x="618" y="441" text-anchor="middle" dominant-baseline="central">Benign vs toxic</text>
             </g>
 
-            <!-- Bottom: Moral disengagement -->
             <g class="map-node mn-coral" onclick="scrollToSection('sec-moraldis')" role="button" tabindex="0" aria-label="Moral disengagement">
               <rect x="330" y="502" width="200" height="82" rx="8"/>
               <text class="mn-label" x="430" y="524" text-anchor="middle" dominant-baseline="central">Moral disengagement</text>
@@ -247,7 +200,6 @@
               <text class="mn-sub"   x="430" y="555" text-anchor="middle" dominant-baseline="central">β = .478 *** (primary)</text>
             </g>
 
-            <!-- Bottom-left: AI constructs -->
             <g class="map-node mn-blue" onclick="scrollToSection('sec-ai')" role="button" tabindex="0" aria-label="AI constructs">
               <rect x="142" y="388" width="200" height="82" rx="8"/>
               <text class="mn-label" x="242" y="410" text-anchor="middle" dominant-baseline="central">AI constructs</text>
@@ -255,7 +207,6 @@
               <text class="mn-sub"   x="242" y="441" text-anchor="middle" dominant-baseline="central">AI Disinhibition</text>
             </g>
 
-            <!-- Left: Personality -->
             <g class="map-node mn-gray" onclick="scrollToSection('sec-personality')" role="button" tabindex="0" aria-label="Personality">
               <rect x="78" y="270" width="200" height="82" rx="8"/>
               <text class="mn-label" x="178" y="292" text-anchor="middle" dominant-baseline="central">Personality</text>
@@ -263,7 +214,6 @@
               <text class="mn-sub"   x="178" y="323" text-anchor="middle" dominant-baseline="central">Small direct effects</text>
             </g>
 
-            <!-- Top-left: AI catharsis -->
             <g class="map-node mn-blue" onclick="scrollToSection('sec-catharsis')" role="button" tabindex="0" aria-label="AI catharsis">
               <rect x="142" y="110" width="200" height="82" rx="8"/>
               <text class="mn-label" x="242" y="132" text-anchor="middle" dominant-baseline="central">AI catharsis</text>
@@ -272,7 +222,7 @@
             </g>
 
           </svg>
-        </div><!-- /map-wrap -->
+        </div>
       </section>
 
       <!-- ══════════════ OVERVIEW ══════════════ -->
@@ -285,7 +235,7 @@
         <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
       </section>
 
-      <!-- ══════════════ AGGRESSION THEORY ══════════════ -->
+      <!-- ══════════════ 2.1 AGGRESSION THEORY ══════════════ -->
       <section class="theory-section" id="sec-aggression">
         <div class="section-tag"><span class="tag-dot" style="background:rgba(140,60,155,.8)"></span> Aggression theory</div>
         <h2>2.1 Theoretical Foundations of Aggression</h2>
@@ -301,13 +251,12 @@
         <h3>2.1.3 The General Aggression Model</h3>
         <p>Anderson and Bushman (2002) synthesised the preceding theoretical lineage into the General Aggression Model (GAM), the most widely applied integrative framework in contemporary aggression research. GAM organises the determinants of aggressive behaviour across three analytical levels. At the input level, personal variables (trait hostility, aggressive attitudes, prior reinforcement history) and situational variables (provocation, frustration, presence of weapons, temperature) interact to shape the internal state of the individual. At the level of internal state, the model specifies three interdependent pathways: the person's current affect, their active cognitive schemas and scripts, and their level of arousal. At the appraisal and decision level, a dual-process mechanism produces either an immediate, largely automatic response consistent with activated scripts, or a more deliberative reappraisal if the situation is sufficiently novel or the costs of automatic responding sufficiently salient.</p>
         <p>Several theoretical extensions of GAM are directly relevant to the online context. DeWall et al. (2011) demonstrated that GAM accommodates indirect and displaced forms of aggression — including cyber-aggression, where physical distance from the target and absence of real-time feedback remove the corrective social signals that ordinarily constrain aggressive responding in GAM's appraisal stage. Allen et al. (2018), in a comprehensive narrative review, confirmed GAM's generalisability across contexts and modalities, including digital communication, while noting that the model's appraisal mechanisms were developed around assumptions of social co-presence that online environments do not satisfy.</p>
-        <p>This last point is theoretically significant for the present study. GAM's appraisal stage assumes access to immediate social feedback — visible reactions, reciprocal adjustment, real-time consequence — as inputs to the reappraisal process. In computer-mediated communication, these inputs are structurally attenuated or absent. Asynchronous delivery removes the temporal coupling between act and consequence; anonymity removes the identity-level accountability that constrains reappraisal in face-to-face contexts; physical separation from the target removes the empathic feedback that ordinarily moderates dehumanisation (Bandura, 1999). The mechanisms through which these structural absences alter the GAM appraisal pathway are taken up in the following section.</p>
-
+        <p>This last point is theoretically significant for the present study. GAM's appraisal stage assumes access to immediate social feedback — visible reactions, reciprocal adjustment, real-time consequence — as inputs to the reappraisal process. In computer-mediated communication, these inputs are structurally attenuated or absent. Asynchronous delivery removes the temporal coupling between act and consequence; anonymity removes the identity-level accountability that constrains reappraisal in face-to-face contexts; physical separation from the target removes the empathic feedback that ordinarily moderates dehumanisation (Bandura, 1999).</p>
         <div class="refs"><strong>Key references:</strong> Dollard et al. (1939); Miller (1941); Berkowitz (1962; 1989; 1990); Anderson (1983); Anderson &amp; Bushman (2002); DeWall et al. (2011); Allen et al. (2018)</div>
         <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
       </section>
 
-      <!-- ══════════════ COMMUNICATION INFRASTRUCTURE ══════════════ -->
+      <!-- ══════════════ 2.2 COMMUNICATION ══════════════ -->
       <section class="theory-section" id="sec-communication">
         <div class="section-tag"><span class="tag-dot" style="background:rgba(0,150,155,.8)"></span> Communication infrastructure</div>
         <h2>2.2 Communication Cost and Structural Friction</h2>
@@ -320,7 +269,7 @@
         <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
       </section>
 
-      <!-- ══════════════ CYBER-AGGRESSION DEFINITION ══════════════ -->
+      <!-- ══════════════ 2.3 CYBER-AGGRESSION ══════════════ -->
       <section class="theory-section" id="sec-cyberagg">
         <div class="section-tag"><span class="tag-dot" style="background:rgba(140,60,155,.8)"></span> Cyber-aggression</div>
         <h2>2.3 Cyber-Aggression: Definition, Taxonomy, and Measurement</h2>
@@ -332,7 +281,7 @@
         <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
       </section>
 
-      <!-- ══════════════ DISINHIBITION ══════════════ -->
+      <!-- ══════════════ 2.4 DISINHIBITION ══════════════ -->
       <section class="theory-section" id="sec-disinhibition">
         <div class="section-tag"><span class="tag-dot" style="background:rgba(0,150,155,.8)"></span> Disinhibition</div>
         <h2>2.4 SIDE and Online Disinhibition</h2>
@@ -345,7 +294,7 @@
         <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
       </section>
 
-      <!-- ══════════════ MORAL DISENGAGEMENT ══════════════ -->
+      <!-- ══════════════ 2.5 MORAL DISENGAGEMENT ══════════════ -->
       <section class="theory-section" id="sec-moraldis">
         <div class="section-tag"><span class="tag-dot" style="background:rgba(216,90,48,.8)"></span> Moral disengagement</div>
         <h2>2.5 Moral Disengagement</h2>
@@ -359,7 +308,7 @@
         <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
       </section>
 
-      <!-- ══════════════ AI CONSTRUCTS ══════════════ -->
+      <!-- ══════════════ 2.6 AI CONSTRUCTS ══════════════ -->
       <section class="theory-section" id="sec-ai">
         <div class="section-tag"><span class="tag-dot" style="background:rgba(55,138,221,.8)"></span> AI constructs</div>
         <h2>2.6 AI and Human Communicative Behaviour</h2>
@@ -373,7 +322,7 @@
         <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
       </section>
 
-      <!-- ══════════════ PERSONALITY ══════════════ -->
+      <!-- ══════════════ 2.7 PERSONALITY ══════════════ -->
       <section class="theory-section" id="sec-personality">
         <div class="section-tag"><span class="tag-dot" style="background:rgba(136,135,128,.8)"></span> Personality</div>
         <h2>2.7 Personality Factors</h2>
@@ -384,7 +333,7 @@
         <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
       </section>
 
-      <!-- ══════════════ AI CATHARSIS ══════════════ -->
+      <!-- ══════════════ 2.8 AI CATHARSIS ══════════════ -->
       <section class="theory-section" id="sec-catharsis">
         <div class="section-tag"><span class="tag-dot" style="background:rgba(55,138,221,.8)"></span> AI catharsis</div>
         <h2>2.8 Emotional Regulation and the AI Catharsis Hypothesis</h2>
@@ -395,6 +344,20 @@
         <p>Of the five items comprising the AI disinhibition scale, only one — "it is easier to vent or let off steam with AI" — showed a significant negative relationship with hostile response likelihood at the bivariate level (r = −.201, p = .017). The remaining AI disinhibition items — expressing true thoughts, saying things one would not say to a person, feeling less judged, being more direct — showed no significant relationship with HRL. This item-level specificity is theoretically important: it is not disinhibition per se that predicts reduced hostile intent, but specifically the venting function.</p>
         <p>This interpretation is necessarily tentative. The finding is item-level, cross-sectional, and based on a single student sample. It requires replication and experimental follow-up before strong claims can be sustained. But it represents a genuinely novel empirical observation — one that opens a theoretically productive line of inquiry at the intersection of emotion regulation, human-AI interaction, and cyber-aggression research.</p>
         <div class="refs"><strong>Key references:</strong> Bushman (2002); Suler (2004)</div>
+        <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
+      </section>
+
+      <!-- ══════════════ 2.9 LITERATURE GAPS ══════════════ -->
+      <section class="theory-section" id="sec-gaps">
+        <div class="section-tag"><span class="tag-dot" style="background:rgba(216,90,48,.8)"></span> Literature gaps</div>
+        <h2>2.9 Literature Gaps and Research Rationale</h2>
+        <p class="section-intro">Three specific gaps in the existing literature motivate the present study's design. Each is addressed directly by the UCA research framework.</p>
+        <p>The literature reviewed above establishes a coherent theoretical lineage from the frustration-aggression hypothesis through GAM, SIDE, and online disinhibition theory to the empirical study of cyber-aggression. Several gaps, however, remain insufficiently addressed.</p>
+        <p>First, the majority of cyber-aggression research has been conducted in the context of adolescent cyberbullying, with adult populations and non-school settings remaining comparatively understudied (Kowalski et al., 2014). The mechanisms that govern hostile online behaviour in adult populations — where power imbalances are less structurally fixed, institutional oversight is absent, and AI tool use is substantially higher — cannot be assumed to replicate those found in adolescent samples.</p>
+        <p>Second, while anonymity has been consistently theorised as a risk factor for cyber-aggression (Suler, 2004; Lapidot-Lefler &amp; Barak, 2012; Tennakoon et al., 2024), the SIDE framework's prediction that anonymity effects are normatively conditional has rarely been tested in the context of hostile response likelihood specifically. The possibility that anonymity operates differently in AI-mediated communicative contexts — where the normative reference group may be less clearly defined and social identity cues are further attenuated — has not been examined. The present study's negative anonymity finding (β = −.232, p &lt; .05) directly engages this gap.</p>
+        <p>Third, and most significantly, the constructs most directly relevant to the contemporary online environment — habitual AI use, trust in AI systems, and AI-specific disinhibition — are absent from existing predictive models of cyber-aggression. Tennakoon et al. (2024) provided the most methodologically proximate precedent, employing PLS-SEM to model personal and situational predictors of cyber-aggression in an adult sample, but their framework predates the mass adoption of generative AI and includes no AI-specific constructs. The theoretical case for their inclusion, established in the preceding sections, has not yet been matched by empirical investigation.</p>
+        <p>The present study addresses these gaps directly. Drawing on Tennakoon et al.'s (2024) framework as its methodological foundation, it extends the predictive model to include habitual AI use, AI trust, and AI disinhibition alongside the established predictors of moral disengagement and anonymity, in a sample of Irish university students — an adult population for whom AI tool use is both routine and consequential.</p>
+        <div class="refs"><strong>Key references:</strong> Kowalski et al. (2014); Suler (2004); Lapidot-Lefler &amp; Barak (2012); Tennakoon et al. (2024)</div>
         <button class="back-to-map" onclick="scrollToMap()">↑ Back to map</button>
       </section>
 
@@ -415,7 +378,13 @@
       const el = document.getElementById('lit-map');
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    // Keyboard accessibility for SVG nodes
+    // Handle anchor on load (from mindmap.html links)
+    window.addEventListener('DOMContentLoaded', () => {
+      if (location.hash) {
+        const el = document.querySelector(location.hash);
+        if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+      }
+    });
     document.querySelectorAll('.map-node').forEach(node => {
       node.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
