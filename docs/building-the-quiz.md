@@ -2,7 +2,7 @@
 
 **A step-by-step walkthrough of building ucahub.ie/quiz**
 
-This document captures the actual conversation and process used to build a cyberpsychology quiz system for [ucahub.ie](https://ucahub.ie) using [Claude Code](https://claude.com/claude-code), Anthropic's CLI tool for Claude. Every step below happened in a single session.
+This document captures the actual conversation and process used to build a cyberpsychology quiz system for [ucahub.ie](https://ucahub.ie) using [Claude Code](https://claude.com/claude-code), Anthropic's CLI tool for Claude. The core build happened in a single evening session; a separate file hierarchy scan ran in the background during the same session and is noted where it appears.
 
 ---
 
@@ -20,7 +20,7 @@ Start with quiz.html and quiz-data.js. Minimum 40 questions, viva mode gated
 by passphrase, matches existing ucahub.ie styling.
 ```
 
-Claude Code read the brief, then **autonomously launched an agent** to explore the full codebase — reading `style.css`, `app.js`, `index.html`, and every other page to understand the design system (CSS variables, theme support, component patterns, responsive breakpoints).
+The `start.prompt` pattern matters: it keeps the initial instruction clean and forces you to write the real requirements down before you start. Claude Code read the brief, then **autonomously launched an agent** to explore the full codebase — reading `style.css`, `app.js`, `index.html`, and every other page to understand the design system (CSS variables, theme support, component patterns, responsive breakpoints). It wasn't told to do this; it inferred that matching the existing style required understanding the existing style.
 
 ---
 
@@ -38,72 +38,62 @@ The quiz matched the site's three-theme system (dark/bright/paper), used the sam
 
 ---
 
-## Step 2: "How come it's not on my navbar?"
-
-I was looking at the live site, not a local preview. Claude suggested running a preview server with `!npx serve /home/Projects/ucahub`.
-
-**Lesson:** Claude Code can run local servers via the `!` prefix, which executes commands in the current session.
-
----
-
-## Step 3: "The longest answer is always right"
+## Step 2: "The longest answer is always right"
 
 Looking at the quiz, I noticed a pattern: the correct answer was consistently the most detailed option. Claude identified this as a two-part problem:
 
-1. **Option order** — Fixed by shuffling answer positions at render time (code fix)
-2. **Option length** — The correct answer was always more detailed than the distractors (content fix)
+1. **Option order** — Fixed by shuffling answer positions at render time (one-line code fix)
+2. **Option length** — The correct answer was always more detailed than the distractors (content problem, not a code problem)
 
-Claude initially added answer shuffling AND a Claude API integration for dynamic question generation. But then I suggested a different approach...
+Claude rewrote the entire question bank with balanced options, where all four choices are similar in length and plausibility. This brought the count down to 132 (quality over quantity), then a background agent expanded it back to 332.
+
+**The lesson here:** The problem wasn't in the code — it was in the content. Wrong answers need to be wrong in *substance*, not in *effort*. This distinction matters for any generated question bank.
 
 ---
 
-## Step 4: "Can we just generate 1000 questions?"
+## Step 3: "Can we just generate 1000 questions?"
 
-Rather than API-based generation, I wanted a large static bank that picks randomly each session. Claude:
+Rather than API-based generation at runtime, I wanted a large static bank that picks randomly each session. Claude:
 
-1. Removed the API generator
+1. Removed the API generator it had prototyped
 2. Expanded the question bank to 335 questions
 3. Added a "50" option to the quiz length selector
 
-But the length problem persisted — wrong answers were still obviously shorter. So Claude **rewrote the entire question bank** with balanced options, where all four choices are similar in length and plausibility. This brought the count down to 132 (quality over quantity), then a background agent expanded it back to 332.
-
-**Key insight:** The problem wasn't code — it was content. Wrong answers need to be wrong in *substance*, not in *effort*.
+The static bank approach turned out to be strictly better for this use case: no API key required, no latency on question load, works offline, and the question set is auditable.
 
 ---
 
-## Step 5: Statistics Detour — "How many questions prove mastery?"
+## Step 4: Statistics Detour — "How many questions prove mastery?"
 
 I asked: if I get questions right across multiple quizzes, how many do I need before I can assert I probably know them all?
 
-Claude provided a statistical analysis using:
+Claude worked through the **Rule of Three**: if you answer n questions correctly with 0 wrong, you can be 95% confident your true error rate is below 3/n. Practically:
 
-- **Bayesian posterior**: With uniform prior, P(ace all N) = (n+1)/(N+n+1) — meaning you need to answer nearly all questions to be >50% confident
-- **Rule of Three**: If 0 wrong in n attempts, 95% confident error rate < 3/n
-  - 30 right, 0 wrong → error rate < 10%
-  - 60 right, 0 wrong → error rate < 5%
-  - 100 right, 0 wrong → error rate < 3%
+- 30 right, 0 wrong → error rate < 10% with 95% confidence
+- 60 right, 0 wrong → error rate < 5%
+- 100 right, 0 wrong → error rate < 3%
 
-And confirmed that **cumulative success counts** — three quizzes of 10 with 0 wrong is statistically equivalent to 30 right, since questions are randomly drawn each session.
+It also confirmed that **cumulative success across sessions counts** — three quizzes of 10 with 0 wrong is statistically equivalent to 30 consecutive correct answers, since questions are randomly drawn each session.
 
-This led directly to the next feature...
+This analysis led directly to the next feature.
 
 ---
 
-## Step 6: Cumulative Mastery Tracking
+## Step 5: Cumulative Mastery Tracking
 
 Claude built a localStorage-based mastery tracker that persists across sessions:
 
 - **Correct / Attempted / Streak** — running totals
 - **Unique questions** — tracks which specific questions you've answered correctly (by ID) out of the total bank
 - **Progress bar** — visual coverage of the question bank
-- **Rule of Three estimate** — "With 30 correct and 0 wrong, you can be 95% confident you'd get at least 90% right"
+- **Rule of Three estimate** — live confidence interval based on your actual session history
 - **Reset button** — clears all stats
 
 Shown on both the home screen (after first quiz) and the results screen.
 
 ---
 
-## Step 7: Questioning the Passphrase
+## Step 6: Questioning the Passphrase
 
 The brief specified a passphrase-gated viva prep mode. I asked: "Where's the passphrase set?"
 
@@ -111,71 +101,45 @@ Claude showed me it was a JS constant in the HTML file. Then I asked the more im
 
 Claude listed what the viva questions contain (specific beta values, model answers to examiner questions, methodological defense strategies) and noted that:
 
-- The findings will be public in the dissertation
-- The "security" is view-source-level anyway
+- The findings will be public in the dissertation anyway
+- The "security" is view-source-level regardless
 - It adds friction for the main user (me)
 
 I agreed: **"Why do we feel we need to protect it?"**
 
 Claude confirmed we don't. I asked to keep the viva mode but make it a simple toggle button instead of a passphrase modal. Claude removed the modal HTML, CSS, JS, and passphrase constant — replaced it all with a single `toggleVivaMode()` function.
 
-**Lesson:** Claude Code can help you question your own requirements. The brief said "passphrase" but the conversation revealed it was unnecessary complexity.
+**This is the most useful thing Claude Code did in the session:** it helped me question my own requirements. The brief said "passphrase" but the conversation revealed it was unnecessary complexity. A tool that pushes back on the spec is more valuable than one that just executes it.
 
 ---
 
-## Step 8: Ship It
+## Step 7: Expanding to 1000 Questions
 
-```
-> Okay, let's push this puppy up!
-```
-
-Claude ran `git status`, `git diff --stat`, and `git log` in parallel, then committed with a descriptive message and pushed to origin. Cloudflare Pages auto-deployed.
-
-**The commit:**
-```
-feat: add cyberpsychology quiz system at /quiz/
-
-332-question bank across 7 categories. All MCQ options balanced
-in length to prevent guessing by answer size.
-
-Features:
-- Category and difficulty filters, selectable quiz length
-- Shuffled questions and answer options each session
-- Immediate feedback with explanations and academic references
-- Cumulative mastery tracking via localStorage with Rule of Three estimate
-- Viva prep mode (toggle button) for dissertation-specific questions
-- Results screen with category breakdown
-- Quiz nav link added to all site pages
-- Matches existing ucahub dark/bright/paper theme system
-```
-
----
-
-## Step 9: "How hard would it be to bring that up to 1000?"
-
-Claude launched **three agents in parallel**, each handling different categories:
+Claude launched **three agents in parallel**, each writing questions for different category groups:
 
 1. Agent 1: ~300 cyber-aggression + moral disengagement questions
 2. Agent 2: ~180 online disinhibition + AI psychology questions
 3. Agent 3: ~188 research methods + personality questions
 
-All working simultaneously on the same file, each inserting before the viva section.
+Each agent was assigned a non-overlapping section of `quiz-data.js` — Agent 1 inserting at the top of its category block, Agents 2 and 3 after theirs. Claude coordinated the insertion points before dispatching them so they wouldn't write to the same lines simultaneously. The merge was clean; no manual intervention needed.
+
+This is worth understanding: the parallelism wasn't random. Claude structured the task so each agent had exclusive ownership of its file region. If you tried this naively (three agents writing to the same file without coordination), you'd get conflicts.
+
+---
+
+## What Didn't Work
+
+This document would be dishonest without this section.
+
+**Option length crept back.** After the initial rewrite to balance option lengths, the bulk expansion (332 → 1000) reintroduced length imbalance in some categories. The parallel agents maintained the constraint better than a single agent doing sequential expansion, but it wasn't perfect. A post-generation audit pass would catch this.
+
+**Some generated questions were too similar.** With 1000 questions across 7 categories, semantic overlap is inevitable. A handful of questions in the research methods category were near-duplicates with different surface wording. Fixable with a deduplication pass, but not done in this session.
+
+**Time estimates were wrong, consistently.** See the timing table below.
 
 ---
 
 ## Patterns Worth Noting
-
-### Claude Code features used in this session
-
-| Feature | How it was used |
-|---|---|
-| **start.prompt** | Kicked off the entire build from a two-line file |
-| **Agent (Explore)** | Autonomously explored the codebase to understand styling |
-| **Agent (general-purpose)** | Added nav links to 7 files, expanded question bank |
-| **Parallel agents** | Three agents writing questions simultaneously |
-| **Background agents** | Long-running tasks that notify on completion |
-| **`!` commands** | Running local preview server in-session |
-| **localStorage** | Persistent mastery tracking with no backend |
 
 ### How the conversation shaped the product
 
@@ -191,8 +155,6 @@ The brief specified one thing. The conversation produced something different —
 
 ### Time breakdown — and a note on estimates
 
-These are wall-clock times, not compute times. They will surprise you.
-
 | Task | Estimated | Actual |
 |---|---|---|
 | Initial build (quiz + 51 questions + nav links) | ~3 min | ~3 min |
@@ -203,33 +165,27 @@ These are wall-clock times, not compute times. They will surprise you.
 | Expanding to 1000 questions (3 parallel agents) | ~15 min | ~30 min |
 | **Total session** | **~40 min** | **~68 min** |
 
-**Why the estimates were wrong:** Claude Code's timing estimates are based on per-operation latency floors, not real-world throughput. Every API call involves network round trips, rate-limit backoff, content sampling, and retry logic. A scan estimated at "19 minutes" based on 0.2 seconds per file will take considerably longer because 0.2s is the minimum delay floor, not the mean. A separate hierarchy scan run during the same evening — 5,670 files, estimated at 19 minutes — took over 90 minutes to complete.
+**Why the estimates were wrong:** Claude Code's timing estimates are based on per-operation latency floors, not real-world throughput. Every API call involves network round trips, rate-limit backoff, content sampling, and retry logic. A separate hierarchy scan run during the same session — 5,670 files, estimated at 19 minutes — took over 90 minutes to complete.
 
-**The practical rule:** Take Claude's time estimate, double it, and treat that as the floor. For bulk content generation tasks (writing 1000 questions, processing thousands of files), plan for 3-4x the headline estimate. The work still gets done — it just takes longer than advertised.
-
-This isn't a criticism of Claude Code — it's a calibration note. The estimates reflect how fast the operations *could* run; real-world conditions (API throughput, network latency, content complexity) determine how fast they *do* run.
+**The practical rule:** Take Claude's time estimate and treat it as the floor, not the mean. For bulk content generation (writing 1000 questions, processing thousands of files), plan for 3-4× the headline estimate. The work still gets done — it just takes longer than advertised.
 
 ---
 
 ## Reproducing This
 
-To build something similar with Claude Code:
+A few things that are specific to this project and wouldn't be obvious going in:
 
-1. **Write a brief first.** Put it in a markdown file. Be specific about constraints (static site, no build step, match existing style).
+**The static site constraint shapes everything.** No build step means no bundler, no transpilation, no npm. Every file Claude generates has to work as plain HTML/CSS/JS in a browser. This is a constraint worth stating explicitly in your brief — Claude Code will default to whatever tooling seems natural for the language otherwise.
 
-2. **Start with a prompt file.** A `start.prompt` that points to the brief keeps the initial instruction clean.
+**The `start.prompt` pattern works.** A two-line file pointing at a brief keeps the initial instruction focused. It also forces you to write the real requirements before you start rather than narrating them interactively. The brief took 20 minutes to write; it saved significant back-and-forth later.
 
-3. **Let Claude explore.** Don't describe your codebase — let Claude read it. It found the CSS variables, theme system, and component patterns on its own.
+**Let Claude read your codebase before it writes anything.** Don't describe your CSS variables or theme system — point Claude at the repo and let it explore. It found the three-theme system, the CSS variable naming conventions, and the component structure by reading, not by being told. The quiz matched the existing site because Claude understood the existing site.
 
-4. **Iterate through use.** The best improvements came from actually using the quiz and reporting what felt wrong ("longest answer is always right").
+**For bulk content tasks, assign each agent an exclusive file region.** Don't set three agents loose on the same file without coordinating insertion points first. The parallel expansion worked cleanly because Claude structured it so agents had non-overlapping ownership.
 
-5. **Question your own requirements.** Claude can help you realise when a feature (like a passphrase) adds complexity without value.
-
-6. **Use parallel agents for bulk work.** Expanding from 332 to 1000 questions would be tedious one-by-one but trivial with three agents working simultaneously.
-
-7. **Plan your time honestly.** If Claude says 15 minutes, block 45. The output is worth it — just don't schedule it before a deadline.
+**Plan your time honestly.** If Claude says 15 minutes, block 45. For anything involving bulk generation or large file scans, block more.
 
 ---
 
-*Built with [Claude Code](https://claude.com/claude-code) in a single session, March 2026.*  
+*Built with [Claude Code](https://claude.com/claude-code), March 2026.*  
 *Try the quiz: [ucahub.ie/quiz](https://ucahub.ie/quiz)*
