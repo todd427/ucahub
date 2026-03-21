@@ -1,0 +1,3 @@
+Read docs/quiz-brief.md and build the cyberpsychology quiz system as described.
+Start with quiz.html and quiz-data.js. Minimum 40 questions, viva mode gated
+by passphrase, matches existing ucahub.ie styling.
