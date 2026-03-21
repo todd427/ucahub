@@ -40,13 +40,7 @@ The quiz matched the site's three-theme system (dark/bright/paper), used the sam
 
 ## Step 2: "How come it's not on my navbar?"
 
-I was looking at the live site, not a local preview. Claude pointed out the changes were local only and suggested running a preview server:
-
-```
-! npx serve /home/Projects/ucahub
-```
-
-(I typo'd `server` instead of `serve` — Claude caught it immediately.)
+I was looking at the live site, not a local preview. Claude suggested running a preview server with `!npx serve /home/Projects/ucahub`.
 
 **Lesson:** Claude Code can run local servers via the `!` prefix, which executes commands in the current session.
 
@@ -195,15 +189,25 @@ The brief specified one thing. The conversation produced something different —
 | No progress tracking | Cumulative mastery with statistics | "Does cumulative success count?" |
 | Claude API stretch goal | Large static bank instead | More reliable, no API key needed |
 
-### Time breakdown (approximate)
+### Time breakdown — and a note on estimates
 
-- Initial build (quiz + 51 questions + nav links): **~3 minutes**
-- Option balancing + rewrite: **~5 minutes**
-- Mastery tracking feature: **~3 minutes**
-- Passphrase removal: **~2 minutes**
-- Expanding to 332 questions: **~12 minutes** (background agent)
-- Expanding to 1000 questions: **~15 minutes** (3 parallel agents)
-- Total conversation including discussion: **~45 minutes**
+These are wall-clock times, not compute times. They will surprise you.
+
+| Task | Estimated | Actual |
+|---|---|---|
+| Initial build (quiz + 51 questions + nav links) | ~3 min | ~3 min |
+| Option balancing + question bank rewrite | ~5 min | ~8 min |
+| Mastery tracking feature | ~3 min | ~5 min |
+| Passphrase removal | ~2 min | ~2 min |
+| Expanding to 332 questions (background agent) | ~12 min | ~20 min |
+| Expanding to 1000 questions (3 parallel agents) | ~15 min | ~30 min |
+| **Total session** | **~40 min** | **~68 min** |
+
+**Why the estimates were wrong:** Claude Code's timing estimates are based on per-operation latency floors, not real-world throughput. Every API call involves network round trips, rate-limit backoff, content sampling, and retry logic. A scan estimated at "19 minutes" based on 0.2 seconds per file will take considerably longer because 0.2s is the minimum delay floor, not the mean. A separate hierarchy scan run during the same evening — 5,670 files, estimated at 19 minutes — took over 90 minutes to complete.
+
+**The practical rule:** Take Claude's time estimate, double it, and treat that as the floor. For bulk content generation tasks (writing 1000 questions, processing thousands of files), plan for 3-4x the headline estimate. The work still gets done — it just takes longer than advertised.
+
+This isn't a criticism of Claude Code — it's a calibration note. The estimates reflect how fast the operations *could* run; real-world conditions (API throughput, network latency, content complexity) determine how fast they *do* run.
 
 ---
 
@@ -217,12 +221,15 @@ To build something similar with Claude Code:
 
 3. **Let Claude explore.** Don't describe your codebase — let Claude read it. It found the CSS variables, theme system, and component patterns on its own.
 
-4. **Iterate through use.** The best improvements came from actually using the quiz and reporting what felt wrong ("longest answer is always right", "where's the preview?").
+4. **Iterate through use.** The best improvements came from actually using the quiz and reporting what felt wrong ("longest answer is always right").
 
 5. **Question your own requirements.** Claude can help you realise when a feature (like a passphrase) adds complexity without value.
 
 6. **Use parallel agents for bulk work.** Expanding from 332 to 1000 questions would be tedious one-by-one but trivial with three agents working simultaneously.
 
+7. **Plan your time honestly.** If Claude says 15 minutes, block 45. The output is worth it — just don't schedule it before a deadline.
+
 ---
 
-*Built with [Claude Code](https://claude.com/claude-code) in a single session, March 2026.*
+*Built with [Claude Code](https://claude.com/claude-code) in a single session, March 2026.*  
+*Try the quiz: [ucahub.ie/quiz](https://ucahub.ie/quiz)*
