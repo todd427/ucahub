@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UCAHub Cyberpsychology Quiz — test your knowledge of cyber-aggression, moral disengagement, online disinhibition, and research methods.">
+  <title>Quiz — UCAHub</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+  <script src="/quiz/quiz-data.js" defer></script>
+  <style>
+    /* ==================== QUIZ STYLES ==================== */
+    .quiz-wrap{
+      margin-top:18px;
+      padding:24px 22px;
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      background:var(--card);
+      box-shadow:var(--shadow);
+    }
+    .quiz-wrap h2{margin:0 0 6px;font-size:1.375rem}
+    .quiz-wrap p.subtitle{margin:0 0 18px;color:var(--muted);font-size:0.875rem}
+
+    /* Viva banner */
+    .viva-banner{
+      display:none;
+      margin-bottom:16px;
+      padding:10px 14px;
+      border-radius:14px;
+      background:linear-gradient(135deg,rgba(151,237,195,.15),rgba(122,162,255,.10));
+      border-left:4px solid rgba(151,237,195,.8);
+      font-size:0.875rem;
+      color:var(--text);
+    }
+    .viva-banner.active{display:block}
+
+    /* Category chips */
+    .chip-group{
+      display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;
+    }
+    .chip{
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid var(--control-border);
+      background:var(--control-bg);
+      color:var(--muted);
+      font-size:0.8125rem;
+      cursor:pointer;
+      user-select:none;
+      transition:background .15s,color .15s,border-color .15s;
+    }
+    .chip:hover{
+      color:var(--text);
+      border-color:var(--control-hover-border);
+      background:var(--control-hover-bg);
+    }
+    .chip.selected{
+      background:var(--btn-bg);
+      border-color:var(--accent);
+      color:var(--text);
+    }
+
+    /* Filter row */
+    .filter-row{
+      display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:18px;
+    }
+    .filter-row label{
+      font-size:0.8125rem;color:var(--muted);
+    }
+    .filter-row select{
+      padding:7px 10px;
+      border-radius:12px;
+      border:1px solid var(--control-border);
+      background:var(--control-bg);
+      color:var(--text);
+      font-size:0.8125rem;
+      cursor:pointer;
+      font-family:inherit;
+    }
+    .filter-row select:focus{
+      outline:2px solid rgba(122,162,255,.55);
+      outline-offset:2px;
+    }
+
+    /* Start / action buttons */
+    .quiz-actions{
+      display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;
+    }
+
+    /* Progress bar */
+    .progress-bar-wrap{
+      margin-bottom:18px;
+    }
+    .progress-info{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:6px;font-size:0.8125rem;color:var(--muted);
+    }
+    .progress-track{
+      height:6px;
+      border-radius:999px;
+      background:var(--control-bg);
+      border:1px solid var(--control-border);
+      overflow:hidden;
+    }
+    .progress-fill{
+      height:100%;
+      border-radius:999px;
+      background:var(--accent);
+      transition:width .3s ease;
+    }
+
+    /* Question */
+    .question-text{
+      font-size:1.125rem;
+      line-height:1.5;
+      margin:0 0 18px;
+      color:var(--text);
+    }
+    .question-meta{
+      display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;
+    }
+    .q-badge{
+      font-size:11px;padding:4px 8px;border-radius:999px;
+      border:1px solid var(--control-border);
+      background:var(--control-bg);color:var(--muted);
+    }
+
+    /* Answer options */
+    .options-list{
+      list-style:none;padding:0;margin:0 0 4px;
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .option-btn{
+      display:block;width:100%;text-align:left;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--control-border);
+      background:var(--control-bg);
+      color:var(--text);
+      font-size:0.9375rem;
+      cursor:pointer;
+      font-family:inherit;
+      line-height:1.4;
+      transition:background .15s,border-color .15s;
+    }
+    .option-btn:hover:not(.locked){
+      background:var(--control-hover-bg);
+      border-color:var(--control-hover-border);
+    }
+    .option-btn.correct{
+      background:rgba(151,237,195,.15);
+      border-color:rgba(151,237,195,.5);
+      color:var(--text);
+    }
+    .option-btn.incorrect{
+      background:rgba(255,80,80,.12);
+      border-color:rgba(255,80,80,.4);
+      color:var(--text);
+    }
+    .option-btn.locked{cursor:default}
+
+    /* Short answer */
+    .short-answer-wrap{margin-bottom:4px}
+    .short-answer-note{
+      font-size:0.8125rem;color:var(--muted);margin:0 0 12px;
+      font-style:italic;
+    }
+
+    /* Feedback card */
+    .feedback-card{
+      margin-top:16px;
+      padding:16px 18px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:var(--control-bg);
+    }
+    .feedback-card .result-icon{
+      font-size:1.25rem;margin-bottom:6px;display:block;
+    }
+    .feedback-card .explanation{
+      font-size:0.875rem;color:var(--muted);line-height:1.5;
+      margin:8px 0;
+    }
+    .feedback-card .reference{
+      font-size:0.75rem;color:var(--muted);font-style:italic;
+      margin:8px 0 0;opacity:.8;
+    }
+
+    /* Results screen */
+    .results-header{
+      text-align:center;margin-bottom:24px;
+    }
+    .score-big{
+      font-size:3rem;font-weight:700;color:var(--text);
+      line-height:1.1;
+    }
+    .score-label{
+      font-size:0.875rem;color:var(--muted);margin-top:4px;
+    }
+    .breakdown{
+      margin:0 0 20px;
+    }
+    .breakdown h3{
+      margin:0 0 10px;font-size:1rem;color:var(--text);
+    }
+    .breakdown-list{
+      list-style:none;padding:0;margin:0;
+      display:flex;flex-direction:column;gap:6px;
+    }
+    .breakdown-item{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:8px 12px;
+      border-radius:12px;
+      border:1px solid var(--control-border);
+      background:var(--control-bg);
+      font-size:0.8125rem;
+    }
+    .breakdown-item .cat-name{color:var(--text);text-transform:capitalize}
+    .breakdown-item .cat-score{color:var(--muted)}
+
+    /* Mastery tracker */
+    .mastery-card{
+      margin-top:18px;
+      padding:14px 16px;
+      border-radius:14px;
+      border:1px solid var(--control-border);
+      background:var(--control-bg);
+    }
+    .mastery-card h4{margin:0 0 8px;font-size:0.875rem;color:var(--text)}
+    .mastery-stats{
+      display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;
+      font-size:0.8125rem;color:var(--muted);
+    }
+    .mastery-stats span{display:flex;align-items:center;gap:4px}
+    .mastery-stats strong{color:var(--text)}
+    .mastery-bar-track{
+      height:8px;border-radius:999px;
+      background:var(--control-bg);border:1px solid var(--control-border);
+      overflow:hidden;margin-bottom:6px;
+    }
+    .mastery-bar-fill{
+      height:100%;border-radius:999px;
+      background:linear-gradient(90deg,var(--accent),rgba(151,237,195,.8));
+      transition:width .4s ease;
+    }
+    .mastery-estimate{
+      font-size:0.75rem;color:var(--muted);font-style:italic;
+    }
+    .mastery-reset{
+      font-size:0.75rem;color:var(--muted);
+      background:none;border:none;cursor:pointer;
+      font-family:inherit;text-decoration:underline;
+      padding:0;margin-top:6px;
+    }
+    .mastery-reset:hover{color:var(--text)}
+
+    /* Screen visibility */
+    .screen{display:none}
+    .screen.active{display:block}
+
+    /* Viva footer link */
+    .viva-link{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:0.75rem;color:var(--muted);
+      text-decoration:none;cursor:pointer;
+      padding:4px 0;
+      border:none;background:none;
+      font-family:inherit;
+    }
+    .viva-link:hover{color:var(--text)}
+    .footer-right{
+      display:flex;justify-content:flex-end;
+      margin-top:4px;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="container dim-wrap">
+    <header class="header">
+      <a class="brand" href="/"><div class="logo" aria-hidden="true"></div>
+        <div><h1 data-site-name>UCAHub</h1><p data-tagline>Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors</p></div>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/progress.html">Progress</a>
+        <a href="/updates.html">Updates</a>
+        <a href="/litreview.html">Lit Review</a>
+        <a href="/mindmap.html">Mind Map</a>
+        <a href="/quiz/">Quiz</a>
+        <a href="/about.html">About</a>
+        <a href="/ethics.html">Ethics</a>
+        <a href="/contact.html">Contact</a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme toggle">
+          Theme: <span class="theme-icon" aria-hidden="true"></span><span data-theme-label>Dark</span>
+        </button>
+        <span class="font-controls" aria-label="Text size controls">
+          <button class="fc-btn" id="fontDec" type="button" title="Smaller text">A−</button>
+          <button class="fc-btn" id="fontReset" type="button" title="Reset text size">A</button>
+          <button class="fc-btn" id="fontInc" type="button" title="Larger text">A+</button>
+          <span class="fc-label" id="fontLabel">100%</span>
+        </span>
+      </nav>
+    </header>
+
+    <main>
+      <div class="quiz-wrap">
+        <!-- Viva banner (hidden by default) -->
+        <div class="viva-banner" id="vivaBanner">
+          Viva Preparation Mode — These questions reflect your specific dissertation findings.
+        </div>
+
+        <!-- ===== HOME SCREEN ===== -->
+        <div class="screen active" id="screenHome">
+          <h2 id="quizTitle">Cyberpsychology Quiz</h2>
+          <p class="subtitle">Test your knowledge of cyber-aggression, moral disengagement, online disinhibition, AI psychology, and research methods.</p>
+
+          <h3 style="margin:0 0 8px;font-size:0.875rem;color:var(--muted)">Categories</h3>
+          <div class="chip-group" id="categoryChips"></div>
+
+          <div class="filter-row">
+            <label>Difficulty:
+              <select id="difficultyFilter">
+                <option value="all">All</option>
+                <option value="1">Beginner</option>
+                <option value="2">Intermediate</option>
+                <option value="3">Advanced</option>
+              </select>
+            </label>
+            <label>Questions:
+              <select id="countFilter">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="0">All</option>
+              </select>
+            </label>
+            <span id="availableCount" style="font-size:0.8125rem;color:var(--muted)"></span>
+          </div>
+
+          <div class="quiz-actions">
+            <button class="btn" id="btnStart" type="button">Start Quiz</button>
+          </div>
+
+          <!-- Mastery tracker on home screen -->
+          <div class="mastery-card" id="masteryHome" style="display:none">
+            <h4>Cumulative Mastery</h4>
+            <div class="mastery-stats">
+              <span><strong id="mhCorrect">0</strong> correct</span>
+              <span><strong id="mhTotal">0</strong> attempted</span>
+              <span><strong id="mhStreak">0</strong> streak</span>
+              <span><strong id="mhUnique">0</strong> unique</span>
+            </div>
+            <div class="mastery-bar-track"><div class="mastery-bar-fill" id="mhBar" style="width:0%"></div></div>
+            <div class="mastery-estimate" id="mhEstimate"></div>
+            <button class="mastery-reset" id="btnResetMastery" type="button">Reset stats</button>
+          </div>
+        </div>
+
+        <!-- ===== QUESTION SCREEN ===== -->
+        <div class="screen" id="screenQuestion">
+          <div class="progress-bar-wrap">
+            <div class="progress-info">
+              <span id="progressText">Question 1 of 10</span>
+              <span id="scoreText">Score: 0</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="question-meta" id="questionMeta"></div>
+          <p class="question-text" id="questionText"></p>
+
+          <!-- MCQ / True-False options -->
+          <ul class="options-list" id="optionsList"></ul>
+
+          <!-- Short answer (viva) -->
+          <div class="short-answer-wrap" id="shortAnswerWrap" style="display:none">
+            <p class="short-answer-note">This is an open-ended question. Think through your answer, then reveal the model response below.</p>
+            <button class="btn secondary" id="btnReveal" type="button">Reveal Model Answer</button>
+          </div>
+
+          <!-- Feedback -->
+          <div class="feedback-card" id="feedbackCard" style="display:none">
+            <span class="result-icon" id="resultIcon"></span>
+            <p class="explanation" id="explanationText"></p>
+            <p class="reference" id="referenceText"></p>
+          </div>
+
+          <div class="quiz-actions" id="nextWrap" style="display:none;margin-top:14px">
+            <button class="btn" id="btnNext" type="button">Next Question</button>
+          </div>
+        </div>
+
+        <!-- ===== RESULTS SCREEN ===== -->
+        <div class="screen" id="screenResults">
+          <div class="results-header">
+            <div class="score-big" id="finalScore">0%</div>
+            <div class="score-label" id="finalLabel">0 of 0 correct</div>
+          </div>
+          <div class="breakdown">
+            <h3>Category Breakdown</h3>
+            <ul class="breakdown-list" id="breakdownList"></ul>
+          </div>
+          <!-- Mastery tracker on results screen -->
+          <div class="mastery-card" id="masteryResults">
+            <h4>Cumulative Mastery</h4>
+            <div class="mastery-stats">
+              <span><strong id="mrCorrect">0</strong> correct</span>
+              <span><strong id="mrTotal">0</strong> attempted</span>
+              <span><strong id="mrStreak">0</strong> streak</span>
+              <span><strong id="mrUnique">0</strong> unique</span>
+            </div>
+            <div class="mastery-bar-track"><div class="mastery-bar-fill" id="mrBar" style="width:0%"></div></div>
+            <div class="mastery-estimate" id="mrEstimate"></div>
+          </div>
+
+          <div class="quiz-actions" style="margin-top:14px">
+            <button class="btn" id="btnRetry" type="button">Try Again</button>
+            <button class="btn secondary" id="btnHome" type="button">Change Settings</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="footer">
+      <span id="lastUpdated"></span>
+      <div>UCAHub is a project progress hub for Todd McCaffrey's MSc Cyberpsychology dissertation.</div>
+      <div class="footer-right">
+        <button class="viva-link" id="vivaToggle" type="button">Viva Prep</button>
+      </div>
+    </footer>
+  </div>
+
+
+  <script>
+  (function(){
+    "use strict";
+
+    // ── Config ──
+    const CATEGORY_LABELS = {
+      "cyber-aggression": "Cyber-Aggression",
+      "moral-disengagement": "Moral Disengagement",
+      "online-disinhibition": "Online Disinhibition",
+      "ai-psychology": "AI Psychology",
+      "research-methods": "Research Methods",
+      "personality": "Personality",
+      "viva-specific": "Viva-Specific"
+    };
+    const DIFFICULTY_LABELS = {1:"Beginner",2:"Intermediate",3:"Advanced"};
+
+    // ── State ──
+    let vivaMode = false;
+    let selectedCategories = new Set();
+    let quizQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let answers = []; // {category, correct:bool}
+    let answered = false;
+
+    // ── DOM refs ──
+    const $ = id => document.getElementById(id);
+    const screenHome = $("screenHome");
+    const screenQuestion = $("screenQuestion");
+    const screenResults = $("screenResults");
+
+    function showScreen(screen){
+      [screenHome, screenQuestion, screenResults].forEach(s=>s.classList.remove("active"));
+      screen.classList.add("active");
+    }
+
+    // ── Categories ──
+    function getAvailableCategories(){
+      const cats = new Set();
+      getFilteredBank().forEach(q=>cats.add(q.category));
+      return [...cats];
+    }
+
+    function getAllCategories(){
+      const cats = new Set();
+      QUIZ_QUESTIONS.forEach(q=>{
+        if(q.mode === "viva" && !vivaMode) return;
+        cats.add(q.category);
+      });
+      return [...cats].sort((a,b)=>{
+        const order = Object.keys(CATEGORY_LABELS);
+        return order.indexOf(a) - order.indexOf(b);
+      });
+    }
+
+    function renderCategoryChips(){
+      const container = $("categoryChips");
+      container.innerHTML = "";
+      const cats = getAllCategories();
+      cats.forEach(cat=>{
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "chip" + (selectedCategories.has(cat) ? " selected" : "");
+        chip.textContent = CATEGORY_LABELS[cat] || cat;
+        chip.addEventListener("click",()=>{
+          if(selectedCategories.has(cat)){
+            selectedCategories.delete(cat);
+            chip.classList.remove("selected");
+          }else{
+            selectedCategories.add(cat);
+            chip.classList.add("selected");
+          }
+          updateAvailableCount();
+        });
+        container.appendChild(chip);
+      });
+    }
+
+    // ── Filtering ──
+    function getFilteredBank(){
+      const diff = $("difficultyFilter").value;
+      return QUIZ_QUESTIONS.filter(q=>{
+        if(q.mode === "viva" && !vivaMode) return false;
+        if(diff !== "all" && q.difficulty !== Number(diff)) return false;
+        if(selectedCategories.size > 0 && !selectedCategories.has(q.category)) return false;
+        return true;
+      });
+    }
+
+    function updateAvailableCount(){
+      const filtered = getFilteredBank();
+      $("availableCount").textContent = filtered.length + " question" + (filtered.length===1?"":"s") + " available";
+    }
+
+    // ── Shuffle ──
+    function shuffle(arr){
+      const a = [...arr];
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]]=[a[j],a[i]];
+      }
+      return a;
+    }
+
+    // ── Start Quiz ──
+    function startQuiz(){
+      const filtered = getFilteredBank();
+      if(filtered.length === 0) return;
+      const count = Number($("countFilter").value);
+      const shuffled = shuffle(filtered);
+      quizQuestions = count > 0 ? shuffled.slice(0, count) : shuffled;
+      currentIndex = 0;
+      score = 0;
+      answers = [];
+      showScreen(screenQuestion);
+      renderQuestion();
+    }
+
+    // ── Render Question ──
+    function renderQuestion(){
+      answered = false;
+      const q = quizQuestions[currentIndex];
+      const total = quizQuestions.length;
+
+      // Progress
+      $("progressText").textContent = "Question " + (currentIndex+1) + " of " + total;
+      $("scoreText").textContent = "Score: " + score;
+      $("progressFill").style.width = ((currentIndex/total)*100) + "%";
+
+      // Meta badges
+      const meta = $("questionMeta");
+      meta.innerHTML = "";
+      const catBadge = document.createElement("span");
+      catBadge.className = "q-badge";
+      catBadge.textContent = CATEGORY_LABELS[q.category] || q.category;
+      meta.appendChild(catBadge);
+      const diffBadge = document.createElement("span");
+      diffBadge.className = "q-badge";
+      diffBadge.textContent = DIFFICULTY_LABELS[q.difficulty] || "";
+      meta.appendChild(diffBadge);
+
+      // Question text
+      $("questionText").textContent = q.question;
+
+      // Options
+      const optList = $("optionsList");
+      optList.innerHTML = "";
+      const saWrap = $("shortAnswerWrap");
+
+      if(q.type === "shortanswer"){
+        optList.style.display = "none";
+        saWrap.style.display = "block";
+        $("btnReveal").onclick = ()=> showShortAnswerFeedback(q);
+      } else {
+        optList.style.display = "";
+        saWrap.style.display = "none";
+        // Shuffle options so correct answer isn't always in the same position
+        const indexed = q.options.map((opt, i)=>({text:opt, origIndex:i}));
+        const shuffledOpts = shuffle(indexed);
+        shuffledOpts.forEach(opt=>{
+          const li = document.createElement("li");
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "option-btn";
+          btn.textContent = opt.text;
+          btn.addEventListener("click",()=> handleShuffledAnswer(opt.origIndex, q, optList, shuffledOpts));
+          li.appendChild(btn);
+          optList.appendChild(li);
+        });
+      }
+
+      // Hide feedback & next
+      $("feedbackCard").style.display = "none";
+      $("nextWrap").style.display = "none";
+    }
+
+    // ── Handle MCQ/TF Answer (with shuffled options) ──
+    function handleShuffledAnswer(selectedOrigIndex, q, optList, shuffledOpts){
+      if(answered) return;
+      answered = true;
+      const isCorrect = selectedOrigIndex === q.correct;
+      if(isCorrect) score++;
+      answers.push({category: q.category, correct: isCorrect});
+
+      // Highlight based on shuffled positions
+      const buttons = optList.querySelectorAll(".option-btn");
+      buttons.forEach((btn, displayIdx)=>{
+        btn.classList.add("locked");
+        const origIdx = shuffledOpts[displayIdx].origIndex;
+        if(origIdx === q.correct) btn.classList.add("correct");
+        if(origIdx === selectedOrigIndex && !isCorrect) btn.classList.add("incorrect");
+      });
+
+      showFeedback(q, isCorrect);
+    }
+
+    // ── Show Feedback ──
+    function showFeedback(q, isCorrect){
+      const card = $("feedbackCard");
+      card.style.display = "block";
+      if(isCorrect !== null){
+        $("resultIcon").textContent = isCorrect ? "Correct" : "Incorrect";
+        $("resultIcon").style.color = isCorrect ? "rgba(151,237,195,.95)" : "rgba(255,80,80,.9)";
+      } else {
+        $("resultIcon").textContent = "Model Answer";
+        $("resultIcon").style.color = "var(--accent)";
+      }
+      $("explanationText").textContent = q.explanation;
+      $("referenceText").textContent = q.reference ? q.reference : "";
+      $("nextWrap").style.display = "flex";
+      $("scoreText").textContent = "Score: " + score;
+    }
+
+    function showShortAnswerFeedback(q){
+      if(answered) return;
+      answered = true;
+      answers.push({category: q.category, correct: null});
+      showFeedback(q, null);
+    }
+
+    // ── Next Question ──
+    function nextQuestion(){
+      currentIndex++;
+      if(currentIndex >= quizQuestions.length){
+        showResults();
+      } else {
+        renderQuestion();
+      }
+    }
+
+    // ── Results ──
+    function showResults(){
+      showScreen(screenResults);
+      $("progressFill").style.width = "100%";
+
+      // Count scored questions (exclude short answer)
+      const scored = answers.filter(a=>a.correct !== null);
+      const correct = scored.filter(a=>a.correct).length;
+      const total = scored.length;
+      const pct = total > 0 ? Math.round((correct/total)*100) : 0;
+
+      $("finalScore").textContent = pct + "%";
+      $("finalLabel").textContent = correct + " of " + total + " correct" +
+        (answers.length > total ? " (" + (answers.length - total) + " open-ended)" : "");
+
+      // Category breakdown
+      const cats = {};
+      answers.forEach(a=>{
+        if(!cats[a.category]) cats[a.category] = {correct:0, total:0, open:0};
+        if(a.correct === null){
+          cats[a.category].open++;
+        } else {
+          cats[a.category].total++;
+          if(a.correct) cats[a.category].correct++;
+        }
+      });
+
+      const list = $("breakdownList");
+      list.innerHTML = "";
+      Object.keys(cats).sort().forEach(cat=>{
+        const c = cats[cat];
+        const li = document.createElement("li");
+        li.className = "breakdown-item";
+        const label = CATEGORY_LABELS[cat] || cat;
+        let scoreStr = c.total > 0 ? c.correct + "/" + c.total : "";
+        if(c.open > 0) scoreStr += (scoreStr ? " + " : "") + c.open + " open";
+        li.innerHTML = '<span class="cat-name">' + label + '</span><span class="cat-score">' + scoreStr + '</span>';
+        list.appendChild(li);
+      });
+
+      // Record and show cumulative mastery
+      const m = recordMasteryResults();
+      renderMasteryCard("mr", m);
+    }
+
+    // ── Mastery Tracking (localStorage) ──
+    const MASTERY_KEY = "ucahub_quiz_mastery";
+
+    function loadMastery(){
+      try {
+        const raw = localStorage.getItem(MASTERY_KEY);
+        if(!raw) return {correct:0, total:0, streak:0, uniqueIds:[]};
+        const m = JSON.parse(raw);
+        // ensure all fields exist
+        return {
+          correct: m.correct || 0,
+          total: m.total || 0,
+          streak: m.streak || 0,
+          uniqueIds: m.uniqueIds || []
+        };
+      } catch(e){
+        return {correct:0, total:0, streak:0, uniqueIds:[]};
+      }
+    }
+
+    function saveMastery(m){
+      localStorage.setItem(MASTERY_KEY, JSON.stringify(m));
+    }
+
+    function resetMastery(){
+      localStorage.removeItem(MASTERY_KEY);
+      renderMasteryHome();
+    }
+
+    function recordMasteryResults(){
+      const m = loadMastery();
+      // Process scored answers from this quiz
+      const scored = answers.filter(a => a.correct !== null);
+      let allCorrect = true;
+      scored.forEach((a, i) => {
+        m.total++;
+        if(a.correct){
+          m.correct++;
+          m.streak++;
+        } else {
+          m.streak = 0;
+          allCorrect = false;
+        }
+      });
+      // Track unique question IDs answered correctly
+      quizQuestions.forEach((q, i) => {
+        if(i < answers.length && answers[i].correct === true){
+          if(!m.uniqueIds.includes(q.id)) m.uniqueIds.push(q.id);
+        }
+      });
+      saveMastery(m);
+      return m;
+    }
+
+    function getMasteryEstimate(m){
+      const n = m.correct;
+      const wrong = m.total - m.correct;
+      const totalBank = QUIZ_QUESTIONS.filter(q => q.mode !== "viva" && q.type !== "shortanswer").length;
+
+      if(m.total === 0) return "";
+
+      const pct = Math.round((m.correct / m.total) * 100);
+      let estimate = "Accuracy: " + pct + "%. ";
+
+      if(wrong === 0 && n >= 3){
+        // Rule of Three: 95% confident error rate < 3/n
+        const maxErrorRate = 3 / n;
+        const estCorrect = Math.round((1 - maxErrorRate) * 100);
+        const estWrong = Math.round(maxErrorRate * totalBank);
+        estimate += "With " + n + " correct and 0 wrong, you can be 95% confident you'd get at least " + estCorrect + "% right (" + Math.max(0, totalBank - estWrong) + " of " + totalBank + " in the bank).";
+      } else if(m.total >= 5){
+        const p = m.correct / m.total;
+        const expected = Math.round(p * totalBank);
+        estimate += "At this rate, you'd likely get ~" + expected + " of " + totalBank + " questions in the bank.";
+      }
+
+      if(m.streak >= 10){
+        estimate += " Current streak: " + m.streak + " in a row!";
+      }
+
+      return estimate;
+    }
+
+    function renderMasteryCard(prefix, m){
+      const totalBank = QUIZ_QUESTIONS.filter(q => q.mode !== "viva" && q.type !== "shortanswer").length;
+      $(prefix + "Correct").textContent = m.correct;
+      $(prefix + "Total").textContent = m.total;
+      $(prefix + "Streak").textContent = m.streak;
+      $(prefix + "Unique").textContent = m.uniqueIds.length + "/" + totalBank;
+      // Bar = unique coverage of the bank
+      const coverage = totalBank > 0 ? Math.round((m.uniqueIds.length / totalBank) * 100) : 0;
+      $(prefix + "Bar").style.width = coverage + "%";
+      $(prefix + "Estimate").textContent = getMasteryEstimate(m);
+    }
+
+    function renderMasteryHome(){
+      const m = loadMastery();
+      const card = $("masteryHome");
+      if(m.total === 0){
+        card.style.display = "none";
+        return;
+      }
+      card.style.display = "block";
+      renderMasteryCard("mh", m);
+    }
+
+    // ── Viva Mode ──
+    function toggleVivaMode(){
+      vivaMode = !vivaMode;
+      $("vivaBanner").classList.toggle("active", vivaMode);
+      $("quizTitle").textContent = vivaMode ? "Viva Preparation Mode" : "Cyberpsychology Quiz";
+      $("vivaToggle").textContent = vivaMode ? "Exit Viva Mode" : "Viva Prep";
+      selectedCategories.clear();
+      renderCategoryChips();
+      updateAvailableCount();
+    }
+
+    // ── Wire up ──
+    document.addEventListener("DOMContentLoaded",()=>{
+      renderCategoryChips();
+      updateAvailableCount();
+      renderMasteryHome();
+
+      $("difficultyFilter").addEventListener("change", updateAvailableCount);
+      $("countFilter").addEventListener("change", updateAvailableCount);
+
+      $("btnStart").addEventListener("click", startQuiz);
+      $("btnNext").addEventListener("click", nextQuestion);
+      $("btnRetry").addEventListener("click",()=>{
+        startQuiz();
+      });
+      $("btnHome").addEventListener("click",()=>{
+        showScreen(screenHome);
+        updateAvailableCount();
+        renderMasteryHome();
+      });
+      $("btnResetMastery").addEventListener("click",()=>{
+        if(confirm("Reset all cumulative quiz stats?")) resetMastery();
+      });
+
+      // Viva
+      $("vivaToggle").addEventListener("click", toggleVivaMode);
+    });
+  })();
+  </script>
+</body>
+</html>
