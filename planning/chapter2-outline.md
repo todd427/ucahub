@@ -1,4 +1,4 @@
-# Chapter 2 — Literature Review: Working Outline (v2, data-first reframe)
+# Chapter 2 — Literature Review: Working Outline (v3, cyberbehaviour-first reframe)
 
 **Document status:** Working outline, not a chapter draft.
 **Date:** 23 April 2026
@@ -11,211 +11,322 @@
 
 ## Purpose of this document
 
-This is a working structural outline for Chapter 2. It captures the reframe agreed in drafting session 2026-04-23: moving from a theory-first opening (Freud and Cannon as first citations) to a data-first opening (establishing that cyber-aggression is a contemporary, measurable, and harmful phenomenon *before* introducing the theoretical lineage).
+This is a working structural outline for Chapter 2. It captures the second reframe agreed in drafting session 2026-04-23: moving from the data-first opening of v2 to a **cyberbehaviour-first** architecture. The chapter now opens with cyberbehaviour as genus and narrows to cyber-aggression as species, passing through the good/ambivalent/bad expression structure.
 
-The reframe responds to two concerns. First, Dr McWilliams's guidance that the chapter should show a "critical eye" rather than merely describe the theoretical frameworks — data-first naturally produces the critical framing. Second, the recognition that the examiner's first question is "why does this study need to exist?" — a question answered more directly by prevalence and harm data than by a century of theoretical history.
+The reframe was motivated by the drafting work on the cyberbehaviour umbrella itself. What began as a framing paragraph for section 2.2 grew into a full taxonomic treatment — eleven affordances synthesised across four theoretical lineages (Suler, boyd, Walther/Daft-Lengel, Thorson-Wells), followed by positive, ambivalent, and negative expression categories. This material is not a digression from the cyber-aggression argument; it *is* the argument's foundation. Placing it first prevents the moral-panic framing that treats cyber-aggression as the whole of cyberbehaviour rather than as one specific negative expression.
 
-The theoretical material drafted in earlier sessions is preserved; it is repositioned from section 2.1 (opening) to section 2.3, where it does substantive work answering the question "given the phenomenon exists, what theoretical resources do we have, and what are their limits?"
+The theoretical material (Freud → Finkel) and the infrastructure chronology remain in section 2.3 where v2 placed them. The prevalence/harm/Ireland empirical anchor moves into 2.1's negative-expressions subsection, where it does load-bearing work as the bridge from cyberbehaviour generally to cyber-aggression specifically.
 
 ---
 
-## Section structure (v2)
+## Chapter 2 mind map
 
-### 2.1 Cyber-aggression as a contemporary problem *(~500–700 words)*
+```mermaid
+mindmap
+  root((Chapter 2))
+    2.1 Cyberbehaviour
+      Opening
+        context for cyber-aggression
+      CMC definition
+        cost compression
+        Standage 1998
+        seven orders of magnitude
+        five-epoch list
+      Medium-contingency
+      Infrastructure stack
+        forward-ref to 2.3
+      Eleven affordances
+        Suler six
+        boyd four
+        Walther and Daft-Lengel
+        Thorson and Wells
+      Positive expressions
+        communities that scale
+        finding help
+        knowledge democratisation
+        near-zero cost
+        asynchronicity + persistence
+      Ambivalent middle
+        anonymity double-edged
+        eye-contact isolation
+        AI-venting as open question
+      Negative expressions
+        prevalence harm Ireland
+        Li 2024 umbrella
+        Foody 2017 Ireland
+        Kowalski 2014 harm
+      Narrowing to cyber-aggression
+    2.2 Defining cyber-aggression
+      Grigg 2010 superordinate
+      Cyberbullying Smith 2008
+      Cyberstalking Reyns 2011
+      Cyberstalking-inclusion explicit
+    2.3 Theoretical foundations
+      Freud 1920
+      Cannon 1915
+      Dollard 1939 Miller 1941
+      Berkowitz 1989 CNA
+      Bandura 1999 2002
+      Anderson Bushman 2002 GAM
+      Finkel 2014 I3
+      Communication infrastructure chronology
+    2.4 Face-to-face to mediated
+      SIDE
+      Suler disinhibition
+      Anonymity anomaly forecast
+    2.5 Moral disengagement
+      Bandura eight mechanisms
+      Pornari Wood 2010
+      Runions Bak 2015
+      Gaffney 2019
+      Tennakoon 2024 scale
+    2.6 AI-mediated interaction
+      Computers as Social Actors
+      Sundar machine heuristic
+      Skjuve relational development
+      Measurement validity problem
+    2.7 Personality factors
+      Dark Tetrad
+      CU traits
+      I3 impellance positioning
+    2.8 AI-venting hypothesis
+      Bushman 2002 classical
+      Kjaervik Bushman 2024 meta
+      AI as non-reciprocating
+      Regulatory scaffold framing
+    2.9 Synthesis and gaps
+      Theory-lag argument
+      Measurement validity
+      Regulatory scaffold reframe
+      Contributions
+```
 
-**Purpose.** Establish the phenomenon as real, measurable, harmful, and present in the study population. This is the "why does this study need to exist?" section.
+---
 
-**Key sources.**
-- Bussu, Pulina, Ashton, Mangiarulo & Molloy (2025). Narrative systematic review, 61 papers, university student populations. Range of victimisation rates 3.7–92% across studies, with variation attributed to operationalisation and sampling rather than underlying true variance. Harm findings include clinical depression, problematic alcohol use, loneliness, elevated suicidal behaviour, psychological maladjustment.
-- Ray, McDermott & Nicho (2024). PRISMA systematic review, 71 papers 2007–2022. Harm synthesis: depression, anxiety, psychological distress, self-harm, suicidal ideation. Documents the definitional inconsistency problem.
-- Kowalski, Giumetti, Schroeder & Lattanner (2014). Canonical meta-analysis. Already in Zotero. Foundational for harm outcomes.
-- Kowalski, Limber & McCord (2019). More recent longitudinal framing. For increasing-trend claim.
-- Modecki et al. (2014). Foundational prevalence estimate (~15% pooled). Already in Zotero.
-- Foody, Samara & O'Higgins Norman (2017). Ireland-specific meta-analysis, 39 studies. Cybervictimisation rates 13.7% primary, 9.6% post-primary. Background rather than direct evidence for adult university population but the only all-Ireland anchor.
-- Tennakoon et al. (2024). Methodological precedent for the vignette paradigm and for university-population focus.
+## Section structure (v3)
 
-**Structural moves.**
-1. Open with range-not-point-estimate. The Bussu et al. 3.7–92% range is itself diagnostic of the field's measurement-validity problem. Use this honestly rather than cherry-picking a single figure.
-2. Establish harm. Cyber-aggression is not a trivial social phenomenon — it produces measurable clinical outcomes including depression, anxiety, problematic alcohol use, and suicidal behaviour in university-age populations.
-3. Establish relevance to population. ATU Letterkenny students sit inside the demographic the literature identifies as at-risk (late-adolescent and young-adult, high digital engagement). The Irish context is under-researched in adult populations specifically.
-4. Close by flagging the infrastructure question. Cyber-aggression research has developed alongside the platforms it studies, always at a lag. The current infrastructure shift — routine AI adoption by the same population — is happening faster than the research can document. The dissertation is a small empirical probe into that shift.
+### 2.1 Cyberbehaviour *(~1,000–1,400 words)*
+
+**Purpose.** Establish cyberbehaviour as the genus within which cyber-aggression sits as species. Build the eleven-affordance umbrella, walk through positive/ambivalent/negative expressions, and narrow to the specific negative expression the dissertation examines. This is the largest section of the chapter because it is doing the conceptual, empirical, and rhetorical work that the other sections depend on.
+
+**Subsection structure.**
+
+**2.1.1 Opening and CMC definition.** Cyber-aggression needs context; the context is cyberbehaviour. CMC defined as conduct shaped by computer-mediated communication. Cost-compression sentence using Standage (1998) as anchor — communication cost collapsed by roughly seven orders of magnitude from 1866 transatlantic telegram to 2026 digital infrastructure.
+
+**2.1.2 Medium-contingency and infrastructure substrate.** Cyberbehaviour is not offline behaviour in a new medium; it is human interaction in a new cost regime. The substrate is the product of a cumulative infrastructure stack built over decades with each layer responding to the frictions of the one beneath. Forward reference to section 2.3 where the chronology is developed.
+
+**2.1.3 Eleven-affordance umbrella.** The structural affordances that make cyberbehaviour categorically different from face-to-face behaviour. Integrates four theoretical lineages:
+
+1. Dissociative anonymity (Suler, 2004)
+2. Invisibility (Lapidot-Lefler & Barak, 2012)
+3. Asynchronicity (Suler, 2004)
+4. Solipsistic introjection (Suler, 2004)
+5. Dissociative imagination (Suler, 2004)
+6. Minimisation of authority (Suler, 2004)
+7. Persistence (boyd, 2010)
+8. Scale and reach (boyd, 2010)
+9. Algorithmic mediation (Thorson & Wells, 2016)
+10. Searchability and aggregation (boyd, 2010)
+11. Reduced sensory bandwidth (Daft & Lengel, 1986; Walther, 1996)
+
+Position the synthesis honestly: constituent parts are established in source literatures; contribution is to apply the integrated framework to cyber-aggression research, where prior integration (Runions & Bak, 2015) is narrower in scope. Evans, Pearce, Vitak & Treem (2017) cited for the methodological case that such synthesis is needed.
+
+**2.1.4 Positive expressions.** Cyberbehaviour produces uniformly beneficial outcomes that the moral-panic framing elides. Five-item parallel list:
+
+1. Communities that scale — marginal groups, rare conditions, dispersed identities (McKenna & Bargh, 1998; boyd, 2010)
+2. Finding help — disclosure, help-seeking, benign disinhibition (Suler, 2004; Lapidot-Lefler & Barak, 2015)
+3. Democratisation of knowledge — Wikipedia, open-access repositories, scholarly search
+4. Near-zero communication cost — relationship maintenance across distance
+5. Asynchronicity and persistence — considered response, durable record (Suler, 2004; boyd, 2010)
+
+**2.1.5 The ambivalent middle.** Affordances that produce neither uniformly positive nor uniformly negative outcomes; the expression depends on context, target, and disposition. Anonymity protects whistleblowers and abuse survivors while enabling harassment — a genuine ambivalence rather than a balance to be resolved. Lapidot-Lefler & Barak's (2012) experimental isolation of lack-of-eye-contact as the principal driver of toxic disinhibition suggests the mechanism operates at a finer grain than early accounts held.
+
+This subsection is where the **AI-venting hypothesis gets structurally positioned** before section 2.8 develops it. The classical venting literature (Bushman 2002, Kjærvik & Bushman 2024) concerned human targets; whether that finding transfers to non-reciprocating interlocutors such as large language models is an open question. Positioning the hypothesis here — inside the ambivalent middle — avoids announcing it prematurely while laying the conceptual groundwork for 2.8.
+
+**2.1.6 Negative expressions — and the empirical anchor.** The uniformly harmful expressions of cyberbehaviour. This is where the prevalence/harm/Ireland data lives, because the harm data are the empirical reason the dissertation narrows to this specific subset rather than cyberbehaviour generally.
+
+- Umbrella review: Li, Wang, Martin-Moratinos, Bella-Fernández & Blasco-Fontecilla (2024). 56 meta-analyses, 296 effect sizes, sample range 421–1,136,080. The flagship citation for harm outcomes.
+- Prevalence anchors: Modecki et al. (2014) for ~15% pooled estimate; Zhu et al. (2021) for cross-national range.
+- Harm outcomes: Kowalski, Giumetti, Schroeder & Lattanner (2014) meta-analysis — depression, anxiety, self-harm, suicidal ideation.
+- Ireland anchor: Foody, Samara & O'Higgins Norman (2017) — school-age population; the only all-Ireland meta-analytic anchor available.
+- University-population thematic: Bussu et al. (2025) for the 3.7–92% range (itself diagnostic of the measurement-validity problem); Oksanen et al. (2022) for academic-population exposure to online hostility.
+- Methodological precedent: Tennakoon et al. (2024) for the vignette paradigm and university-population focus.
+
+Name the family: cyber-aggression covers cyberbullying, cyberstalking, trolling, doxing, sextortion, coordinated harassment, hostile impersonation. Runions & Bak (2015) for the affordance-to-moral-disengagement link within this family.
+
+**2.1.7 Narrowing move.** The dissertation examines one specific negative expression — cyber-aggression — in the Irish adult university population. Section 2.2 defines the term; subsequent sections develop the theoretical apparatus (2.3), the mediated-context literature (2.4), the moral disengagement mechanism (2.5), the AI-specific territory (2.6), personality factors (2.7), and the venting hypothesis (2.8).
 
 **What this section does NOT do.**
-- No theoretical content. Theory is deferred to 2.3.
-- No definition debate. Brief working definition only; detailed definitional treatment lives in 2.2.
-- No AI-specific hypotheses. Those live in 2.6 onward.
+- No theoretical lineage. Freud → Finkel deferred to 2.3.
+- No formal definition of cyber-aggression. Working gesture only; formal definition in 2.2.
+- No AI-specific hypotheses. Those live in 2.6 and 2.8.
 
 ---
 
-### 2.2 Defining cyber-aggression *(~300–400 words)*
+### 2.2 Defining cyber-aggression *(~400–500 words)*
 
-**Purpose.** Establish the working definition that the rest of the chapter operates under. Position cyber-aggression as superordinate category with internal diversity, then narrow to the reactive-hostile-intent aspect the dissertation measures.
+**Purpose.** Establish the working definition that the rest of the chapter operates under. Position cyber-aggression as superordinate category with internal diversity, name cyberbullying and cyberstalking explicitly as members, then narrow to the reactive-hostile-intent aspect the dissertation measures.
 
 **Key sources.**
-- Grigg (2010). Working superordinate definition.
-- Tokunaga (2010). Alternative definition, cited for comparison.
-- Smith et al. (2008). Canonical cyberbullying definition, treated as sub-category.
+- Grigg (2010, p. 152). Working superordinate definition: "intentional harm delivered by the use of electronic means to a person or a group of people, irrespective of their age, who perceive(s) such acts as offensive, derogatory, harmful or unwanted." Grigg explicitly names cyberstalking as a member of the superordinate category.
+- Smith, Mahdavi, Carvalho, Fisher, Russell & Tippett (2008, p. 376). Canonical cyberbullying definition: "an aggressive, intentional act carried out by a group or individual, using electronic forms of contact, repeatedly and over time against a victim who cannot easily defend him or herself." Ports Olweus's three traditional-bullying criteria (intentionality, repetition, power imbalance) into electronic context.
+- Reyns, Henson & Fisher (2011). Cyberstalking as "repeated, unwanted pursuit of another person that incites fear in the victim" via electronic means.
 - Runions (2013). Typology of cyber-aggression motives.
+- Tokunaga (2010). Alternative definition cited for comparison.
 
 **Structural moves.**
-1. Establish Grigg (2010) as working definition. Cyber-aggression as hostile, intentional digital communication directed at a human target.
-2. Name the family. Cyber-aggression covers cyberbullying, cyberstalking, trolling, doxing, sextortion, coordinated harassment, hostile impersonation, and related behaviours. These share the defining core (aggressive intent, digital medium, human target) and differ along dimensions of persistence, coordination, target selection, and motive mix.
-3. Scope the dissertation explicitly. The study examines one specific aspect — *reactive hostile intent under standardised provocation* — operationalised via the Tennakoon et al. (2024) vignette paradigm. This paradigm captures reactive single-incident hostile intent and does not capture persistence (cyberstalking), group coordination (pile-ons), or instrumental harassment campaigns.
-4. Flag the measurement validity issue. Instruments vary significantly across studies; the Bussu et al. (2025) range of 3.7–92% reflects measurement variation more than true prevalence difference. This measurement problem becomes acute when the research is applied to AI-mediated contexts, foreshadowing a framing point developed in 2.6.
+1. Grigg (2010) as working definition. Include the p. 152 quotation; note that Grigg's framing already positions cyberstalking inside the superordinate category.
+2. Cyberbullying (Smith et al., 2008) and cyberstalking (Reyns et al., 2011) as members, each with definition and distinguishing features. The inclusion-of-cyberstalking claim is made explicitly — this is not a novel move but a restatement of Grigg's founding position.
+3. Scope the dissertation. The study examines *reactive hostile intent under standardised provocation*, operationalised via the Tennakoon et al. (2024) vignette paradigm. This captures reactive single-incident hostile intent; it does not capture persistence (cyberstalking), coordination (pile-ons), or instrumental harassment.
+4. Flag the measurement validity issue (framing point 2). The Bussu et al. 3.7–92% range reflects measurement variation more than true prevalence difference. The problem becomes acute in AI-mediated contexts — foreshadowing 2.6.
 
 ---
 
 ### 2.3 Theoretical foundations *(~700–900 words)*
 
-**Purpose.** Trace the theoretical lineage that produced contemporary cyber-aggression research. This is the humanised-history section, with figures as people making specific intellectual moves at specific moments, not as citations.
+**Purpose.** Trace the theoretical lineage that produced contemporary cyber-aggression research, integrated with the communication infrastructure chronology that 2.1 forward-referenced. Humanised history — figures as people making specific intellectual moves at specific moments.
 
 **Key sources and figures.**
 - Freud (1920). *Beyond the Pleasure Principle*. Aggression as its own drive.
-- Cannon (1915). *Bodily Changes in Pain, Hunger, Fear and Rage*. Biological substrate; fight-or-flight.
-- Dollard, Doob, Miller, Mowrer & Sears (1939). *Frustration and Aggression*. Yale Institute of Human Relations; translation of Freudian content into behaviourist vocabulary.
+- Cannon (1915). Biological substrate; fight-or-flight.
+- Dollard, Doob, Miller, Mowrer & Sears (1939). *Frustration and Aggression*. Yale IHR.
 - Miller (1941). Walk-back of the strong FAH claim.
-- Berkowitz (1989). Cognitive Neoassociationistic Model. The reformulation that accommodates aversive affect and cognitive-appraisal stages.
-- Bandura (1999, 2002). Social learning theory; moral disengagement as mechanism that makes cyber-aggression perpetration cognitively possible.
-- Anderson & Bushman (2002). General Aggression Model. Current integrative framework.
-- Finkel (2014). I³ Model. Multiplicative reorganisation of the variables; instigation × impellance ÷ inhibition. The framework McWilliams approved for inclusion.
+- Berkowitz (1989). Cognitive Neoassociationistic Model. Built on the spreading-activation machinery (Quillian 1968; Collins & Loftus 1975; Anderson 1983) — chronology to be preserved precisely.
+- Bandura (1999, 2002). Social learning theory; moral disengagement.
+- Anderson & Bushman (2002). General Aggression Model.
+- Finkel (2014). I³ Model. Multiplicative reorganisation.
+- Communication infrastructure thread: Shannon (1948), Wiener (1948), ARPANET (1969), TCP/IP (Cerf & Kahn, 1974), Berners-Lee (1989/1993), Linux (Torvalds, 1991), Apache (1995). Each layer as response to the frictions of the one before.
 
 **Structural moves.**
-1. Open with Freud, 1920, as the move that makes aggression a theoretical object worth studying in its own right. Vienna, postwar, Sophie's death in January, the abandonment of the pleasure-principle monopoly. One or two sentences of biographical texture, not a full treatment.
-2. Brief mention of Cannon as adjacent biological substrate. Fight-or-flight is the physiology aggression research assumes but does not itself explain. Positioned as complementary, not the theoretical starting point.
-3. Forward to Dollard (1939). Yale IHR; the attempt to secularise Freud into behaviourist vocabulary; the strong claim and Miller's walk-back.
-4. Berkowitz's fifty-year arc compressed. 1958 catharsis critique; 1962 cognitive turn; 1989 CNA reformulation once cognitive science provided the spreading-activation machinery (Quillian, Collins & Loftus, Anderson). Aversive events, negative affect, automatic network activation, deliberate appraisal.
-5. Bandura's rejection of drive theory; social learning; moral disengagement as the framework that makes moral disengagement dominance in the UCA data theoretically interpretable.
-6. Integration into GAM (Anderson & Bushman, 2002) and I³ (Finkel, 2014) as the contemporary theoretical machinery.
-7. Closing sentence flagging the limitation: this entire lineage was built in face-to-face or laboratory contexts, with communication infrastructure treated as theoretically neutral. That assumption becomes central in sections 2.4 and onward.
+1. Open with Freud, 1920, Vienna. Aggression as theoretical object.
+2. Cannon as adjacent biological substrate.
+3. Dollard (1939), Miller (1941) walk-back.
+4. Berkowitz's arc compressed — 1958 catharsis critique, 1962 cognitive turn, 1989 CNA reformulation.
+5. Bandura; GAM; I³.
+6. Communication infrastructure interleaved — aggression theory built for face-to-face contexts; infrastructure changed underneath the theory; section 2.4 develops the theoretical response to that change.
+7. Closing sentence: the lineage's assumption of theoretically-neutral communication infrastructure becomes central from 2.4 onward.
 
 ---
 
 ### 2.4 From face-to-face to mediated contexts *(~350–450 words)*
 
-**Purpose.** Name the infrastructural shift and its theoretical consequences. Introduce SIDE and online disinhibition as the first theoretical responses to computer-mediated communication. Lay the groundwork for the AI extension in 2.6.
+**Purpose.** Name the infrastructural shift's theoretical consequences. Introduce SIDE and online disinhibition as the first theoretical responses to CMC.
 
 **Key sources.**
-- Postmes, Spears & Lea (1998); Reicher, Spears & Postmes (1995). Social Identity Model of Deindividuation Effects (SIDE).
-- Suler (2004). Online Disinhibition Effect, six-factor framework. Dissociative anonymity, invisibility, asynchronicity, solipsistic introjection, dissociative imagination, minimisation of authority.
+- Postmes, Spears & Lea (1998); Reicher, Spears & Postmes (1995). SIDE.
+- Suler (2004). Online Disinhibition Effect.
 - Tanis & Postmes (2007). SIDE empirical development.
-- Lapidot-Lefler & Barak (2012). Eye contact and disinhibition; the visibility component isolated experimentally.
+- Lapidot-Lefler & Barak (2012). Eye contact isolation.
 
 **Structural moves.**
-1. The infrastructure question. Aggression theory was built for face-to-face communication. Networked communication breaks the calibration conditions the theory assumed.
-2. SIDE as the social-identity response. Reframes anonymity as not merely freedom from identification but shift from personal to group identity.
-3. Suler's six factors. The phenomenological catalogue of what changes in mediated contexts.
-4. Flag the complication. Classical disinhibition predictions have been complicated by findings that identifiability sometimes *increases* rather than decreases hostile behaviour (forecasts for the UCA anonymity anomaly finding). Brief, not developed.
+1. The infrastructure question. Aggression theory built for face-to-face; networked communication breaks the calibration.
+2. SIDE as social-identity response.
+3. Suler's six factors (already introduced in 2.1 as affordances; here developed theoretically).
+4. Complication flag: identifiability sometimes *increases* hostile behaviour (forecasts the UCA anonymity anomaly finding, β = −.232).
 
 ---
 
 ### 2.5 Moral disengagement *(~350–450 words)*
 
-**Purpose.** Establish moral disengagement as the cognitive machinery that makes cyber-aggression perpetration cognitively possible, and as the empirically dominant predictor in the UCA literature.
+**Purpose.** Establish moral disengagement as the cognitive machinery that makes cyber-aggression perpetration possible, and as the empirically dominant predictor in the UCA literature.
 
 **Key sources.**
-- Bandura (1999, 2002). Eight mechanisms across three levels.
+- Bandura (1999, 2002). Eight mechanisms.
 - Pornari & Wood (2010). Moral disengagement in cyberbullying specifically.
-- Runions & Bak (2015). Review of moral disengagement in online aggression.
-- Gaffney et al. (2019). Meta-analysis confirming moral disengagement as robust predictor.
-- Tennakoon et al. (2024). The moral disengagement measurement used in the UCA study.
+- Runions & Bak (2015). Affordance-to-mechanism mapping; already cited in 2.1.
+- Gaffney et al. (2019). Meta-analytic confirmation.
+- Tennakoon et al. (2024). Scale used in UCA.
 
 **Structural moves.**
-1. Bandura's framework. Eight mechanisms: moral justification, euphemistic labelling, advantageous comparison, displacement of responsibility, diffusion of responsibility, dehumanisation, attribution of blame, disregard of consequences.
-2. Application to online contexts. The mechanisms operate especially easily in digital environments that structurally provide distance (dehumanisation), anonymity (responsibility diffusion), and asynchrony (consequence disregard).
-3. Empirical track record. Strong and robust predictor of cyberbullying perpetration across studies. Gaffney et al. (2019) meta-analytic confirmation.
-4. The dissertation's contribution here. Moral disengagement measured via Tennakoon et al.'s scale; expected to replicate as dominant predictor; interpretation in Chapter 5.
+1. Bandura's framework.
+2. Application to online contexts.
+3. Empirical track record.
+4. UCA's measurement approach; expected replication as dominant predictor (β = .478 in the data); interpretation in Chapter 5.
 
 ---
 
 ### 2.6 AI-mediated interaction as new territory *(~400–500 words)*
 
-**Purpose.** Introduce AI use, trust, and disinhibition as novel constructs; establish the measurement-validity framing point; pre-empt the null AI result that the dissertation finds.
+**Purpose.** Introduce AI use, trust, and disinhibition as novel constructs; establish the measurement-validity framing point; pre-empt the null AI result.
 
 **Key sources.**
-- Nass & Moon (2000); Reeves & Nass (1996). Computers as Social Actors paradigm.
-- Sundar (2020). Machine Heuristic and related AI-agency framings.
-- Skjuve et al. (2021, 2022). Human-AI relational development; chatbot attachment.
+- Nass & Moon (2000); Reeves & Nass (1996). Computers as Social Actors.
+- Sundar (2020). Machine Heuristic.
+- Skjuve et al. (2021, 2022). Human-AI relational development.
 - Shi et al. (2023). Trust in AI scales.
-- AI Disinhibition scale development (identify specific scale used in UCA).
+- AI Disinhibition scale (specific scale used in UCA).
 
 **Structural moves.**
-1. The framing point. AI-mediated interaction is a qualitatively different infrastructural shift from previous computer-mediated contexts. Not just another channel — a new class of non-human conversational partner.
-2. The Computers-as-Social-Actors inheritance. Reeves and Nass showed humans respond socially to computers even when explicitly told not to. AI as social actor is an extension of that inheritance, not a novelty.
-3. AI use, trust, and disinhibition as candidate constructs. How they might influence cyber-aggression perpetration: AI as affective regulator (venting target), AI as model for hostile communication, AI as disinhibiting infrastructure.
-4. The measurement validity problem. Existing instruments were developed for AI-as-tool paradigms. Applied to AI-as-social-agent contexts, they may not capture the construct they are intended to measure. This framing pre-empts the null result in the dissertation's AI block and positions it as a measurement issue rather than a hypothesis failure.
+1. AI-mediated interaction as qualitatively different infrastructural shift.
+2. Computers-as-Social-Actors inheritance.
+3. AI use, trust, disinhibition as candidate constructs.
+4. Measurement validity problem — instruments built for AI-as-tool paradigms applied to AI-as-social-agent contexts. Frames the null AI block (ΔR² = .002) as measurement issue rather than hypothesis failure.
 
 ---
 
 ### 2.7 Personality factors *(~300–400 words)*
 
-**Purpose.** Establish the personality-factor rationale and the specific traits measured.
-
 **Key sources.**
-- Dark Triad / Dark Tetrad literature (Paulhus & Williams, 2002; Buckels, Trapnell & Paulhus, 2014 — trolling specifically).
-- Callous-unemotional traits (Frick, Ray, Thornton & Kahn, 2014).
-- Agreeableness / Big Five relationships with cyber-aggression.
-- Specific trait measurement used in UCA (confirm from method chapter).
+- Dark Triad / Dark Tetrad (Paulhus & Williams, 2002; Buckels, Trapnell & Paulhus, 2014).
+- Callous-unemotional traits (Frick et al., 2014).
+- Agreeableness / Big Five relationships.
+- UCA-specific trait measurement.
 
 **Structural moves.**
-1. Why personality. Classical individual-differences framing; not all users in equivalent online contexts behave equivalently aggressively.
-2. Dark Tetrad findings. Narcissism, Machiavellianism, psychopathy, sadism all implicated in online aggression, with sadism the strongest trolling-specific predictor.
-3. Callous-unemotional traits as used in UCA. Brief motivation for the specific instrument used.
-4. Position within I³. Personality as impellance factor in the multiplicative model.
+1. Why personality.
+2. Dark Tetrad findings.
+3. CU traits motivation.
+4. I³ positioning — personality as impellance factor.
 
 ---
 
 ### 2.8 The AI-venting hypothesis *(~300–400 words)*
 
-**Purpose.** Introduce the specific empirical hypothesis that AI interaction may reduce rather than increase hostile intent under provocation — the dissertation's most novel empirical contribution.
+**Purpose.** Develop the specific empirical hypothesis previously positioned in 2.1.5 — the dissertation's most novel empirical contribution (venting item r ≈ −.201, p ≈ .017 in the UCA data).
 
 **Key sources.**
-- Bushman (2002). Venting feeds rather than extinguishes aggression. The classical finding.
+- Bushman (2002). Venting feeds rather than extinguishes aggression.
 - Bushman, Baumeister & Stack (1999). Earlier experimental precedent.
 - Kjærvik & Bushman (2024). Meta-analytic closure of the human-venting literature.
-- Skjuve et al. (2022). AI relational development and use as emotional support.
-- Reeves & Nass (1996) as framing for AI-as-substitute-social-partner.
+- Skjuve et al. (2022). AI emotional support use.
+- Reeves & Nass (1996). AI-as-substitute-social-partner framing.
+- Barrett (2020). Regulatory scaffold argument — framing point 3.
 
 **Structural moves.**
-1. The classical finding. Venting at human targets rehearses and reinforces aggression through reciprocal escalation (Bushman 2002).
-2. The reopening question. AI as non-reciprocating interlocutor may break the rehearsal mechanism. Venting into a substrate that does not retaliate may produce affective discharge without the escalation loop.
-3. The empirical prediction. AI venting may correlate negatively with hostile response likelihood, contrary to what the catharsis literature would predict for human targets.
-4. Theoretical positioning. This is not a claim that catharsis works after all. It is a claim that the specific mechanism Bushman identified (rehearsal through reciprocal escalation) may require a reciprocating target, and that AI interaction constitutes a genuinely distinct case.
+1. The classical finding — human-target venting rehearses aggression.
+2. The reopening question — AI as non-reciprocating interlocutor may break the rehearsal mechanism.
+3. Empirical prediction — AI venting may correlate negatively with hostile response likelihood.
+4. Theoretical positioning — not a claim that catharsis works after all; a claim that the rehearsal mechanism requires a reciprocating target, and AI is a genuinely distinct case. Barrett's regulatory-scaffold framing supplies the positive theoretical account.
 
 ---
 
 ### 2.9 Synthesis and gaps *(~300–400 words)*
 
-**Purpose.** Consolidate the literature review into a statement of what the existing literature shows, where it falls short for the contemporary moment, and what specific gaps the dissertation addresses.
-
 **Structural moves.**
-1. What the literature shows. Cyber-aggression is prevalent, harmful, and theoretically continuous with traditional aggression research despite infrastructural discontinuity. Moral disengagement is the dominant cognitive-level predictor. Anonymity has a contested role. Personality factors matter.
-2. Where it falls short. Theory has consistently lagged infrastructure. Current instruments were built for AI-as-tool contexts and may not capture AI-as-social-agent effects. Venting research has assumed human targets. Adult university populations in Ireland are under-studied.
+1. What the literature shows.
+2. Where it falls short — theory-lag, measurement validity, venting assumption, Irish adult gap.
 3. The dissertation's specific contributions.
-   - Replicate and extend Tennakoon et al. (2024) with an Irish adult sample.
-   - Test the null extension: do AI constructs add predictive variance beyond classical predictors?
-   - Test the venting hypothesis: does AI interaction reduce hostile response likelihood?
-   - Apply the I³ framework as a multiplicative-interaction alternative to additive GAM.
-4. Closing hypothesis statement or bridge to Chapter 3 (Methods).
+4. Closing hypothesis statement or bridge to Chapter 3.
 
 ---
 
 ## Framing points — integration across sections
 
-Three framing points are woven across the chapter to pre-empt examiner questions and to position the dissertation's findings before the examiner reaches the results.
+**Framing point 1: The theory-lag argument.** Introduced in 2.1 (infrastructure precedes theoretical frameworks); developed in 2.3 (the Freud-to-Finkel lineage is a slow response to pre-existing phenomena, interleaved with the communication infrastructure chronology); sharpened in 2.4 (SIDE and disinhibition as decade-late responses); returned to in 2.9.
 
-**Framing point 1: The theory-lag argument.** Aggression theory has consistently trailed the infrastructure by decades. Introduced lightly in 2.1 (prevalence data rising faster than theoretical frameworks mature). Developed in 2.3 (the lineage from Freud to Finkel is a slow response to phenomena that predated each theorist). Sharpened in 2.4 (SIDE and disinhibition as decade-late responses to online phenomena). Returned to explicitly in 2.9 (the gap the dissertation helps fill).
+**Framing point 2: The measurement-validity problem.** Introduced in 2.1.6 (Bussu et al. 3.7–92% range); developed in 2.2 (instrument variation); sharpened in 2.6 (AI-as-tool instruments in AI-as-social-agent contexts); returned to in 2.9 (the null AI block as measurement issue).
 
-**Framing point 2: The measurement-validity problem.** Instruments built for earlier research paradigms may not cleanly transfer to AI contexts. Introduced in 2.2 (Bussu et al.'s 3.7–92% range as diagnostic of measurement variation). Developed in 2.6 (AI-as-tool instruments applied to AI-as-social-agent contexts). Returned to in 2.9 (the null AI block as measurement issue rather than hypothesis failure).
-
-**Framing point 3: The regulatory-scaffold reframe.** Barrett's (2020) argument that human arousal regulation depends on other human nervous systems. Introduced tentatively in 2.6 (AI as simulated scaffold). Developed in 2.8 (the venting hypothesis as empirical signal that AI partially functions as regulatory partner). Positions the venting finding as theoretically significant rather than anomalous.
+**Framing point 3: The regulatory-scaffold reframe.** Introduced tentatively in 2.1.5 (AI-venting as open question inside the ambivalent middle); developed in 2.6 (AI as simulated scaffold); sharpened in 2.8 (venting as empirical signal that AI partially functions as regulatory partner); Barrett (2020) as theoretical anchor.
 
 ---
 
 ## Revision history
 
-**v1 (2026-04-21, superseded).** Theory-first structure: 2.1 Theoretical Foundations (Freud and Cannon), 2.2 Communication Cost, 2.3 Cyber-Aggression Definition, 2.4 SIDE, 2.5 Moral Disengagement, 2.6 AI Constructs, 2.7 Personality, 2.8 AI Catharsis, 2.9 Gaps. Drafted through 2.1 opening, 2.1.1 FAH, partial 2.1.2 CNA.
+**v1 (2026-04-21, superseded).** Theory-first structure: 2.1 Theoretical Foundations (Freud and Cannon), 2.2 Communication Cost, 2.3 Cyber-Aggression Definition, 2.4 SIDE, 2.5 Moral Disengagement, 2.6 AI Constructs, 2.7 Personality, 2.8 AI Catharsis, 2.9 Gaps.
 
-**v2 (2026-04-23, current).** Data-first reframe. 2.1 becomes contemporary problem statement; theoretical lineage moves to 2.3; section numbers shift accordingly. Rationale: data-first answers the examiner's first question directly, produces the critical-eye framing McWilliams has asked for, and positions the theoretical history as doing real work rather than scene-setting.
+**v2 (2026-04-23 morning, superseded).** Data-first reframe. 2.1 becomes contemporary problem statement; theoretical lineage moves to 2.3; section numbers shift. Rationale: data-first answers the examiner's first question directly and produces the critical-eye framing.
+
+**v3 (2026-04-23 evening, current).** Cyberbehaviour-first reframe. 2.1 becomes cyberbehaviour umbrella (genus), narrowing through good/ambivalent/bad expressions to cyber-aggression (species) as 2.2. Prevalence/harm/Ireland data moves into 2.1's negative-expressions subsection as the empirical bridge from cyberbehaviour generally to cyber-aggression specifically. Rationale: the cyberbehaviour umbrella developed in drafting is not scene-setting for cyber-aggression; it *is* the conceptual foundation the cyber-aggression argument rests on. Placing it first prevents the moral-panic framing and keeps the positive/ambivalent/negative taxonomy honest.
 
 ---
 
@@ -223,9 +334,9 @@ Three framing points are woven across the chapter to pre-empt examiner questions
 
 | Section | Status |
 |---|---|
-| 2.1 Contemporary problem | Not drafted |
-| 2.2 Definition | Not drafted (new section in v2) |
-| 2.3 Theoretical foundations | Partial draft exists (from v1 section 2.1); needs integration into new position and humanising revision |
+| 2.1 Cyberbehaviour — opening paragraphs | Partial draft (2.1.1–2.1.3 drafted in session 2026-04-23; positive-expressions list draft-in-progress; ambivalent and negative expressions not drafted) |
+| 2.2 Defining cyber-aggression | Not drafted |
+| 2.3 Theoretical foundations | Partial draft exists (from v1 section 2.1); needs integration into new position and communication-infrastructure interleaving |
 | 2.4 Face-to-face to mediated | Not drafted |
 | 2.5 Moral disengagement | Not drafted |
 | 2.6 AI-mediated interaction | Not drafted |
@@ -233,4 +344,10 @@ Three framing points are woven across the chapter to pre-empt examiner questions
 | 2.8 AI-venting hypothesis | Not drafted |
 | 2.9 Synthesis and gaps | Not drafted |
 
-**Next drafting action:** section 2.1, data-first opening, ~600 words. Four sentences of flagship content each doing one job (prevalence range, harm outcomes, Ireland/population relevance, infrastructure question).
+**Next drafting actions:**
+1. Three residual fixes to 2.1.1 opening paragraph (CMC addition: "Which" fragment, double-space typo, self-reference issue)
+2. Strip item 3 of positives back to affordance-only (defer historical detail to 2.3)
+3. Rewrite item 5 of positives with parallel structure and citations
+4. Draft 2.1.5 ambivalent middle
+5. Draft 2.1.6 negative expressions (prevalence/harm/Ireland data)
+6. Draft 2.1.7 narrowing move to 2.2
