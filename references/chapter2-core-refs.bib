@@ -1,5 +1,5 @@
 % UCA dissertation — Chapter 2 core references
-% Generated 23 April 2026, updated 25 April 2026 (v7)
+% Generated 23 April 2026, updated 25 April 2026 (v8)
 % Import to Zotero: File → Import → select this file
 %
 % v1: Thirteen sources covering prevalence/harm (Li, Modecki, Kowalski, Zhu, Ray,
@@ -60,6 +60,28 @@
 % assumption that isn't always made explicit; the underlying 2010
 % (~2 ZB) → 2026 (~221 ZB) trajectory is mathematically defensible
 % (~100x in 16 years).
+%
+% v8: Added six sources supporting the negative-expressions list
+% in section 2.1. All six verified via Fiosrú async investigation
+% 2026-04-25 (job 5f120650, 80s, $0.78) with cross-source checking.
+%   - Wall (2007) Cybercrime — canonical academic cybercrime reference
+%     for the scope-out paragraph (cybercrime is outside the
+%     dissertation's scope).
+%   - Marwick (2021) — coordinated networked harassment as normative
+%     reinforcement; cites for item 3 (coordinated harassment / pile-ons).
+%     Article-number journal (no page range), uses article number
+%     20563051211021378 in the pages field per SAGE convention.
+%   - Douglas (2016) — conceptual analysis of doxing; cites for item 5.
+%   - Wittes, Poplin, Jurecic & Spera (2016) — Brookings sextortion
+%     report; cites for item 6.
+%   - Wardle & Derakhshan (2017) — Council of Europe information
+%     disorder framework; cites alongside Lazer et al. (2018) for
+%     item 4 (disinformation). Note: title uses "policymaking"
+%     (one word) per the authoritative PDF cover; many citing
+%     sources use "policy making" (two words).
+%   - Lazer et al. (2018) — Science multi-author piece on fake news;
+%     16 authors verified across PubMed, Science.org, Harvard DASH,
+%     Belfer Center, arXiv.
 
 @article{li2024umbrella,
   author  = {Li, Chengyang and Wang, Peijie and Martin-Moratinos, Marina and Bella-Fern\'{a}ndez, Marcos and Blasco-Fontecilla, Hilario},
@@ -378,4 +400,78 @@
   year         = {2024},
   publisher    = {{IDC}},
   note         = {Standard reference for global data-volume figures; widely cited in industry and popular press. Headline figures syndicated through Statista.}
+}
+
+% ============================================================
+% v8 additions — negative-expressions support
+% All six verified via Fiosrú job 5f120650 on 2026-04-25
+% ============================================================
+
+@book{wall2007cybercrime,
+  author    = {Wall, David S.},
+  title     = {Cybercrime: The Transformation of Crime in the Information Age},
+  publisher = {Polity Press},
+  address   = {Cambridge},
+  year      = {2007},
+  isbn      = {9780745627366},
+  series    = {Crime and Society}
+}
+
+@article{marwick2021morally,
+  author  = {Marwick, Alice E.},
+  title   = {Morally Motivated Networked Harassment as Normative Reinforcement},
+  journal = {Social Media + Society},
+  year    = {2021},
+  volume  = {7},
+  number  = {2},
+  pages   = {20563051211021378},
+  doi     = {10.1177/20563051211021378},
+  note    = {Article number used in lieu of page range per SAGE journal convention.}
+}
+
+@article{douglas2016doxing,
+  author  = {Douglas, David M.},
+  title   = {Doxing: A Conceptual Analysis},
+  journal = {Ethics and Information Technology},
+  year    = {2016},
+  volume  = {18},
+  number  = {3},
+  pages   = {199--210},
+  doi     = {10.1007/s10676-016-9406-0}
+}
+
+@misc{wittes2016sextortion,
+  author       = {Wittes, Benjamin and Poplin, Cody and Jurecic, Quinta and Spera, Clara},
+  title        = {Sextortion: Cybersecurity, Teenagers, and Remote Sexual Assault},
+  year         = {2016},
+  month        = {May},
+  howpublished = {Report, Center for Technology Innovation, The Brookings Institution},
+  url          = {https://www.brookings.edu/research/sextortion-cybersecurity-teenagers-and-remote-sexual-assault/}
+}
+
+@techreport{wardle2017information,
+  author      = {Wardle, Claire and Derakhshan, Hossein},
+  title       = {Information Disorder: Toward an Interdisciplinary Framework for Research and Policymaking},
+  institution = {Council of Europe},
+  year        = {2017},
+  number      = {DGI(2017)09},
+  month       = {September},
+  url         = {https://rm.coe.int/information-disorder-toward-an-interdisciplinary-framework-for-research/168076277c},
+  note        = {Title uses "policymaking" (one word) per the authoritative PDF cover; some citing sources use "policy making" (two words).}
+}
+
+@article{lazer2018science,
+  author  = {Lazer, David M. J. and Baum, Matthew A. and Benkler, Yochai
+             and Berinsky, Adam J. and Greenhill, Kelly M. and Menczer, Filippo
+             and Metzger, Miriam J. and Nyhan, Brendan and Pennycook, Gordon
+             and Rothschild, David and Schudson, Michael and Sloman, Steven A.
+             and Sunstein, Cass R. and Thorson, Emily A. and Watts, Duncan J.
+             and Zittrain, Jonathan L.},
+  title   = {The Science of Fake News},
+  journal = {Science},
+  year    = {2018},
+  volume  = {359},
+  number  = {6380},
+  pages   = {1094--1096},
+  doi     = {10.1126/science.aao2998}
 }
