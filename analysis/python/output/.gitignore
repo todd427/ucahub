@@ -1,0 +1,3 @@
+# Generated results are reproducible from the scripts; do not commit.
+*
+!.gitignore
