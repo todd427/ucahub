@@ -16,11 +16,23 @@ library(dplyr)
 # readxl loaded conditionally below. car / lmtest used for assumptions (optional).
 
 # -- 1. DATA IMPORT ----------------------------------------------------------
-# Point this at either your working file or the committed de-identified copy.
-# Both carry identical question-text headers, so the keyword matching below works
-# on either. Default resolves the committed dataset when run from analysis/R/ in
-# the repo; override with your local working file if preferred.
-data_path <- "../python/data/uca173_anon.csv"   # or e.g. "uca_173.xlsx"
+# Resolve the dataset relative to THIS script's own location, so it works whether
+# the script is sourced by absolute path, run via Rscript, or run from its own
+# directory. To use your local working file instead, replace the data_path line
+# below with a literal path, e.g. data_path <- "uca_173.xlsx".
+get_script_dir <- function() {
+  ca <- commandArgs(FALSE)
+  m  <- grep("^--file=", ca, value = TRUE)             # Rscript
+  if (length(m) == 1) return(dirname(normalizePath(sub("^--file=", "", m), mustWork = FALSE)))
+  for (i in seq_len(sys.nframe())) {                   # source()
+    of <- sys.frame(i)$ofile
+    if (!is.null(of)) return(dirname(normalizePath(of, mustWork = FALSE)))
+  }
+  getwd()                                              # interactive paste fallback
+}
+script_dir <- get_script_dir()
+data_path  <- normalizePath(file.path(script_dir, "..", "python", "data", "uca173_anon.csv"),
+                            mustWork = FALSE)           # or set to a literal path
 
 ext <- tolower(tools::file_ext(data_path))
 if (ext %in% c("xlsx", "xls")) {
