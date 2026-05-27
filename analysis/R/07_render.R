@@ -24,19 +24,22 @@
 #        RStudio publish: Sys.setenv(UCA_PUBLISH = "1") before sourcing.
 #
 # Google Docs publish prerequisites:
-#   - googledrive needs a token carrying a WRITE scope. A bare drive_auth()
-#     requests the full-`drive` scope, which is a RESTRICTED/unverified scope on
-#     the bundled OAuth client: the token is issued but the write is denied with
-#     403 insufficientPermissions. Use the non-sensitive `drive.file` scope
-#     instead (sufficient to create files at My Drive root). The publish block
-#     below sets it explicitly. To clear a previously cached (bad-scope) token:
+#   - Scope: the publish block requests the non-sensitive `drive.file` scope.
+#     A bare drive_auth() requests full-`drive`, a RESTRICTED/unverified scope
+#     on the bundled OAuth client -> token issued but write denied (403
+#     insufficientPermissions). To clear a previously cached bad-scope token:
 #       googledrive::drive_deauth()
-#       googledrive::drive_auth(scopes = "https://www.googleapis.com/auth/drive.file")
-#     Service account:
+#     then re-source (the block re-auths with drive.file). Service account:
 #       googledrive::drive_auth(path = "sa.json",
 #                               scopes = "https://www.googleapis.com/auth/drive.file")
-#   - GD_FOLDER must be NULL (My Drive root) OR a folder this app created:
-#     drive.file cannot see folders it did not create.
+#   - Method: drive_put() is deliberately NOT used. Its find-or-update step does
+#     a lookup that, under drive.file, can resolve to a root/shared-drive id the
+#     scope cannot read -> 404 notFound. Instead the docs are CREATED once with
+#     drive_upload() (pure files.create, no lookup) and their file ids cached in
+#     .uca_gdoc_ids.rds next to this script; re-runs UPDATE the same docs BY ID
+#     with drive_update() (drive.file can always reach files it created by id).
+#     Result: stable Doc URLs, idempotent re-runs, no name/container search.
+#     Files land at My Drive root. Gitignore .uca_gdoc_ids.rds and the *.docx.
 # ============================================================================
 
 # -- locate this script's dir so bare source("00_prep.R") in modules resolves -
@@ -164,24 +167,30 @@ cat("07_render: wrote\n  ", f_ch3, "\n  ", f_ch4, "\n")
 
 # ---------------------------------------------------------------------------
 # Optional: publish to Google Docs as native Docs tables (upload + convert).
-# Gated on UCA_PUBLISH=1 so a plain Rscript run never triggers an OAuth prompt.
-# Uses the non-sensitive drive.file scope (see header) to avoid the 403
-# insufficient-scope failure from the default full-drive request.
+# Gated on UCA_PUBLISH=1. drive.file scope + create-once / update-by-id (see
+# header for why drive_put is avoided). Files land at My Drive root; ids cached
+# in .uca_gdoc_ids.rds so re-runs overwrite the same Docs in place.
 # ---------------------------------------------------------------------------
-GD_FOLDER <- NULL   # e.g. "UCA/Tables"; NULL = My Drive root (required for drive.file)
+GD_IDS <- file.path(.here, ".uca_gdoc_ids.rds")   # local publish state (gitignore)
 
 if (nzchar(Sys.getenv("UCA_PUBLISH")) && Sys.getenv("UCA_PUBLISH") != "0") {
   if (!requireNamespace("googledrive", quietly = TRUE))
     stop("UCA_PUBLISH set but googledrive is not installed.")
   googledrive::drive_auth(scopes = "https://www.googleapis.com/auth/drive.file")
-  gd_path <- if (is.null(GD_FOLDER)) NULL else googledrive::as_dribble(GD_FOLDER)
+  ids <- if (file.exists(GD_IDS)) readRDS(GD_IDS) else list()
   for (f in c(f_ch3, f_ch4)) {
-    nm <- sub("\\.docx$", "", basename(f))
-    googledrive::drive_put(media = f, path = gd_path,
-                           name = paste0("UCA ", nm),
-                           type = "document")          # .docx -> native Google Doc
-    cat("07_render: published ", nm, " to Google Docs\n")
+    nm  <- paste0("UCA ", sub("\\.docx$", "", basename(f)))
+    res <- NULL
+    if (!is.null(ids[[nm]]))                         # update existing Doc by id
+      res <- tryCatch(
+        googledrive::drive_update(googledrive::as_id(ids[[nm]]), media = f),
+        error = function(e) NULL)                    # id trashed/gone -> recreate below
+    if (is.null(res))                                # first run, or recreate
+      res <- googledrive::drive_upload(media = f, name = nm, type = "document")
+    ids[[nm]] <- res$id
+    cat("07_render: published", nm, "->", as.character(res$id), "\n")
   }
+  saveRDS(ids, GD_IDS)
 } else {
   cat("07_render: UCA_PUBLISH not set; skipped Google Docs publish.\n")
 }
