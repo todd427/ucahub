@@ -19,6 +19,8 @@
 #
 # Run:   Rscript analysis/R/07_render.R            # writes ch3_tables.docx, ch4_tables.docx
 #        UCA_PUBLISH=1 Rscript analysis/R/07_render.R   # also pushes to Google Docs
+#        RStudio: Source the file (button or source()), OR Run line-by-line -
+#        get_script_dir() resolves the path under all three (rstudioapi branch).
 #
 # Google Docs publish prerequisites (headless / vi / Rscript):
 #   - googledrive needs a CACHED OAuth token. Run ONCE interactively:
@@ -29,15 +31,21 @@
 # ============================================================================
 
 # -- locate this script's dir so bare source("00_prep.R") in modules resolves -
+# Order: Rscript --file=  ->  source() ofile  ->  RStudio active doc  ->  getwd()
 get_script_dir <- function() {
-  ca <- commandArgs(FALSE)
+  ca <- commandArgs(FALSE)                                   # Rscript / R CMD BATCH
   m  <- grep("^--file=", ca, value = TRUE)
   if (length(m) == 1) return(dirname(normalizePath(sub("^--file=", "", m), mustWork = FALSE)))
-  for (i in rev(seq_len(sys.nframe()))) {
+  for (i in rev(seq_len(sys.nframe()))) {                    # source() sets ofile
     of <- sys.frame(i)$ofile
     if (!is.null(of)) return(dirname(normalizePath(of, mustWork = FALSE)))
   }
-  getwd()
+  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+    p <- tryCatch(rstudioapi::getSourceEditorContext()$path, error = function(e) NULL)
+    if (!is.null(p) && nzchar(p))                            # RStudio Run / active editor doc
+      return(dirname(normalizePath(p, mustWork = FALSE)))
+  }
+  getwd()                                                    # last resort: must be analysis/R
 }
 .here <- get_script_dir()
 setwd(.here)
