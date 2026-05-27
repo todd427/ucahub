@@ -21,6 +21,7 @@
 #        UCA_PUBLISH=1 Rscript analysis/R/07_render.R   # also pushes to Google Docs
 #        RStudio: Source the file (button or source()), OR Run line-by-line -
 #        get_script_dir() resolves the path under all three (rstudioapi branch).
+#        RStudio publish: Sys.setenv(UCA_PUBLISH = "1") before sourcing.
 #
 # Google Docs publish prerequisites (headless / vi / Rscript):
 #   - googledrive needs a CACHED OAuth token. Run ONCE interactively:
@@ -50,13 +51,18 @@ get_script_dir <- function() {
 .here <- get_script_dir()
 setwd(.here)
 
-# -- hard dependency check (render stack) ------------------------------------
+# -- hard dependency check + attach the render stack -------------------------
+# flextable MUST be attached, not just namespaced: body_add_flextable() is
+# exported by flextable (it extends officer's body_add_* generics), so a bare
+# requireNamespace would load the namespace but leave the function off the
+# search path -> "could not find function body_add_flextable".
 .need <- c("flextable", "officer", "psych")
 .miss <- .need[!vapply(.need, requireNamespace, logical(1), quietly = TRUE)]
 if (length(.miss))
   stop("07_render needs: ", paste(.miss, collapse = ", "),
        "\n  install.packages(c(", paste(sprintf('\"%s\"', .miss), collapse = ", "), "))")
 library(officer)
+library(flextable)
 
 # -- run the analysis modules (quietly); they leave tbl_* + `valid`/`scales` --
 # Each module re-sources 00_prep.R (idempotent; a few seconds). Console output
@@ -123,19 +129,18 @@ tbl_meas <- flextable::flextable(meas_df) |>
 
 # ---------------------------------------------------------------------------
 # Assemble the two Word documents.
-# Table 4.2 is wide (14 columns) -> place it in a landscape section.
+# Table 4.2 is wide (14 columns) -> isolate it in its own LANDSCAPE section.
+# Tables 4.1 and 4.3 sit in the leading portrait section; the portrait break
+# is closed before the wide table so ONLY 4.2 flips to landscape.
 # ---------------------------------------------------------------------------
-ls_props <- prop_section(
-  page_size = page_size(orient = "landscape"), type = "continuous")
-
 ch4 <- read_docx() |>
   body_add_par("Chapter 4 Tables (auto-generated)", style = "heading 1") |>
   body_add_flextable(tbl_descr) |>
   body_add_par("") |>
   body_add_flextable(tbl_hier) |>
-  body_add_par("") |>
+  body_end_section_portrait() |>                       # close portrait (4.1 + 4.3)
   body_add_flextable(tbl_corr) |>
-  body_end_block_section(block_section(ls_props))      # wrap the wide corr table
+  body_end_section_landscape()                         # 4.2 alone in landscape
 f_ch4 <- file.path(.here, "ch4_tables.docx")
 print(ch4, target = f_ch4)
 
