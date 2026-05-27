@@ -46,4 +46,47 @@ cat("\nDemographics (N =", nrow(valid), "):\n")
 cat("Gender:\n");    print(table(valid$gender, useNA = "ifany"))
 cat("Age group:\n"); print(table(valid$age_group, useNA = "ifany"))
 
+# ---------------------------------------------------------------------------
+# TABLE 4.1 render object (reliabilities + composite descriptives).
+# Builds `tbl_descr` (a flextable) from the SAME objects computed above and
+# leaves it in the global env for 07_render.R. Non-destructive: all console
+# output above is unchanged. Skips quietly if flextable is not installed, so
+# headless diagnostic runs still work on machines without the render stack.
+# ---------------------------------------------------------------------------
+if (requireNamespace("flextable", quietly = TRUE)) {
+  .lab41 <- c(habitual_use        = "Habitual SNS Use",
+              empathy_deficit     = "Empathy Deficit",
+              normalization       = "Aggression Normalisation",
+              anonymity           = "Perceived Anonymity",
+              moral_disengagement = "Moral Disengagement",
+              ai_trust            = "AI Trust",
+              ai_disinhibition    = "AI Disinhibition")
+  t41 <- do.call(rbind, lapply(names(scales), function(s) {
+    it <- scales[[s]]
+    cc <- complete.cases(valid[, it])
+    sc <- rowMeans(valid[cc, it])
+    a  <- suppressWarnings(psych::alpha(valid[, it], check.keys = FALSE))$total$raw_alpha
+    data.frame(Scale = .lab41[[s]], Items = length(it),
+               a  = sprintf("%.2f", a),
+               M  = sprintf("%.2f", mean(sc)),
+               SD = sprintf("%.2f", sd(sc)),
+               n  = sum(cc), check.names = FALSE)
+  }))
+  tbl_descr <- flextable::flextable(t41) |>
+    flextable::set_header_labels(a = "\u03b1") |>
+    flextable::set_caption(
+      "Table 4.1  Scale Reliabilities and Composite Descriptive Statistics") |>
+    flextable::add_footer_lines(
+      paste("Note. All multi-item scales scored 1\u20135 (1 = strongly disagree,",
+            "5 = strongly agree). Aggression normalisation fell just below the",
+            ".70 threshold. AI Trust n = 140 owing to item-level missingness on",
+            "two cases. n = 142 AI-using participants.")) |>
+    flextable::theme_booktabs() |>
+    flextable::autofit()
+  assign("tbl_descr", tbl_descr, envir = .GlobalEnv)
+  cat("\n[render] tbl_descr (Table 4.1) built.\n")
+} else {
+  cat("\n[render] flextable not installed; tbl_descr skipped.\n")
+}
+
 cat("\nDone.\n")

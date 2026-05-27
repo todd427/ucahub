@@ -102,4 +102,56 @@ if (requireNamespace("lmtest", quietly = TRUE)) {
   cat("(install 'lmtest' for Breusch-Pagan)\n")
 }
 
+# ---------------------------------------------------------------------------
+# TABLE 4.3 render object (block-comparison summary).
+# Reuses `models` and `reg_data` computed above; rebuilds the same R2 / dR2 /
+# dF / f2 figures into a data.frame and renders `tbl_hier` for 07_render.R.
+# Non-destructive. Skips quietly if flextable is absent.
+# ---------------------------------------------------------------------------
+if (requireNamespace("flextable", quietly = TRUE)) {
+  .rows <- list(); .prev <- NULL
+  for (nm in names(models)) {
+    mod <- models[[nm]]; s <- summary(mod)
+    r2 <- s$r.squared; adj <- s$adj.r.squared
+    if (is.null(.prev)) {
+      .rows[[nm]] <- data.frame(Model = nm, R2 = sprintf("%.3f", r2),
+                                AdjR2 = sprintf("%.3f", adj), dR2 = "\u2014",
+                                dF = "\u2014", df = "\u2014", p = "\u2014",
+                                f2 = sprintf("%.3f", r2 / (1 - r2)),
+                                check.names = FALSE)
+    } else {
+      a <- anova(.prev, mod); dr2 <- r2 - summary(.prev)$r.squared
+      df1 <- as.integer(abs(a$Df[2])); df2 <- as.integer(a$Res.Df[2])
+      .rows[[nm]] <- data.frame(Model = nm, R2 = sprintf("%.3f", r2),
+                                AdjR2 = sprintf("%.3f", adj),
+                                dR2 = sprintf("%+.3f", dr2),
+                                dF = sprintf("%.2f", a$F[2]),
+                                df = sprintf("%d, %d", df1, df2),
+                                p = sprintf("%.3f", a$`Pr(>F)`[2]),
+                                f2 = sprintf("%.3f", dr2 / (1 - r2)),
+                                check.names = FALSE)
+    }
+    .prev <- mod
+  }
+  t43 <- do.call(rbind, .rows)
+  tbl_hier <- flextable::flextable(t43) |>
+    flextable::set_header_labels(R2 = "R\u00b2", AdjR2 = "Adj R\u00b2",
+                                 dR2 = "\u0394R\u00b2", dF = "\u0394F",
+                                 p = "p (\u0394F)", f2 = "f\u00b2") |>
+    flextable::set_caption(sprintf(
+      "Table 4.3  Hierarchical Regression Predicting Hostile Response Likelihood (n = %d)",
+      nrow(reg_data))) |>
+    flextable::add_footer_lines(
+      paste("Note. DV = Hostile Response Likelihood (1\u201310). Each AI predictor",
+            "entered as a separate block; the Big Five entered as a final block.",
+            "All models fitted on the identical complete-case sample.",
+            "f\u00b2: .02 small, .15 medium, .35 large (Cohen, 1988).")) |>
+    flextable::theme_booktabs() |>
+    flextable::autofit()
+  assign("tbl_hier", tbl_hier, envir = .GlobalEnv)
+  cat("\n[render] tbl_hier (Table 4.3) built.\n")
+} else {
+  cat("\n[render] flextable not installed; tbl_hier skipped.\n")
+}
+
 cat("\nDone.\n")
