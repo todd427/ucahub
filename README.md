@@ -1,5 +1,7 @@
 # UCAHub (static site)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20529430.svg)](https://doi.org/10.5281/zenodo.20529430)
+
 A lightweight thesis study hub for:
 **Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors (UCA)**
 

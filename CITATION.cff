@@ -15,8 +15,13 @@ authors:
     # orcid: "https://orcid.org/0000-0000-0000-0000"  # add your ORCID if available
 version: 1.0.0
 date-released: 2026-06-03
+doi: 10.5281/zenodo.20529430
 license: MIT
 repository-code: "https://github.com/todd427/ucahub"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.20529430
+    description: Concept DOI (latest version) for all releases
 keywords:
   - cyber-aggression
   - artificial intelligence
