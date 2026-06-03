@@ -21,7 +21,10 @@ repository-code: "https://github.com/todd427/ucahub"
 identifiers:
   - type: doi
     value: 10.5281/zenodo.20529430
-    description: Concept DOI (latest version) for all releases
+    description: Concept DOI (always resolves to the latest version)
+  - type: doi
+    value: 10.5281/zenodo.20529431
+    description: Version DOI for the v1.0.0 release
 keywords:
   - cyber-aggression
   - artificial intelligence
