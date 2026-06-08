@@ -15,6 +15,12 @@
     /* Stretch the quiz to fill the window — no fixed column cap. */
     .container{max-width:96vw}
 
+    /* Fill the full viewport height: header pinned top, footer bottom,
+       quiz card vertically centred in the space between. */
+    .dim-wrap{min-height:100vh; display:flex; flex-direction:column}
+    .dim-wrap > main{flex:1 1 auto; display:flex; align-items:center}
+    .quiz-wrap{width:100%}
+
     .quiz-wrap{
       margin-top:18px;
       padding:24px 22px;
