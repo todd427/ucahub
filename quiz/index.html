@@ -351,6 +351,7 @@
 
           <div class="quiz-actions">
             <button class="btn" id="btnStart" type="button">Start Quiz</button>
+            <button class="btn secondary" id="vivaToggle" type="button">⚑ Viva Prep Mode</button>
           </div>
 
           <!-- Mastery tracker on home screen -->
@@ -439,9 +440,6 @@
     <footer class="footer">
       <span id="lastUpdated"></span>
       <div>UCAHub is a project progress hub for Todd McCaffrey's MSc Cyberpsychology dissertation.</div>
-      <div class="footer-right">
-        <button class="viva-link" id="vivaToggle" type="button">Viva Prep</button>
-      </div>
     </footer>
   </div>
 
@@ -833,7 +831,7 @@
       vivaMode = !vivaMode;
       $("vivaBanner").classList.toggle("active", vivaMode);
       $("quizTitle").textContent = vivaMode ? "Viva Preparation Mode" : "Cyberpsychology Quiz";
-      $("vivaToggle").textContent = vivaMode ? "Exit Viva Mode" : "Viva Prep";
+      $("vivaToggle").textContent = vivaMode ? "Exit Viva Mode" : "⚑ Viva Prep Mode";
       selectedCategories.clear();
       renderCategoryChips();
       updateAvailableCount();
