@@ -536,7 +536,9 @@ body.theme-paper .badge.next{
 
 /* Font scaling (user-adjustable) */
 :root{ --font-scale: 1; }
-html{ font-size: calc(16px * var(--font-scale)); }
+/* Fluid base font: grows with viewport width (16px on phones up to 22px on
+   wide displays), still multiplied by the user-adjustable --font-scale. */
+html{ font-size: calc(clamp(16px, 0.55vw + 13px, 22px) * var(--font-scale)); }
 
 
 /* Font controls */
