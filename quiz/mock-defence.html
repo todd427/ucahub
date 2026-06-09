@@ -1,148 +1,209 @@
-<meta charset="utf-8">
-<style>
-  :root{
-    --ink:#11140f; --paper:#f4f1e8; --paper2:#ece7d8;
-    --rust:#9c3b1b; --rust2:#c2531f; --moss:#3a4a2a; --gold:#b8862b;
-    --line:#1d1f18; --shadow:rgba(20,18,12,.18);
-    --got:#3a5a32; --shaky:#9a6a12; --missed:#8f2b16;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  #app{
-    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    color:var(--ink); background:
-      radial-gradient(circle at 18% 12%, rgba(184,134,43,.07), transparent 42%),
-      radial-gradient(circle at 82% 88%, rgba(156,59,27,.06), transparent 46%),
-      var(--paper);
-    min-height:100vh; padding:clamp(14px,3vw,40px);
-    background-attachment:fixed;
-  }
-  .wrap{max-width:780px;margin:0 auto}
-  .masthead{border-bottom:3px double var(--line);padding-bottom:14px;margin-bottom:6px}
-  .kicker{font-family:"Courier New",monospace;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--rust);font-weight:700}
-  h1{font-size:clamp(26px,5vw,40px);line-height:1.02;font-weight:800;letter-spacing:-.01em;margin:6px 0 2px}
-  .sub{font-style:italic;color:#544f40;font-size:14px}
-  .meterbar{display:flex;gap:10px;align-items:center;margin:16px 0 22px;font-family:"Courier New",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#5a5444}
-  .track{flex:1;height:7px;background:var(--paper2);border:1px solid var(--line);border-radius:2px;overflow:hidden}
-  .fill{height:100%;background:linear-gradient(90deg,var(--rust),var(--gold));width:0;transition:width .4s ease}
-  .card{background:linear-gradient(180deg,#fbf9f1,#f1ece0);border:1px solid var(--line);border-radius:4px;
-    box-shadow:6px 7px 0 var(--shadow);padding:clamp(20px,4vw,34px);position:relative;overflow:hidden}
-  .card::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(20,18,12,.025) 1px,transparent 1px);background-size:4px 4px;pointer-events:none}
-  .tagrow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-  .cat{font-family:"Courier New",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--moss);font-weight:700}
-  .prio{font-family:"Courier New",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:3px 9px;border:1px solid var(--rust);color:var(--rust);border-radius:2px}
-  .qtext{font-size:clamp(20px,3.4vw,27px);line-height:1.28;font-weight:600;margin:4px 0 10px}
-  .prompt{font-style:italic;color:#6a6353;font-size:14px;margin-top:18px;border-top:1px dashed #b7b09a;padding-top:14px}
-  .reveal{margin-top:22px;border-top:2px solid var(--line);padding-top:18px;animation:fade .35s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  .rlabel{font-family:"Courier New",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);font-weight:700;margin-bottom:8px}
-  .answer{font-size:16.5px;line-height:1.55}
-  .warn{margin-top:16px;background:rgba(156,59,27,.07);border-left:4px solid var(--rust);padding:11px 14px;font-size:14.5px;line-height:1.5}
-  .warn b{font-family:"Courier New",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--rust);display:block;margin-bottom:4px}
-  .btnrow{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
-  button{font-family:"Courier New",monospace;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
-    padding:13px 20px;border:1px solid var(--line);border-radius:3px;cursor:pointer;background:var(--ink);color:var(--paper);
-    box-shadow:3px 3px 0 var(--shadow);transition:transform .08s,box-shadow .08s}
-  button:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--shadow)}
-  button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
-  button.ghost{background:transparent;color:var(--ink)}
-  .grade{flex:1;min-width:120px;color:#fff}
-  .g-got{background:var(--got);border-color:var(--got)}
-  .g-shaky{background:var(--shaky);border-color:var(--shaky)}
-  .g-missed{background:var(--missed);border-color:var(--missed)}
-  .end h2{font-size:clamp(24px,4vw,34px);margin-bottom:4px}
-  .scoreline{font-family:"Courier New",monospace;font-size:14px;letter-spacing:.06em;margin:18px 0;line-height:2}
-  .pill{display:inline-block;padding:2px 10px;border-radius:2px;font-weight:700;margin-left:6px}
-  .catbreak{margin-top:20px}
-  .catrow{display:flex;align-items:center;gap:10px;font-family:"Courier New",monospace;font-size:12px;margin:7px 0}
-  .catname{flex:0 0 200px;text-transform:uppercase;letter-spacing:.08em;font-size:11px}
-  .catbar{flex:1;height:14px;background:var(--paper2);border:1px solid var(--line);border-radius:2px;overflow:hidden;display:flex}
-  .seg{height:100%}
-  .footnote{margin-top:26px;font-size:12px;font-style:italic;color:#6a6353;border-top:1px dashed #b7b09a;padding-top:12px;line-height:1.5}
-</style>
-<div id="app"><div class="wrap"><a href="/quiz/" style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--rust);text-decoration:none;display:inline-block;margin-bottom:14px">&larr; Back to Quiz</a><div id="root"></div></div></div>
-<script src="/quiz/viva-bank.js"></script>
-<script>var BANK=window.VIVA_BANK;</script>
-<script>
-var POOL=25;
-var state={};
-function pick(){
-  // weighted draw: weight-3 strongly favoured, then 2, then 1, no repeats
-  var bag=[];
-  BANK.forEach(function(q){ var n=q.weight===3?4:q.weight===2?2:1; for(var i=0;i<n;i++)bag.push(q); });
-  var seen={}, out=[];
-  while(out.length<POOL && bag.length){
-    var i=Math.floor(Math.random()*bag.length), q=bag[i];
-    if(!seen[q.id]){seen[q.id]=1;out.push(q);}
-    bag.splice(i,1);
-  }
-  // ensure all weight-3 appear if room; shuffle final order
-  for(var s=out.length-1;s>0;s--){var j=Math.floor(Math.random()*(s+1));var t=out[s];out[s]=out[j];out[j]=t;}
-  return out;
-}
-function start(){ state={set:pick(),idx:0,revealed:false,grades:{}}; render(); }
-function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;");}
-function render(){
-  var root=document.getElementById("root");
-  if(state.idx>=state.set.length){ return renderEnd(root); }
-  var q=state.set[state.idx], n=state.set.length, pct=Math.round(state.idx/n*100);
-  var h='<div class="masthead"><div class="kicker">UCA Viva &middot; Mock Defence</div>'
-    +'<h1>Question '+(state.idx+1)+'<span style="color:#b7b09a">/'+n+'</span></h1>'
-    +'<div class="sub">Answer aloud first. Then reveal and grade yourself honestly.</div></div>'
-    +'<div class="meterbar"><span>Progress</span><div class="track"><div class="fill" style="width:'+pct+'%"></div></div><span>'+pct+'%</span></div>'
-    +'<div class="card"><div class="tagrow"><span class="cat">'+esc(q.cat)+'</span>'
-    +(q.weight===3?'<span class="prio">High-priority &middot; exposure point</span>':'')+'</div>'
-    +'<div class="qtext">'+esc(q.q)+'</div>';
-  if(!state.revealed){
-    h+='<div class="prompt">Say your full answer out loud, as if to the external. No notes.</div>'
-      +'<div class="btnrow"><button onclick="doReveal()">Reveal model answer</button>'
-      +'<button class="ghost" onclick="skip()">Skip</button></div>';
-  }else{
-    h+='<div class="reveal"><div class="rlabel">Model answer</div><div class="answer">'+esc(q.a)+'</div>';
-    if(q.warn){ h+='<div class="warn"><b>Todd-eeze warning</b>'+esc(q.warn)+'</div>'; }
-    h+='<div class="btnrow"><button class="grade g-got" onclick="grade(\'got\')">Got it</button>'
-      +'<button class="grade g-shaky" onclick="grade(\'shaky\')">Shaky</button>'
-      +'<button class="grade g-missed" onclick="grade(\'missed\')">Missed</button></div></div>';
-  }
-  h+='</div>';
-  root.innerHTML=h;
-}
-function doReveal(){state.revealed=true;render();}
-function skip(){state.idx++;state.revealed=false;render();}
-function grade(g){ state.grades[state.set[state.idx].id]=g; state.idx++; state.revealed=false; render(); }
-function renderEnd(root){
-  var got=0,shaky=0,missed=0,bycat={};
-  state.set.forEach(function(q){
-    var g=state.grades[q.id]||"skip";
-    if(g==="got")got++; else if(g==="shaky")shaky++; else if(g==="missed")missed++;
-    if(!bycat[q.cat])bycat[q.cat]={got:0,shaky:0,missed:0,skip:0,n:0};
-    bycat[q.cat][g]++; bycat[q.cat].n++;
-  });
-  var graded=got+shaky+missed;
-  var score=graded?Math.round((got+shaky*0.5)/graded*100):0;
-  var verdict = score>=80?["Defensible","var(--got)"]:score>=60?["Patchy &mdash; drill the reds","var(--shaky)"]:["Not viva-ready yet","var(--missed)"];
-  var h='<div class="masthead"><div class="kicker">UCA Viva &middot; Result</div>'
-    +'<h1 class="end">Round complete</h1><div class="sub">25 drawn, weighted toward your four exposure points.</div></div>'
-    +'<div class="card"><h2>Readiness '+score+'%<span class="pill" style="background:'+verdict[1]+';color:#fff">'+verdict[0]+'</span></h2>'
-    +'<div class="scoreline">'
-    +'Got it &nbsp;<span class="pill" style="background:var(--got);color:#fff">'+got+'</span><br>'
-    +'Shaky &nbsp;<span class="pill" style="background:var(--shaky);color:#fff">'+shaky+'</span><br>'
-    +'Missed &nbsp;<span class="pill" style="background:var(--missed);color:#fff">'+missed+'</span></div>';
-  h+='<div class="catbreak"><div class="rlabel">By category &mdash; where the gaps are</div>';
-  Object.keys(bycat).sort().forEach(function(c){
-    var b=bycat[c], tot=b.n;
-    function w(x){return tot?(x/tot*100):0;}
-    h+='<div class="catrow"><div class="catname">'+esc(c)+'</div><div class="catbar">'
-      +'<div class="seg" style="width:'+w(b.got)+'%;background:var(--got)"></div>'
-      +'<div class="seg" style="width:'+w(b.shaky)+'%;background:var(--shaky)"></div>'
-      +'<div class="seg" style="width:'+w(b.missed)+'%;background:var(--missed)"></div>'
-      +'<div class="seg" style="width:'+w(b.skip)+'%;background:var(--paper2)"></div>'
-      +'</div></div>';
-  });
-  h+='</div>';
-  h+='<div class="footnote">Scoring weights Got it = 1, Shaky = 0.5, Missed/Skip = 0. A viva is not multiple-choice: the test is whether you said the number, the p-value and the disclosure out loud before revealing. Reds in Anonymity anomaly, CAI to HRL, AI-block null or MIRM are the ones that cost marks in the room.</div>';
-  h+='<div class="btnrow"><button onclick="start()">New 25 &mdash; reshuffle</button></div>';
-  h+='</div>';
-  root.innerHTML=h;
-}
-start();
-</script>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UCAHub Mock Defence — an open-ended viva flashcard drill on the canonical dissertation findings.">
+  <title>Mock Defence — UCAHub</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+  <script src="/quiz/viva-bank.js" defer></script>
+  <style>
+    /* ===== Mock Defence — theme-aware, full-window ===== */
+    .container{max-width:96vw}
+    .dim-wrap{min-height:100vh; display:flex; flex-direction:column}
+    .dim-wrap > main{flex:1 1 auto; display:flex}
+    .mock-wrap{width:100%; display:flex; flex-direction:column; margin-top:18px}
+
+    .mock-masthead{margin-bottom:6px}
+    .mock-kicker{font-size:0.75rem; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); font-weight:700}
+    .mock-masthead h2{font-size:clamp(1.5rem,4vw,2.25rem); line-height:1.05; margin:6px 0 2px; color:var(--text)}
+    .mock-sub{color:var(--muted); font-size:0.875rem; font-style:italic}
+
+    .mock-meter{display:flex; gap:12px; align-items:center; margin:16px 0 18px;
+      font-size:0.6875rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+    .mock-track{flex:1; height:7px; background:var(--control-bg); border:1px solid var(--control-border);
+      border-radius:999px; overflow:hidden}
+    .mock-fill{height:100%; background:linear-gradient(90deg,var(--accent),rgba(151,237,195,.85));
+      width:0; transition:width .4s ease}
+
+    .mock-card{flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;
+      background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+      box-shadow:var(--shadow); padding:clamp(22px,4vw,44px)}
+    .mock-tagrow{display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+      margin-bottom:16px; flex-wrap:wrap}
+    .mock-cat{font-size:0.75rem; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); font-weight:700}
+    .mock-prio{font-size:0.6875rem; letter-spacing:.14em; text-transform:uppercase; padding:4px 11px;
+      border:1px solid var(--accent); color:var(--accent); border-radius:999px}
+    .mock-q{font-size:clamp(1.25rem,3vw,1.9rem); line-height:1.3; font-weight:600; color:var(--text); margin:0 0 10px}
+    .mock-prompt{font-style:italic; color:var(--muted); font-size:0.875rem; margin-top:18px;
+      border-top:1px dashed var(--control-border); padding-top:14px}
+    .mock-reveal{margin-top:22px; border-top:2px solid var(--line); padding-top:18px; animation:mockfade .35s ease}
+    @keyframes mockfade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+    .mock-rlabel{font-size:0.75rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent);
+      font-weight:700; margin-bottom:8px}
+    .mock-answer{font-size:1.0625rem; line-height:1.6; color:var(--text)}
+    .mock-warn{margin-top:16px; background:var(--control-bg); border-left:4px solid var(--accent);
+      padding:12px 16px; font-size:0.9375rem; line-height:1.55; color:var(--text); border-radius:0 10px 10px 0}
+    .mock-warn b{font-size:0.6875rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent);
+      display:block; margin-bottom:4px}
+
+    .mock-btnrow{display:flex; gap:12px; margin-top:24px; flex-wrap:wrap}
+    .grade{flex:1; min-width:130px}
+    .g-got{background:rgba(151,237,195,.16); border-color:rgba(151,237,195,.55); color:var(--text)}
+    .g-got:hover{background:rgba(151,237,195,.24)}
+    .g-shaky{background:rgba(255,191,73,.16); border-color:rgba(255,191,73,.55); color:var(--text)}
+    .g-shaky:hover{background:rgba(255,191,73,.24)}
+    .g-missed{background:rgba(255,99,99,.16); border-color:rgba(255,99,99,.55); color:var(--text)}
+    .g-missed:hover{background:rgba(255,99,99,.24)}
+
+    /* Results */
+    .mock-score{font-size:clamp(1.5rem,4vw,2rem); color:var(--text); margin-bottom:6px}
+    .mock-pill{display:inline-block; padding:3px 12px; border-radius:999px; font-weight:700;
+      margin-left:8px; font-size:0.8125rem; color:var(--text)}
+    .mock-scoreline{font-size:0.9375rem; margin:18px 0; line-height:2; color:var(--muted)}
+    .mock-catbreak{margin-top:20px}
+    .mock-catrow{display:flex; align-items:center; gap:10px; font-size:0.8125rem; margin:7px 0; color:var(--muted)}
+    .mock-catname{flex:0 0 220px; text-transform:uppercase; letter-spacing:.06em; font-size:0.6875rem}
+    .mock-catbar{flex:1; height:14px; background:var(--control-bg); border:1px solid var(--control-border);
+      border-radius:999px; overflow:hidden; display:flex}
+    .mock-seg{height:100%}
+    .mock-footnote{margin-top:26px; font-size:0.8125rem; font-style:italic; color:var(--muted);
+      border-top:1px dashed var(--control-border); padding-top:14px; line-height:1.6}
+  </style>
+</head>
+<body>
+  <div id="preliveOverlay" aria-hidden="true"></div>
+  <div class="container dim-wrap">
+    <header class="header">
+      <a class="brand" href="/"><div class="logo" aria-hidden="true"></div>
+        <div><h1 data-site-name>UCAHub</h1><p data-tagline>Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors</p></div>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/progress.html">Progress</a>
+        <a href="/updates.html">Updates</a>
+        <a href="/quiz/" aria-current="page" style="color:var(--text);border-color:var(--control-hover-border);background:var(--control-bg)">Quiz</a>
+        <a href="/about.html">About</a>
+        <a href="/ethics.html">Ethics</a>
+        <a href="/contact.html">Contact</a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme toggle">
+          <span class="theme-icon" aria-hidden="true"></span><span data-theme-label>Dark</span>
+        </button>
+        <span class="font-controls" aria-label="Text size controls">
+          <button class="fc-btn" id="fontDec" type="button" title="Smaller text">A−</button>
+          <button class="fc-btn" id="fontReset" type="button" title="Reset text size">A</button>
+          <button class="fc-btn" id="fontInc" type="button" title="Larger text">A+</button>
+          <span class="fc-label" id="fontLabel">100%</span>
+        </span>
+      </nav>
+    </header>
+
+    <main>
+      <div class="mock-wrap" id="root"></div>
+    </main>
+
+    <footer class="footer">
+      <span id="lastUpdated"></span>
+      <div>Mock Defence — open-ended viva drill on the canonical dissertation findings. <a href="/quiz/">← Back to Quiz</a></div>
+    </footer>
+  </div>
+
+  <script>
+  (function(){
+    "use strict";
+    var BANK = [];
+    var POOL = 25;
+    var state = {};
+
+    function pick(){
+      // weighted draw: weight-3 strongly favoured, then 2, then 1, no repeats
+      var bag=[];
+      BANK.forEach(function(q){ var n=q.weight===3?4:q.weight===2?2:1; for(var i=0;i<n;i++)bag.push(q); });
+      var seen={}, out=[];
+      while(out.length<POOL && bag.length){
+        var i=Math.floor(Math.random()*bag.length), q=bag[i];
+        if(!seen[q.id]){seen[q.id]=1;out.push(q);}
+        bag.splice(i,1);
+      }
+      for(var s=out.length-1;s>0;s--){var j=Math.floor(Math.random()*(s+1));var t=out[s];out[s]=out[j];out[j]=t;}
+      return out;
+    }
+    function start(){ state={set:pick(),idx:0,revealed:false,grades:{}}; render(); }
+    function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+
+    function render(){
+      var root=document.getElementById("root");
+      if(state.idx>=state.set.length){ return renderEnd(root); }
+      var q=state.set[state.idx], n=state.set.length, pct=Math.round(state.idx/n*100);
+      var h='<div class="mock-masthead"><div class="mock-kicker">UCA Viva · Mock Defence</div>'
+        +'<h2>Question '+(state.idx+1)+'<span style="color:var(--muted)">/'+n+'</span></h2>'
+        +'<div class="mock-sub">Answer aloud first. Then reveal and grade yourself honestly.</div></div>'
+        +'<div class="mock-meter"><span>Progress</span><div class="mock-track"><div class="mock-fill" style="width:'+pct+'%"></div></div><span>'+pct+'%</span></div>'
+        +'<div class="mock-card"><div class="mock-tagrow"><span class="mock-cat">'+esc(q.cat)+'</span>'
+        +(q.weight===3?'<span class="mock-prio">High-priority · exposure point</span>':'')+'</div>'
+        +'<div class="mock-q">'+esc(q.q)+'</div>';
+      if(!state.revealed){
+        h+='<div class="mock-prompt">Say your full answer out loud, as if to the external. No notes.</div>'
+          +'<div class="mock-btnrow"><button class="btn" onclick="MOCK.reveal()">Reveal model answer</button>'
+          +'<button class="btn ghost" onclick="MOCK.skip()">Skip</button></div>';
+      }else{
+        h+='<div class="mock-reveal"><div class="mock-rlabel">Model answer</div><div class="mock-answer">'+esc(q.a)+'</div>';
+        if(q.warn){ h+='<div class="mock-warn"><b>Todd-eeze warning</b>'+esc(q.warn)+'</div>'; }
+        h+='<div class="mock-btnrow"><button class="btn grade g-got" onclick="MOCK.grade(\'got\')">Got it</button>'
+          +'<button class="btn grade g-shaky" onclick="MOCK.grade(\'shaky\')">Shaky</button>'
+          +'<button class="btn grade g-missed" onclick="MOCK.grade(\'missed\')">Missed</button></div></div>';
+      }
+      h+='</div>';
+      root.innerHTML=h;
+    }
+    function doReveal(){state.revealed=true;render();}
+    function skip(){state.idx++;state.revealed=false;render();}
+    function grade(g){ state.grades[state.set[state.idx].id]=g; state.idx++; state.revealed=false; render(); }
+
+    function renderEnd(root){
+      var got=0,shaky=0,missed=0,bycat={};
+      state.set.forEach(function(q){
+        var g=state.grades[q.id]||"skip";
+        if(g==="got")got++; else if(g==="shaky")shaky++; else if(g==="missed")missed++;
+        if(!bycat[q.cat])bycat[q.cat]={got:0,shaky:0,missed:0,skip:0,n:0};
+        bycat[q.cat][g]++; bycat[q.cat].n++;
+      });
+      var graded=got+shaky+missed;
+      var score=graded?Math.round((got+shaky*0.5)/graded*100):0;
+      var verdict = score>=80?["Defensible","rgba(151,237,195,.28)"]:score>=60?["Patchy — drill the reds","rgba(255,191,73,.28)"]:["Not viva-ready yet","rgba(255,99,99,.28)"];
+      var h='<div class="mock-masthead"><div class="mock-kicker">UCA Viva · Result</div>'
+        +'<h2>Round complete</h2><div class="mock-sub">25 drawn, weighted toward your four exposure points.</div></div>'
+        +'<div class="mock-card"><div class="mock-score">Readiness '+score+'%<span class="mock-pill" style="background:'+verdict[1]+'">'+verdict[0]+'</span></div>'
+        +'<div class="mock-scoreline">'
+        +'Got it <span class="mock-pill" style="background:rgba(151,237,195,.28)">'+got+'</span><br>'
+        +'Shaky <span class="mock-pill" style="background:rgba(255,191,73,.28)">'+shaky+'</span><br>'
+        +'Missed <span class="mock-pill" style="background:rgba(255,99,99,.28)">'+missed+'</span></div>';
+      h+='<div class="mock-catbreak"><div class="mock-rlabel">By category — where the gaps are</div>';
+      Object.keys(bycat).sort().forEach(function(c){
+        var b=bycat[c], tot=b.n;
+        function w(x){return tot?(x/tot*100):0;}
+        h+='<div class="mock-catrow"><div class="mock-catname">'+esc(c)+'</div><div class="mock-catbar">'
+          +'<div class="mock-seg" style="width:'+w(b.got)+'%;background:rgba(151,237,195,.7)"></div>'
+          +'<div class="mock-seg" style="width:'+w(b.shaky)+'%;background:rgba(255,191,73,.7)"></div>'
+          +'<div class="mock-seg" style="width:'+w(b.missed)+'%;background:rgba(255,99,99,.7)"></div>'
+          +'<div class="mock-seg" style="width:'+w(b.skip)+'%;background:var(--control-border)"></div>'
+          +'</div></div>';
+      });
+      h+='</div>';
+      h+='<div class="mock-footnote">Scoring weights Got it = 1, Shaky = 0.5, Missed/Skip = 0. A viva is not multiple-choice: the test is whether you said the number, the p-value and the disclosure out loud before revealing. Reds in Anonymity anomaly, CAI to HRL, AI-block null or MIRM are the ones that cost marks in the room.</div>';
+      h+='<div class="mock-btnrow"><button class="btn" onclick="MOCK.start()">New 25 — reshuffle</button></div>';
+      h+='</div>';
+      root.innerHTML=h;
+    }
+
+    // expose handlers for inline onclick
+    window.MOCK = { start:start, reveal:doReveal, skip:skip, grade:grade };
+
+    document.addEventListener("DOMContentLoaded", function(){
+      BANK = (window.VIVA_BANK || []);
+      start();
+    });
+  })();
+  </script>
+</body>
+</html>
