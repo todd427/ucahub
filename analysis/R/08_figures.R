@@ -5,13 +5,18 @@
 # findings-led and would benefit from visual summaries before inferential
 # statistics.
 #
-# Produces four PNG figures + one console table:
-#   Figure 4.1  Mean scores across seven scales (HSU, ED, AN, PA, MD, AIT, AID)
-#   Figure 4.2  Mean HRL by behavioural-choice response (the five options)
-#   Figure 4.3  Significant predictors only: forest plot of beta / r effects
-#   Figure 4.4  HRL by age band (18-24 vs 25+), reported as exploratory
-#   Console     Table 4.3 reconciled against final N = 164 (clears the
-#               [Numbers carried from prelim n = 132] flag in the draft)
+# Produces four PNG figures + one console table. PNG filenames are descriptive
+# only (no chapter/figure numbers) so renumbering at the document level does
+# not leave the filenames stale. The Word document carries the figure numbers
+# in the captions; the in-figure plot titles describe content only.
+#
+# Files produced in analysis/R/figures/:
+#   fig_scale_means.png         Mean scores across seven scales
+#   fig_hrl_by_choice.png       HRL by behavioural-choice response
+#   fig_sig_predictors.png      Significant predictors only: forest plot
+#   fig_age_band.png            HRL by age band (exploratory)
+#
+# Also prints Table 4.3 reconciled against final N = 164 to the console.
 #
 # Prep delegated to 00_prep.R; figures consume the same screened `valid`
 # frame as every other module. ggplot2 is the only added dependency.
@@ -20,11 +25,10 @@
 #   Rscript analysis/R/08_figures.R           # PNGs -> analysis/R/figures/
 #   RStudio: Source the file. get_script_dir() resolves all three contexts.
 #
-# Output dimensions: 7.5 x 4.5 in, 300 dpi (5.0 x 4.0 for fig 4.4).
+# Output dimensions: 7.5 x 4.5 in, 300 dpi (6.0 x 4.2 for age band).
 # Designed to drop into the Word doc at ~6 in wide without resampling.
 # ============================================================================
 
-# -- locate this script's dir (Rscript / source / RStudio editor) ------------
 get_script_dir <- function() {
   ca <- commandArgs(FALSE)
   m  <- grep("^--file=", ca, value = TRUE)
@@ -43,7 +47,6 @@ get_script_dir <- function() {
 .here <- get_script_dir()
 setwd(.here)
 
-# -- dependencies ------------------------------------------------------------
 if (!requireNamespace("ggplot2", quietly = TRUE))
   stop("08_figures needs ggplot2. install.packages(\"ggplot2\")")
 library(ggplot2)
@@ -53,20 +56,6 @@ source("00_prep.R")
 .figdir <- file.path(.here, "figures")
 dir.create(.figdir, showWarnings = FALSE, recursive = TRUE)
 
-# ----------------------------------------------------------------------------
-# Theme + helpers
-#
-# Three things matter for the rendered output in Word at ~6 in wide:
-#   - Captions must WRAP, not run off the right edge. Use a hand-rolled
-#     wrapper (no stringr dep) and set plot.caption.position = "plot" so
-#     the caption spans the full plot width, not just the panel.
-#   - Value labels (the M= numbers) must sit ABOVE the error-bar whiskers,
-#     not on top of them. Compute y = m + 1.96*se + nudge.
-#   - n-labels need contrast. White-on-blue at the bar foot is too subtle
-#     when the PNG is downscaled. Use dark grey ABOVE the x-axis instead.
-# ----------------------------------------------------------------------------
-
-# Wrap text to width chars without depending on stringr.
 .wrap_caption <- function(s, width = 95) {
   paste(strwrap(s, width = width), collapse = "\n")
 }
@@ -103,12 +92,7 @@ cat("Output directory:", .figdir, "\n")
 cat("N (screened):", nrow(valid), "\n\n")
 
 # ============================================================================
-# FIGURE 4.1  Mean scores across seven scales
-# ----------------------------------------------------------------------------
-# Gerry: "This is probably the graph I'd most want to see."
-# All seven scales scored 1-5, so they share an axis. 95% CI error bars; per-
-# scale n in the caption since the AI-frequency branch leaves the AI scales
-# at n = 142 (140 for AI Trust).
+# Mean scores across seven scales
 # ============================================================================
 
 .scale_labels <- c(habitual_use        = "Habitual SNS Use",
@@ -128,7 +112,7 @@ f41 <- do.call(rbind, lapply(names(.scale_labels), function(s) {
              stringsAsFactors = FALSE)
 }))
 f41$scale <- factor(f41$scale, levels = unname(.scale_labels))
-f41$y_lab <- f41$m + 1.96 * f41$se + 0.15   # label position above whisker
+f41$y_lab <- f41$m + 1.96 * f41$se + 0.15
 
 cap_41 <- .wrap_caption(sprintf(paste(
   "Error bars: 95%% CI. Dashed line marks the scale midpoint (3).",
@@ -144,20 +128,19 @@ p41 <- ggplot(f41, aes(x = scale, y = m)) +
   geom_text(aes(y = y_lab, label = sprintf("%.2f", m)),
             size = 3.3, colour = "grey20", fontface = "bold") +
   scale_y_continuous(limits = c(1, 5.2), breaks = 1:5, expand = c(0, 0)) +
-  labs(title   = "Figure 4.1  Mean scores across the seven multi-item scales",
+  labs(title   = "Mean scores across the seven multi-item scales",
        x       = NULL, y = "Mean (1\u20135 scale)",
        caption = cap_41) +
   .theme +
   theme(axis.text.x = element_text(angle = 25, hjust = 1))
 
-ggsave(file.path(.figdir, "fig_4_1_scale_means.png"),
+ggsave(file.path(.figdir, "fig_scale_means.png"),
        p41, width = 7.5, height = 4.8, dpi = 300)
-cat("[fig 4.1] saved fig_4_1_scale_means.png\n")
+cat("[saved] fig_scale_means.png\n")
 
 # ============================================================================
-# FIGURE 4.2  Mean HRL by behavioural-choice response
-# ----------------------------------------------------------------------------
-# Also serves as the canonical Table 4.3 recompute against N = 164.
+# Mean HRL by behavioural-choice response
+# (also serves as the canonical Table 4.3 recompute against N = 164)
 # ============================================================================
 
 .bc_map <- list(
@@ -177,7 +160,7 @@ cat("[fig 4.1] saved fig_4_1_scale_means.png\n")
 bc_label <- vapply(valid$response_choice, .match_bc, character(1))
 unmatched <- sum(!is.na(valid$response_choice) & is.na(bc_label))
 if (unmatched > 0)
-  warning(sprintf("[fig 4.2] %d response_choice values did not match; check Qualtrics export wording",
+  warning(sprintf("[hrl-by-choice] %d response_choice values did not match",
                   unmatched))
 
 bc_df <- data.frame(label = bc_label,
@@ -214,9 +197,7 @@ cap_42 <- .wrap_caption(sprintf(paste(
   f42$m[f42$label == "Reply sharply"],
   f42$m[f42$label == "Talk privately"]))
 
-# Two-line x-axis labels: choice on line 1, n on line 2 in dark grey.
 f42$x_label <- sprintf("%s\n(n = %d)", as.character(f42$label), f42$n)
-# Keep the factor order from f42 so x-axis is passive -> aggressive.
 f42$x_label <- factor(f42$x_label, levels = f42$x_label)
 
 p42 <- ggplot(f42, aes(x = x_label, y = m)) +
@@ -227,22 +208,18 @@ p42 <- ggplot(f42, aes(x = x_label, y = m)) +
             size = 3.6, colour = "grey20", fontface = "bold") +
   scale_y_continuous(limits = c(0, 10.5), breaks = seq(0, 10, 2),
                      expand = c(0, 0)) +
-  labs(title   = "Figure 4.2  Hostile Response Likelihood by behavioural choice",
+  labs(title   = "Hostile Response Likelihood by behavioural choice",
        x       = "Self-reported behavioural response",
        y       = "Mean HRL (1\u201310)",
        caption = cap_42) +
   .theme
 
-ggsave(file.path(.figdir, "fig_4_2_hrl_by_choice.png"),
+ggsave(file.path(.figdir, "fig_hrl_by_choice.png"),
        p42, width = 7.5, height = 4.8, dpi = 300)
-cat("[fig 4.2] saved fig_4_2_hrl_by_choice.png\n")
+cat("[saved] fig_hrl_by_choice.png\n")
 
 # ============================================================================
-# FIGURE 4.3  Significant predictors only (forest plot)
-# ----------------------------------------------------------------------------
-# Two effect types share the panel:
-#   - Standardised beta from the hierarchical regression (MD, Anonymity)
-#   - Zero-order r from the full sample (Agreeableness)
+# Significant predictors only (forest plot)
 # ============================================================================
 
 .hm_vars <- c("hostile_response", "habitual_use", "empathy_deficit",
@@ -296,9 +273,6 @@ f43$label_txt <- mapply(function(type_lab, est_v, p_v) {
   sprintf("%s = %+.2f, p %s", prefix, est_v, .fmt_p(p_v))
 }, f43$type, f43$est, f43$p)
 
-# For horizontal forest, place the text label above-and-right of the point but
-# bounded so it doesn't run off the panel. hjust 0 = left-anchored at the
-# point; nudge upward via vjust.
 cap_43 <- .wrap_caption(sprintf(paste(
   "Moral disengagement and perceived anonymity: standardised \u03b2 from the full",
   "hierarchical model (n = %d). Agreeableness: zero-order r against the full",
@@ -316,7 +290,7 @@ p43 <- ggplot(f43, aes(y = predictor, x = est, colour = sign)) +
   scale_colour_manual(values = c(positive = .sig_pos, negative = .sig_neg),
                       guide  = "none") +
   scale_x_continuous(limits = c(-0.55, 0.75), breaks = seq(-0.4, 0.6, 0.2)) +
-  labs(title   = "Figure 4.3  Significant predictors of Hostile Response Likelihood",
+  labs(title   = "Significant predictors of Hostile Response Likelihood",
        x       = "Effect size (95% CI)",
        y       = NULL,
        caption = cap_43) +
@@ -327,15 +301,14 @@ p43 <- ggplot(f43, aes(y = predictor, x = est, colour = sign)) +
                                           colour = "grey30"),
         panel.grid.major.x = element_line(colour = "grey92"),
         panel.grid.major.y = element_blank(),
-        # Forest needs more vertical breathing room per row for the labels.
         panel.spacing.y    = unit(0.6, "lines"))
 
-ggsave(file.path(.figdir, "fig_4_3_sig_predictors.png"),
+ggsave(file.path(.figdir, "fig_sig_predictors.png"),
        p43, width = 7.5, height = 4.4, dpi = 300)
-cat("[fig 4.3] saved fig_4_3_sig_predictors.png\n")
+cat("[saved] fig_sig_predictors.png\n")
 
 # ============================================================================
-# FIGURE 4.4  HRL by age band (exploratory)
+# HRL by age band (exploratory)
 # ============================================================================
 
 ag2 <- valid[!is.na(valid$age_group) & !is.na(valid$hostile_response), ]
@@ -376,14 +349,14 @@ p44 <- ggplot(f44, aes(x = x_label, y = m)) +
             size = 3.6, colour = "grey20", fontface = "bold") +
   scale_y_continuous(limits = c(0, 10.5), breaks = seq(0, 10, 2),
                      expand = c(0, 0)) +
-  labs(title   = "Figure 4.4  Hostile Response Likelihood by age band (exploratory)",
+  labs(title   = "Hostile Response Likelihood by age band (exploratory)",
        x       = "Age band",
        y       = "Mean HRL (1\u201310)",
        caption = cap_44) +
   .theme
 
-ggsave(file.path(.figdir, "fig_4_4_age_band.png"),
+ggsave(file.path(.figdir, "fig_age_band.png"),
        p44, width = 6.0, height = 4.2, dpi = 300)
-cat("[fig 4.4] saved fig_4_4_age_band.png\n")
+cat("[saved] fig_age_band.png\n")
 
 cat("\n08_figures: done. Four PNGs in", .figdir, "\n")
