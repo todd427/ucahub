@@ -1028,3 +1028,26 @@ body.theme-paper .daily-message{
   gap:10px;
   flex-wrap:wrap;
 }
+
+/* ==================== TACA DEMO SECTION ==================== */
+.demo-section{
+  margin-top:14px;
+  padding:16px 20px;
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+  background:var(--card);
+  box-shadow: var(--shadow);
+}
+
+.demo-title{
+  margin:0 0 6px;
+  font-size:1.05rem;
+  color:var(--text);
+}
+
+.demo-note{
+  margin:0 0 14px;
+  font-size:.92rem;
+  line-height:1.55;
+  color:var(--muted);
+}
