@@ -70,6 +70,65 @@
     .mock-seg{height:100%}
     .mock-footnote{margin-top:26px; font-size:0.8125rem; font-style:italic; color:var(--muted);
       border-top:1px dashed var(--control-border); padding-top:14px; line-height:1.6}
+
+    /* ============================================================
+       WCAG 2.1 AAA layer
+       1.4.6 Contrast (Enhanced) 7:1 — opaque, high-contrast palettes
+       1.4.8 Visual Presentation — measure <=80ch, line-height >=1.5,
+              not justified, no horizontal scroll on 200% zoom
+       2.4.7 / 2.4.13 — visible, high-contrast focus indicator
+       ============================================================ */
+
+    /* Deterministic, opaque palettes per theme (override the translucent
+       site variables for this page only so contrast is measurable). */
+    body{
+      background:#0b0d12 !important;
+      --bg:#0b0d12; --card:#171b24;
+      --text:#ffffff; --muted:#cfd6e2; --accent:#a9caff;
+      --line:rgba(255,255,255,.34);
+      --control-bg:#222836; --control-border:rgba(255,255,255,.52);
+      --control-hover-bg:#2b3242; --control-hover-border:rgba(255,255,255,.66);
+    }
+    body.theme-bright{
+      background:#e9f1f3 !important;
+      --bg:#e9f1f3; --card:#ffffff;
+      --text:#0a0f18; --muted:#2e3a46; --accent:#00494c;
+      --line:rgba(16,21,34,.34);
+      --control-bg:#eef3f5; --control-border:rgba(16,21,34,.52);
+      --control-hover-bg:#e6edef; --control-hover-border:rgba(16,21,34,.66);
+    }
+    body.theme-paper{
+      background:#ffffff !important;
+      --bg:#ffffff; --card:#ffffff;
+      --text:#000000; --muted:#262626; --accent:#0a39a0;
+      --line:rgba(0,0,0,.38);
+      --control-bg:#f1f1f1; --control-border:rgba(0,0,0,.55);
+      --control-hover-bg:#e9e9e9; --control-hover-border:rgba(0,0,0,.7);
+    }
+    /* Force the chrome opaque so text contrast is deterministic. */
+    .header, body.theme-bright .header, body.theme-paper .header{
+      background:var(--card) !important; backdrop-filter:none;
+    }
+    .mock-card{background:var(--card)}
+
+    /* 1.4.8 — limit line length of text blocks to <=80 characters.
+       66ch of the "0"-glyph maps to ~72 proportional chars/line. */
+    .mock-q, .mock-answer, .mock-warn, .mock-prompt, .mock-sub,
+    .mock-scoreline, .mock-footnote{max-width:66ch}
+    /* 1.4.8 — block line spacing >= 1.5. */
+    .mock-answer{line-height:1.6}
+    .mock-warn{line-height:1.6}
+    .mock-prompt{line-height:1.6}
+    .mock-footnote{line-height:1.6}
+
+    /* 2.4.7 / 2.4.13 — visible focus indicator (>=3:1, thick, offset). */
+    a:focus-visible, button:focus-visible,
+    .btn:focus-visible, .nav a:focus-visible,
+    .theme-toggle:focus-visible, .fc-btn:focus-visible{
+      outline:3px solid var(--accent);
+      outline-offset:3px;
+      border-radius:6px;
+    }
   </style>
 </head>
 <body>
