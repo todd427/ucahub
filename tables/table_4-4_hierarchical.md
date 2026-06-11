@@ -1,4 +1,4 @@
-# Table 4.5 — Hierarchical Regression Predicting Hostile Response Likelihood
+# Table 4.4 — Hierarchical Regression Predicting Hostile Response Likelihood
 
 *N = 139 (listwise complete cases). DV = Hostile Response Likelihood (HRL, 1–10).*
 
