@@ -6,3 +6,7 @@ analysis/R/*.docx
 analysis/R/figures
 analysis/R/.RData
 analysis/R/.Rhistory
+
+# Python bytecode cache
+__pycache__/
+*.pyc
