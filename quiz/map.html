@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UCAHub Thesis Map — the load-bearing ideas of the UCA dissertation and how they connect. Tap any node to rehearse the links.">
+  <title>Thesis Map — UCAHub</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+  <script src="/quiz/mapdata.js" defer></script>
+  <style>
+    .map-wrap{
+      margin-top:18px;padding:22px 20px;border-radius:var(--radius);
+      border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow);
+    }
+    .map-wrap h2{margin:0 0 6px;font-size:1.375rem}
+    .map-wrap .subtitle{margin:0 0 14px;color:var(--muted);font-size:0.9rem;line-height:1.5}
+    .map-hint{font-size:0.8125rem;color:var(--muted);margin:0 0 14px;font-style:italic}
+
+    .map-layout{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:900px){ .map-layout{grid-template-columns:1.55fr 1fr} }
+
+    .graph-box{
+      border:1px solid var(--control-border);border-radius:14px;background:var(--control-bg);
+      overflow:hidden;position:relative;min-height:380px;
+    }
+    svg.graph{display:block;width:100%;height:auto;touch-action:manipulation}
+
+    .layer-band{font-size:10px;letter-spacing:.12em;text-transform:uppercase;fill:var(--muted);opacity:.65}
+    .edge{stroke:var(--muted);stroke-opacity:.18;fill:none;transition:stroke-opacity .2s,stroke .2s,stroke-width .2s}
+    .edge.lit{stroke:var(--accent);stroke-opacity:.9;stroke-width:2.2}
+    .edge-label{font-size:10px;fill:var(--text);opacity:0;transition:opacity .2s;pointer-events:none}
+    .edge-label.lit{opacity:.92}
+    .edge-label rect{fill:var(--card);stroke:var(--accent);stroke-opacity:.5;rx:4}
+
+    .node{cursor:pointer}
+    .node rect{rx:9;stroke-width:1.4;transition:stroke .2s,fill .2s,filter .2s}
+    .node text{font-size:11.5px;font-weight:600;fill:var(--text);pointer-events:none;dominant-baseline:middle}
+    .node.dim{opacity:.32;transition:opacity .2s}
+    .node.lit rect{stroke-width:2.6}
+    .node.selected rect{stroke-width:3.2;filter:drop-shadow(0 0 6px rgba(122,162,255,.55))}
+
+    /* tag palettes (work in both themes via translucency over card bg) */
+    .t-theory rect{fill:rgba(122,162,255,.14);stroke:rgba(122,162,255,.8)}
+    .t-classic rect{fill:rgba(151,237,195,.14);stroke:rgba(151,237,195,.85)}
+    .t-ai rect{fill:rgba(230,160,255,.13);stroke:rgba(212,140,250,.8)}
+    .t-outcome rect{fill:rgba(255,196,120,.14);stroke:rgba(245,176,90,.85)}
+    .t-method rect{fill:rgba(180,180,180,.12);stroke:rgba(170,170,170,.7)}
+    .t-find-strong rect{fill:rgba(151,237,195,.2);stroke:rgba(120,220,170,.95)}
+    .t-find-anom rect{fill:rgba(255,150,150,.16);stroke:rgba(245,120,120,.9)}
+    .t-find-null rect{fill:rgba(255,196,120,.16);stroke:rgba(240,170,80,.9)}
+    .t-find-trace rect{fill:rgba(230,160,255,.16);stroke:rgba(210,140,245,.9)}
+    .t-synth rect{fill:rgba(122,162,255,.18);stroke:rgba(110,150,250,.95)}
+    .t-future rect{fill:rgba(160,200,255,.12);stroke:rgba(140,180,245,.75)}
+
+    .panel{
+      border:1px solid var(--control-border);border-radius:14px;background:var(--control-bg);
+      padding:16px 18px;min-height:200px;
+    }
+    .panel .empty{color:var(--muted);font-style:italic;font-size:0.9rem;line-height:1.55}
+    .panel h3{margin:0 0 2px;font-size:1.1rem;color:var(--text)}
+    .panel .full{font-size:0.8rem;color:var(--muted);margin:0 0 12px}
+    .panel .say-label,.panel .links-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:14px 0 6px}
+    .panel .say{font-size:0.95rem;line-height:1.55;color:var(--text)}
+    .panel ul{list-style:none;padding:0;margin:6px 0 0}
+    .panel li{font-size:0.85rem;line-height:1.45;color:var(--text);padding:7px 0;border-top:1px solid var(--control-border)}
+    .panel li .arrow{color:var(--accent);font-weight:700}
+    .panel li .peer{color:var(--muted);cursor:pointer;text-decoration:underline dotted}
+    .panel li .peer:hover{color:var(--text)}
+
+    .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:0.72rem;color:var(--muted)}
+    .legend span{display:inline-flex;align-items:center;gap:5px}
+    .legend i{width:11px;height:11px;border-radius:3px;display:inline-block;border:1px solid}
+    .recall-bar{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;align-items:center}
+  </style>
+</head>
+<body>
+  <div class="container dim-wrap">
+    <header class="header">
+      <a class="brand" href="/"><div class="logo" aria-hidden="true"></div>
+        <div><h1 data-site-name>UCAHub</h1><p data-tagline>Understanding Cyber-Aggression through AI Use, Trust, and Personality Factors</p></div>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/progress.html">Progress</a>
+        <a href="/updates.html">Updates</a>
+        <a href="/quiz/">Quiz</a>
+        <a href="/quiz/map.html">Map</a>
+        <a href="/about.html">About</a>
+        <a href="/ethics.html">Ethics</a>
+        <a href="/contact.html">Contact</a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme toggle">
+          Theme: <span class="theme-icon" aria-hidden="true"></span><span data-theme-label>Dark</span>
+        </button>
+        <span class="font-controls" aria-label="Text size controls">
+          <button class="fc-btn" id="fontDec" type="button" title="Smaller text">A&minus;</button>
+          <button class="fc-btn" id="fontReset" type="button" title="Reset text size">A</button>
+          <button class="fc-btn" id="fontInc" type="button" title="Larger text">A+</button>
+          <span class="fc-label" id="fontLabel">100%</span>
+        </span>
+      </nav>
+    </header>
+
+    <main>
+      <div class="map-wrap">
+        <h2>Thesis Map</h2>
+        <p class="subtitle">The load-bearing ideas of the dissertation and how they connect. This isn't a list of facts to defend &mdash; it's the shape of what you built. Knowing it backwards means you can enter the web at any node and trace it outward in any direction.</p>
+        <p class="map-hint">Tap any node. Its connections light up, and the panel shows what you'd say about it &mdash; and the one-line claim for each link. Try entering from a finding and tracing back to its theory, or from a theory forward to where it landed.</p>
+
+        <div class="map-layout">
+          <div class="graph-box">
+            <svg class="graph" id="graph" viewBox="0 0 760 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Thesis concept map"></svg>
+          </div>
+          <div class="panel" id="panel">
+            <div class="empty">Tap a node to begin. Each one carries the thing you should be able to say cold, plus how it links to everything it touches.</div>
+          </div>
+        </div>
+
+        <div class="recall-bar">
+          <button class="btn secondary" id="btnRandom" type="button">Quiz me &mdash; random node</button>
+          <button class="btn secondary" id="btnClear" type="button">Clear</button>
+        </div>
+
+        <div class="legend" id="legend"></div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span id="lastUpdated"></span>
+      <div>UCAHub is a project progress hub for Todd McCaffrey's MSc Cyberpsychology dissertation.</div>
+    </footer>
+  </div>
+
+  <script>
+  (function(){
+    "use strict";
+    if(typeof MAP==="undefined"){return;}
+    var svg=document.getElementById("graph");
+    var panel=document.getElementById("panel");
+    var W=760, H=560, padTop=40, padBot=20;
+    var cols=MAP.layers.length;
+    var colW=W/cols;
+    var nodeW=120, nodeH=42;
+
+    var byLayer={};
+    MAP.nodes.forEach(function(n){ (byLayer[n.layer]=byLayer[n.layer]||[]).push(n); });
+    var pos={};
+    Object.keys(byLayer).forEach(function(L){
+      var arr=byLayer[L], cx=colW*(+L)+colW/2;
+      var usable=H-padTop-padBot, gap=usable/arr.length;
+      arr.forEach(function(n,i){ pos[n.id]={x:cx, y:padTop+gap*i+gap/2}; });
+    });
+    function nodeById(id){ return MAP.nodes.find(function(n){return n.id===id;}); }
+    function edgesOf(id){ return MAP.edges.filter(function(e){return e.from===id||e.to===id;}); }
+
+    var NS="http://www.w3.org/2000/svg";
+    function el(t,a){ var e=document.createElementNS(NS,t); for(var k in a) e.setAttribute(k,a[k]); return e; }
+
+    MAP.layers.forEach(function(name,i){
+      var t=el("text",{x:colW*i+colW/2, y:20, "text-anchor":"middle", "class":"layer-band"});
+      t.textContent=name; svg.appendChild(t);
+    });
+
+    var edgeG=el("g",{}); svg.appendChild(edgeG);
+    var labelG=el("g",{}); svg.appendChild(labelG);
+    var edgeEls={};
+    MAP.edges.forEach(function(e,idx){
+      var a=pos[e.from], b=pos[e.to];
+      var mx=(a.x+b.x)/2;
+      var d="M"+(a.x+nodeW/2)+","+a.y+" C"+(mx)+","+a.y+" "+(mx)+","+b.y+" "+(b.x-nodeW/2)+","+b.y;
+      var p=el("path",{d:d,"class":"edge"});
+      edgeG.appendChild(p);
+      var lg=el("g",{"class":"edge-label"});
+      var rect=el("rect",{}); var tx=el("text",{x:mx,y:(a.y+b.y)/2,"text-anchor":"middle"});
+      tx.textContent=e.claim.length>46?e.claim.slice(0,44)+"…":e.claim;
+      lg.appendChild(rect); lg.appendChild(tx); labelG.appendChild(lg);
+      edgeEls[idx]={path:p,label:lg,rect:rect,txt:tx,e:e};
+    });
+    function sizeLabels(){
+      Object.keys(edgeEls).forEach(function(k){
+        var o=edgeEls[k]; try{ var bb=o.txt.getBBox();
+          o.rect.setAttribute("x",bb.x-5); o.rect.setAttribute("y",bb.y-2);
+          o.rect.setAttribute("width",bb.width+10); o.rect.setAttribute("height",bb.height+4);
+        }catch(_){}
+      });
+    }
+
+    var nodeEls={};
+    MAP.nodes.forEach(function(n){
+      var p=pos[n.id];
+      var g=el("g",{"class":"node t-"+n.tag, "data-id":n.id, tabindex:"0", role:"button","aria-label":n.label});
+      var r=el("rect",{x:p.x-nodeW/2, y:p.y-nodeH/2, width:nodeW, height:nodeH});
+      var t=el("text",{x:p.x, y:p.y, "text-anchor":"middle"});
+      t.textContent=n.label;
+      g.appendChild(r); g.appendChild(t); svg.appendChild(g);
+      g.addEventListener("click",function(){ select(n.id); });
+      g.addEventListener("keydown",function(ev){ if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();select(n.id);} });
+      nodeEls[n.id]=g;
+    });
+    sizeLabels();
+
+    var current=null;
+    function clearLit(){
+      Object.keys(nodeEls).forEach(function(id){ nodeEls[id].classList.remove("lit","dim","selected"); });
+      Object.keys(edgeEls).forEach(function(k){ edgeEls[k].path.classList.remove("lit"); edgeEls[k].label.classList.remove("lit"); });
+    }
+    function select(id){
+      current=id; clearLit();
+      var neighbours={}; neighbours[id]=true;
+      MAP.edges.forEach(function(e,idx){
+        if(e.from===id||e.to===id){
+          edgeEls[idx].path.classList.add("lit");
+          edgeEls[idx].label.classList.add("lit");
+          neighbours[e.from]=true; neighbours[e.to]=true;
+        }
+      });
+      Object.keys(nodeEls).forEach(function(nid){
+        if(neighbours[nid]) nodeEls[nid].classList.add("lit");
+        else nodeEls[nid].classList.add("dim");
+      });
+      nodeEls[id].classList.add("selected");
+      renderPanel(id);
+    }
+    function renderPanel(id){
+      var n=nodeById(id);
+      var html='<h3>'+esc(n.label)+'</h3><div class="full">'+esc(n.full)+'</div>';
+      html+='<div class="say-label">What you say</div><div class="say">'+esc(n.say)+'</div>';
+      var es=edgesOf(id);
+      if(es.length){
+        html+='<div class="links-label">Connections ('+es.length+')</div><ul>';
+        es.forEach(function(e){
+          var other = e.from===id ? e.to : e.from;
+          var dir = e.from===id ? "→" : "←";
+          var on=nodeById(other);
+          html+='<li><span class="arrow">'+dir+'</span> <span class="peer" data-go="'+other+'">'+esc(on.label)+'</span> &mdash; '+esc(e.claim)+'</li>';
+        });
+        html+='</ul>';
+      }
+      panel.innerHTML=html;
+      panel.querySelectorAll(".peer").forEach(function(elm){
+        elm.addEventListener("click",function(){ select(elm.getAttribute("data-go")); });
+      });
+    }
+    function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+    document.getElementById("btnRandom").addEventListener("click",function(){
+      var n=MAP.nodes[Math.floor(Math.random()*MAP.nodes.length)];
+      select(n.id);
+      panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+    });
+    document.getElementById("btnClear").addEventListener("click",function(){
+      current=null; clearLit();
+      panel.innerHTML='<div class="empty">Tap a node to begin. Each one carries the thing you should be able to say cold, plus how it links to everything it touches.</div>';
+    });
+
+    var legendDefs=[
+      ["t-theory","Theory"],["t-classic","Classic construct"],["t-ai","AI construct"],
+      ["t-outcome","Outcome/method"],["t-find-strong","Strong finding"],
+      ["t-find-anom","Anomaly"],["t-find-null","Null"],["t-find-trace","Trace"],
+      ["t-synth","Synthesis"],["t-future","Future"]
+    ];
+    var leg=document.getElementById("legend");
+    legendDefs.forEach(function(d){
+      var s=document.createElement("span");
+      s.innerHTML='<i></i>'+d[1];
+      leg.appendChild(s);
+    });
+    var swatchCss={
+      "t-theory":["rgba(122,162,255,.14)","rgba(122,162,255,.8)"],
+      "t-classic":["rgba(151,237,195,.14)","rgba(151,237,195,.85)"],
+      "t-ai":["rgba(230,160,255,.13)","rgba(212,140,250,.8)"],
+      "t-outcome":["rgba(255,196,120,.14)","rgba(245,176,90,.85)"],
+      "t-find-strong":["rgba(151,237,195,.2)","rgba(120,220,170,.95)"],
+      "t-find-anom":["rgba(255,150,150,.16)","rgba(245,120,120,.9)"],
+      "t-find-null":["rgba(255,196,120,.16)","rgba(240,170,80,.9)"],
+      "t-find-trace":["rgba(230,160,255,.16)","rgba(210,140,245,.9)"],
+      "t-synth":["rgba(122,162,255,.18)","rgba(110,150,250,.95)"],
+      "t-future":["rgba(160,200,255,.12)","rgba(140,180,245,.75)"]
+    };
+    leg.querySelectorAll("i").forEach(function(ic,k){
+      var key=legendDefs[k][0], c=swatchCss[key];
+      ic.style.background=c[0]; ic.style.borderColor=c[1];
+    });
+  })();
+  </script>
+</body>
+</html>
