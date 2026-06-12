@@ -133,7 +133,8 @@
   <script>
   (function(){
     "use strict";
-    if(typeof MAP==="undefined"){return;}
+    function boot(){
+    if(typeof MAP==="undefined"){ console.error("Thesis Map: mapdata.js did not load"); return; }
     var svg=document.getElementById("graph");
     var panel=document.getElementById("panel");
     var W=760, H=560, padTop=40, padBot=20;
@@ -280,6 +281,8 @@
       var key=legendDefs[k][0], c=swatchCss[key];
       ic.style.background=c[0]; ic.style.borderColor=c[1];
     });
+    }
+    if(document.readyState==="loading"){ document.addEventListener("DOMContentLoaded", boot); } else { boot(); }
   })();
   </script>
 </body>
