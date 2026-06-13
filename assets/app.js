@@ -20,6 +20,14 @@
     { key: "paper", label: "Paper" }
   ];
   const THEME_STORAGE_KEY = "ucahub_theme";
+  // Cross-site theme sync: a cookie scoped to .ucahub.ie is shared with
+  // stats.ucahub.ie (localStorage can't cross origins; a domain cookie can).
+  function writeThemeCookie(key){
+    try { document.cookie = "ucahub_theme=" + key + ";domain=.ucahub.ie;path=/;max-age=31536000;SameSite=Lax;Secure"; } catch(e){}
+  }
+  function readThemeCookie(){
+    try { const m = document.cookie.match(/(?:^|;\s*)ucahub_theme=([^;]+)/); return m ? m[1] : null; } catch(e){ return null; }
+  }
 
   const FONT_STORAGE_KEY = "ucahub_font_scale";
   const FONT_MIN = 0.90;
@@ -150,6 +158,7 @@
 
     const t = THEMES.find(x=>x.key===themeKey) || THEMES[0];
     localStorage.setItem(THEME_STORAGE_KEY, t.key);
+    writeThemeCookie(t.key);
 
     const btn = document.getElementById("themeToggle");
     if(btn){
@@ -160,14 +169,14 @@
   }
 
   function initTheme(){
-    const saved = localStorage.getItem(THEME_STORAGE_KEY);
+    const saved = readThemeCookie() || localStorage.getItem(THEME_STORAGE_KEY);
     const initial = THEMES.some(t=>t.key===saved) ? saved : "bright";
     setTheme(initial);
 
     const btn = document.getElementById("themeToggle");
     if(btn){
       btn.addEventListener("click", ()=>{
-        const current = localStorage.getItem(THEME_STORAGE_KEY) || "bright";
+        const current = readThemeCookie() || localStorage.getItem(THEME_STORAGE_KEY) || "bright";
         const idx = THEMES.findIndex(t=>t.key===current);
         const next = THEMES[(idx + 1) % THEMES.length].key;
         setTheme(next);
