@@ -28,6 +28,15 @@
   function readThemeCookie(){
     try { const m = document.cookie.match(/(?:^|;\s*)ucahub_theme=([^;]+)/); return m ? m[1] : null; } catch(e){ return null; }
   }
+  function writeFontCookie(s){
+    try { document.cookie = "ucahub_font=" + s + ";domain=.ucahub.ie;path=/;max-age=31536000;SameSite=Lax;Secure"; } catch(e){}
+  }
+  function readFontPref(){
+    let s = NaN;
+    try { const m = document.cookie.match(/(?:^|;\s*)ucahub_font=([^;]+)/); if(m) s = parseFloat(m[1]); } catch(e){}
+    if(!isFinite(s)){ const ls = parseFloat(localStorage.getItem(FONT_STORAGE_KEY) || ""); s = isFinite(ls) ? ls : 1; }
+    return s;
+  }
 
   const FONT_STORAGE_KEY = "ucahub_font_scale";
   const FONT_MIN = 0.90;
@@ -188,26 +197,20 @@
     const s = clamp(scale, FONT_MIN, FONT_MAX);
     document.documentElement.style.setProperty("--font-scale", String(s));
     localStorage.setItem(FONT_STORAGE_KEY, String(s));
+    writeFontCookie(s);
     const label = document.getElementById("fontLabel");
     if(label) label.textContent = Math.round(s * 100) + "%";
   }
 
   function initFontScale(){
-    const saved = parseFloat(localStorage.getItem(FONT_STORAGE_KEY) || "1");
-    setFontScale(isFinite(saved) ? saved : 1);
+    setFontScale(readFontPref());
 
     const dec = document.getElementById("fontDec");
     const inc = document.getElementById("fontInc");
     const reset = document.getElementById("fontReset");
 
-    if(dec) dec.addEventListener("click", ()=>{
-      const s = parseFloat(localStorage.getItem(FONT_STORAGE_KEY) || "1");
-      setFontScale((isFinite(s) ? s : 1) - FONT_STEP);
-    });
-    if(inc) inc.addEventListener("click", ()=>{
-      const s = parseFloat(localStorage.getItem(FONT_STORAGE_KEY) || "1");
-      setFontScale((isFinite(s) ? s : 1) + FONT_STEP);
-    });
+    if(dec) dec.addEventListener("click", ()=> setFontScale(readFontPref() - FONT_STEP));
+    if(inc) inc.addEventListener("click", ()=> setFontScale(readFontPref() + FONT_STEP));
     if(reset) reset.addEventListener("click", ()=> setFontScale(1));
   }
 
